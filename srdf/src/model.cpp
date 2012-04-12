@@ -179,12 +179,25 @@ void srdf::Model::loadGroups(const urdf::ModelInterface &urdf_model, TiXmlElemen
       }
       bool found = false;
       boost::shared_ptr<const urdf::Link> l = urdf_model.getLink(tip_str);
+      std::set<std::string> seen;
       while (!found && l)
       {
+        seen.insert(l->name);
         if (l->name == base_str)
           found = true;
         else
           l = l->getParent();
+      }
+      if (!found)
+      {
+        l = urdf_model.getLink(base_str);
+        while (!found && l)
+        {
+          if (seen.find(l->name) != seen.end())
+            found = true;
+          else
+            l = l->getParent();
+        }
       }
       if (found)
         g.chains_.push_back(std::make_pair(base_str, tip_str));
