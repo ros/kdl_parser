@@ -115,12 +115,24 @@ public:
         domMotion_axis_infoRef motion_axis_info;
     };
 
+    /// \brief bindings for links between different spaces
+    class LinkBinding
+    {
+public:
+        domNodeRef node;
+        domLinkRef domlink;
+        domInstance_rigid_bodyRef irigidbody;
+        domRigid_bodyRef rigidbody;
+        domNodeRef nodephysicsoffset;
+    };
+
     /// \brief inter-collada bindings for a kinematics scene
     class KinematicsSceneBindings
     {
 public:
         std::list< std::pair<domNodeRef,domInstance_kinematics_modelRef> > listKinematicsVisualBindings;
         std::list<JointAxisBinding> listAxisBindings;
+        std::list<LinkBinding> listLinkBindings;
 
         bool AddAxisInfo(const domInstance_kinematics_model_Array& arr, domKinematics_axis_infoRef kinematics_axis_info, domMotion_axis_infoRef motion_axis_info)
         {
@@ -462,6 +474,7 @@ protected:
             }
             boost::shared_ptr<KinematicsSceneBindings> bindings(new KinematicsSceneBindings());
             _ExtractKinematicsVisualBindings(allscene->getInstance_visual_scene(),kiscene,*bindings);
+            _ExtractPhysicsBindings(allscene,*bindings);
             for(size_t ias = 0; ias < kscene->getInstance_articulated_system_array().getCount(); ++ias) {
                 if( _ExtractArticulatedSystem(kscene->getInstance_articulated_system_array()[ias], *bindings) ) {
                     _PostProcess();
@@ -618,7 +631,7 @@ protected:
             _model->name_ = ikm->getID();
         }
 
-        if (!_ExtractKinematicsModel(kmodel, pvisualnode, pmodel, bindings.listAxisBindings)) {
+        if (!_ExtractKinematicsModel(kmodel, pvisualnode, pmodel, bindings)) {
             ROS_WARN_STREAM(str(boost::format("failed to load kinbody from kinematics model %s\n")%kmodel->getID()));
             return false;
         }
@@ -626,7 +639,7 @@ protected:
     }
 
     /// \brief append the kinematics model to the openrave kinbody
-    bool _ExtractKinematicsModel(domKinematics_modelRef kmodel, domNodeRef pnode, domPhysics_modelRef pmodel, const std::list<JointAxisBinding>& listAxisBindings)
+    bool _ExtractKinematicsModel(domKinematics_modelRef kmodel, domNodeRef pnode, domPhysics_modelRef pmodel, const KinematicsSceneBindings& bindings)
     {
         std::vector<domJointRef> vdomjoints;
         ROS_DEBUG_STREAM(str(boost::format("kinematics model: %s\n")%_model->name_));
@@ -655,7 +668,7 @@ protected:
 
         ROS_DEBUG_STREAM(str(boost::format("Number of root links in the kmodel %d\n")%ktec->getLink_array().getCount()));
         for (size_t ilink = 0; ilink < ktec->getLink_array().getCount(); ++ilink) {
-            _ExtractLink(ktec->getLink_array()[ilink], ilink == 0 ? pnode : domNodeRef(), Pose(), Pose(), vdomjoints, listAxisBindings);
+            _ExtractLink(ktec->getLink_array()[ilink], ilink == 0 ? pnode : domNodeRef(), Pose(), Pose(), vdomjoints, bindings);
         }
 
         //  TODO: implement mathml
@@ -753,7 +766,8 @@ protected:
     }
 
     ///  \brief Extract Link info and add it to an existing body
-    boost::shared_ptr<Link> _ExtractLink(const domLinkRef pdomlink,const domNodeRef pdomnode, const Pose& tParentWorldLink, const Pose& tParentLink, const std::vector<domJointRef>& vdomjoints, const std::list<JointAxisBinding>& listAxisBindings) {
+    boost::shared_ptr<Link> _ExtractLink(const domLinkRef pdomlink,const domNodeRef pdomnode, const Pose& tParentWorldLink, const Pose& tParentLink, const std::vector<domJointRef>& vdomjoints, const KinematicsSceneBindings& bindings) {
+        const std::list<JointAxisBinding>& listAxisBindings = bindings.listAxisBindings;
         //  Set link name with the name of the COLLADA's Link
         std::string linkname = _ExtractLinkName(pdomlink);
         if( linkname.size() == 0 ) {
@@ -781,6 +795,14 @@ protected:
             plink->visual->material->color.g = 1.0;
             plink->visual->material->color.b = 0.0;
             plink->visual->material->color.a = 1.0;
+            plink->inertial.reset(new Inertial());
+            plink->inertial->mass = 1.0;
+            plink->inertial->ixx = 1.0;
+            plink->inertial->iyy = 1.0;
+            plink->inertial->izz = 1.0;
+            plink->inertial->ixy = 0.0;
+            plink->inertial->ixz = 0.0;
+            plink->inertial->iyz = 0.0;
             _model->links_.insert(std::make_pair(linkname,plink));
         }
 
@@ -788,6 +810,34 @@ protected:
         if( !!pdomnode ) {
             ROS_DEBUG_STREAM(str(boost::format("Node Id %s and Name %s\n")%pdomnode->getId()%pdomnode->getName()));
         }
+
+        // physics
+        domInstance_rigid_bodyRef irigidbody;
+        domRigid_bodyRef rigidbody;
+        bool bFoundBinding = false;
+        FOREACH(itlinkbinding, bindings.listLinkBindings) {
+            if( !!pdomnode->getID() && !!itlinkbinding->node->getID() && strcmp(pdomnode->getID(),itlinkbinding->node->getID()) == 0 ) {
+                bFoundBinding = true;
+                irigidbody = itlinkbinding->irigidbody;
+                rigidbody = itlinkbinding->rigidbody;
+            }
+        }
+
+        if( !!rigidbody && !!rigidbody->getTechnique_common() ) {
+            domRigid_body::domTechnique_commonRef rigiddata = rigidbody->getTechnique_common();
+            if( !!rigiddata->getMass() ) {
+                plink->inertial->mass = rigiddata->getMass()->getValue();
+            }
+            if( !!rigiddata->getInertia() ) {
+                plink->inertial->ixx = rigiddata->getInertia()->getValue()[0];
+                plink->inertial->iyy = rigiddata->getInertia()->getValue()[1];
+                plink->inertial->izz = rigiddata->getInertia()->getValue()[2];
+            }
+            if( !!rigiddata->getMass_frame() ) {
+                plink->inertial->origin = _poseMult(tParentLink, _poseFromMatrix(_ExtractFullTransform(rigiddata->getMass_frame())));
+            }
+        }
+
 
         std::list<GEOMPROPERTIES> listGeomProperties;
         if (!pdomlink) {
@@ -903,7 +953,7 @@ protected:
                     vjoints[ic] = pjoint;
                 }
 
-                boost::shared_ptr<Link> pchildlink = _ExtractLink(pattfull->getLink(), pchildnode, _poseMult(_poseMult(tParentWorldLink,tlink), tatt), tatt, vdomjoints, listAxisBindings);
+                boost::shared_ptr<Link> pchildlink = _ExtractLink(pattfull->getLink(), pchildnode, _poseMult(_poseMult(tParentWorldLink,tlink), tatt), tatt, vdomjoints, bindings);
 
                 if (!pchildlink) {
                     ROS_WARN_STREAM(str(boost::format("Link has no child: %s\n")%plink->name));
@@ -1033,6 +1083,22 @@ protected:
         }
 
         plink->visual->geometry = _CreateGeometry(plink->name, listGeomProperties);
+        // visual_groups
+        boost::shared_ptr<std::vector<boost::shared_ptr<Visual > > > viss;
+        viss.reset(new std::vector<boost::shared_ptr<Visual > >);
+        viss->push_back(plink->visual);
+        plink->visual_groups.insert(std::make_pair("default", viss));
+
+        // collision
+        plink->collision.reset(new Collision());
+        plink->collision->geometry = plink->visual->geometry;
+
+        // collision_groups
+        boost::shared_ptr<std::vector<boost::shared_ptr<Collision > > > cols;
+        cols.reset(new std::vector<boost::shared_ptr<Collision > >);
+        cols->push_back(plink->collision);
+        plink->collision_groups.insert(std::make_pair("default", cols));
+
         return plink;
     }
 
@@ -1212,7 +1278,7 @@ protected:
         }
         close(fd);
         _listTempFilenames.push_back(boost::shared_ptr<UnlinkFilename>(new UnlinkFilename(geometry->filename)));
-        geometry->filename = std::string("file://") + geometry->filename;
+        //geometry->filename = std::string("file://") + geometry->filename;
         return geometry;
     }
 
@@ -2295,6 +2361,29 @@ protected:
             bindings.listAxisBindings.push_back(JointAxisBinding(pjtarget, pjointaxis, bindjoint->getValue(), NULL, NULL));
         }
     }
+
+    static void _ExtractPhysicsBindings(domCOLLADA::domSceneRef allscene, KinematicsSceneBindings& bindings)
+    {
+        for(size_t iphysics = 0; iphysics < allscene->getInstance_physics_scene_array().getCount(); ++iphysics) {
+            domPhysics_sceneRef pscene = daeSafeCast<domPhysics_scene>(allscene->getInstance_physics_scene_array()[iphysics]->getUrl().getElement().cast());
+            for(size_t imodel = 0; imodel < pscene->getInstance_physics_model_array().getCount(); ++imodel) {
+                domInstance_physics_modelRef ipmodel = pscene->getInstance_physics_model_array()[imodel];
+                domPhysics_modelRef pmodel = daeSafeCast<domPhysics_model> (ipmodel->getUrl().getElement().cast());
+                domNodeRef nodephysicsoffset = daeSafeCast<domNode>(ipmodel->getParent().getElement().cast());
+                for(size_t ibody = 0; ibody < ipmodel->getInstance_rigid_body_array().getCount(); ++ibody) {
+                    LinkBinding lb;
+                    lb.irigidbody = ipmodel->getInstance_rigid_body_array()[ibody];
+                    lb.node = daeSafeCast<domNode>(lb.irigidbody->getTarget().getElement().cast());
+                    lb.rigidbody = daeSafeCast<domRigid_body>(daeSidRef(lb.irigidbody->getBody(),pmodel).resolve().elt);
+                    lb.nodephysicsoffset = nodephysicsoffset;
+                    if( !!lb.rigidbody && !!lb.node ) {
+                        bindings.listLinkBindings.push_back(lb);
+                    }
+                }
+            }
+        }
+    }
+
 
     size_t _countChildren(daeElement* pelt) {
         size_t c = 1;
