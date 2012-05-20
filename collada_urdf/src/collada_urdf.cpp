@@ -1048,7 +1048,7 @@ protected:
                 derivelt->setAttribute("type","second_partial");
                 derivelt->setAttribute("target",str(boost::format("%s/%s")%kmodel->getID()%_ComputeId(pjoint->mimic->joint_name)).c_str());
                 daeElementRef pmath_const0 = derivelt->add("cn");
-                pmath_const0->setCharData("0");
+                pmath_const0->setCharData(str(boost::format("%f")%pjoint->mimic->multiplier));
             }
 
             {
