@@ -13,10 +13,12 @@
 
   <depend package="roscpp"/>
   <depend package="urdf_interface"/>
-  <depend package="colladadom"/>
+
+  <rosdep name="colladadom"/>
 
   <export>
-    <cpp cflags="-I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lcollada_parser"/>
+    <cpp cflags="-I${prefix}/include `pkg-config --cflags collada15dom`" 
+         lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lcollada_parser `pkg-config --libs collada15dom`"/>
   </export>
 
 </package>

@@ -11,7 +11,6 @@
   <url>http://ros.org/wiki/urdf</url>
 
   <depend package="roscpp" />
-  <depend package="colladadom" />
   <depend package="urdf_parser" />
   <depend package="collada_parser" />
 

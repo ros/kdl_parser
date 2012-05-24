@@ -12,7 +12,6 @@
   <url>http://ros.org/wiki/collada_urdf</url>
   <depend package="roscpp" />
   <depend package="urdf" />
-  <depend package="colladadom" />
   <depend package="resource_retriever" />
   <depend package="angles" />
   <depend package="common_rosdeps" />

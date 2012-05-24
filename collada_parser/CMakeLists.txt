@@ -11,6 +11,12 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 rosbuild_init()
 
+set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/ )
+find_package(PkgConfig)
+pkg_check_modules(COLLADADOM collada15dom)
+include_directories(${COLLADADOM_INCLUDE_DIRS})
+#link_directories(${COLLADADOM_LIBRARY_DIRS})
+
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
