@@ -145,7 +145,7 @@ public:
     /// The reference frame for the data produced by the sensor, such that the sensor looks in the direction of the z axis and the optical centre is at the origin of the sensor frame
     std::string frame_;
     
-    /// The field of view angle with respect to the z axis
+    /// The field of view angle with respect to the z axis (radians)
     double      fov_angle_;
     
     /// The minimum distance along the z axis for sensor data to be considered valid
