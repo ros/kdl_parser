@@ -36,7 +36,7 @@
 
 #include "kdl_parser/kdl_parser.hpp"
 #include <kdl/frames_io.hpp>
-
+#include <ros/console.h>
 
 using namespace std;
 using namespace KDL;

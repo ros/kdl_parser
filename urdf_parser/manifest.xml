@@ -1,5 +1,7 @@
 <package>
   <description brief="URDF Xml robot description parser.">
+    This package is DEPRECATED. Please use the urdfdom dependency directly instead of this package.
+
     This package contains a C++ parser for the Unified Robot
     Description Format (URDF), which is an XML format for representing
     a robot model.  The parser reads a URDF XML robot description, and
@@ -9,21 +11,13 @@
   </description>
   <author>Wim Meeussen, John Hsu, Rosen Diankov</author>
   <license>BSD</license>
-  <review status="Doc reviewed" notes=""/>
+  <review status="deprecated" notes="Please use the urdfdom dependency directly"/>
   <url>http://ros.org/wiki/urdf_parser</url>
 
-  <rosdep name="tinyxml" />
+  <rosdep name="urdfdom" />
 
-  <depend package="roscpp" />  <!-- Only to call ROS_ERROR -->
-  <depend package="urdf_interface" />  
-
-  <export>
-    <cpp cflags="-I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lurdf_parser"/>
+  <export>  
+    <cpp cflags="`pkg-config --cflags urdfdom`" lflags="`pkg-config --libs urdfdom`"/>
   </export>
 
-  <platform os="ubuntu" version="9.04"/>
-  <platform os="ubuntu" version="9.10"/>
-  <platform os="ubuntu" version="10.04"/>
 </package>
-
-

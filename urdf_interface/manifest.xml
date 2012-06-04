@@ -1,17 +1,19 @@
 <package>
   <description brief="URDF C++ interface.">
+    This package is DEPRECATED. Please use the urdfdom dependency directly instead of this package.
+
     This package contains URDF C++ interface headers that define the
     user API to the C++ URDF model.
   </description>
   <author>Wim Meeussen, John Hsu</author>
   <license>BSD</license>
-  <review status="Doc reviewed" notes=""/>
+  <review status="deprecated" notes=" Please use the urdfdom dependency directly."/>
   <url>http://ros.org/wiki/urdf_interface</url>
 
-  <rosdep name="tinyxml" />
+  <rosdep name="urdfdom" />
 
   <export>
-    <cpp cflags="-I${prefix}/include"/>
+    <cpp cflags="`pkg-config --cflags urdfdom`"/>
   </export>
 
 </package>
