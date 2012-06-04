@@ -168,6 +168,19 @@ public:
     std::map<std::string, std::vector<double> > joint_values_;
   };
   
+  /// The definition of a disabled collision between two links
+  struct DisabledCollision
+  {
+    /// The name of the first link (as in URDF) of the disabled collision
+    std::string link1_;
+
+    /// The name of the second link (as in URDF) of the disabled collision
+    std::string link2_;
+
+    /// The reason why the collision check was disabled
+    std::string reason_;
+  };
+  
   /// Get the name of this model
   const std::string& getName(void) const
   {
@@ -175,10 +188,14 @@ public:
   }
   
   /// Get the list of pairs of links that need not be checked for collisions (because they can never touch given the geometry and kinematics of the robot)
-  const std::vector<std::pair<std::string, std::string> >& getDisabledCollisions(void) const
+  const std::vector<DisabledCollision>& getDisabledCollisionPairs(void) const
   {
     return disabled_collisions_;
   }
+  
+  /// \deprecated{ Use the version returning DisabledCollision }
+  __attribute__ ((deprecated)) 
+  std::vector<std::pair<std::string, std::string> > getDisabledCollisions(void) const;
   
   /// Get the list of groups defined for this model
   const std::vector<Group>& getGroups(void) const
@@ -216,13 +233,13 @@ private:
   void loadVisualSensors(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
   void loadDisabledCollisions(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
 
-  std::string                                       name_;
-  std::vector<Group>                                groups_;
-  std::vector<GroupState>                           group_states_;
-  std::vector<VirtualJoint>                         virtual_joints_;
-  std::vector<EndEffector>                          end_effectors_;
-  std::vector<VisualSensor>                         visual_sensors_;
-  std::vector<std::pair<std::string, std::string> > disabled_collisions_;
+  std::string                    name_;
+  std::vector<Group>             groups_;
+  std::vector<GroupState>        group_states_;
+  std::vector<VirtualJoint>      virtual_joints_;
+  std::vector<EndEffector>       end_effectors_;
+  std::vector<VisualSensor>      visual_sensors_;
+  std::vector<DisabledCollision> disabled_collisions_;
 };
 
 }

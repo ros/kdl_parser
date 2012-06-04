@@ -48,21 +48,21 @@ TEST(SRDF, Simple)
     EXPECT_TRUE(s.getVirtualJoints().size() == 0);
     EXPECT_TRUE(s.getGroups().size() == 0);
     EXPECT_TRUE(s.getGroupStates().size() == 0);
-    EXPECT_TRUE(s.getDisabledCollisions().empty());
+    EXPECT_TRUE(s.getDisabledCollisionPairs().empty());
     EXPECT_TRUE(s.getEndEffectors().size() == 0);
 
     EXPECT_TRUE(s.initFile(u, "test/res/pr2_desc.2.srdf"));
     EXPECT_TRUE(s.getVirtualJoints().size() == 1);
     EXPECT_TRUE(s.getGroups().size() == 1);
     EXPECT_TRUE(s.getGroupStates().size() == 0);
-    EXPECT_TRUE(s.getDisabledCollisions().empty());
+    EXPECT_TRUE(s.getDisabledCollisionPairs().empty());
     EXPECT_TRUE(s.getEndEffectors().size() == 0);
 
     EXPECT_TRUE(s.initFile(u, "test/res/pr2_desc.1.srdf"));
     EXPECT_TRUE(s.getVirtualJoints().size() == 0);
     EXPECT_TRUE(s.getGroups().size() == 0);
     EXPECT_TRUE(s.getGroupStates().size() == 0);
-    EXPECT_TRUE(s.getDisabledCollisions().empty());
+    EXPECT_TRUE(s.getDisabledCollisionPairs().empty());
     EXPECT_TRUE(s.getEndEffectors().size() == 0);
 }
 
@@ -76,7 +76,8 @@ TEST(SRDF, Complex)
     EXPECT_TRUE(s.getVirtualJoints().size() == 1);
     EXPECT_TRUE(s.getGroups().size() == 7);
     EXPECT_TRUE(s.getGroupStates().size() == 2);
-    EXPECT_TRUE(s.getDisabledCollisions().size() == 2);
+    EXPECT_TRUE(s.getDisabledCollisionPairs().size() == 2);
+    EXPECT_TRUE(s.getDisabledCollisionPairs()[0].reason_ == "adjacent");
     EXPECT_TRUE(s.getEndEffectors().size() == 2);
 
     EXPECT_EQ(s.getVirtualJoints()[0].name_, "world_joint");

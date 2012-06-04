@@ -65,7 +65,7 @@
    <end_effector name="r_end_effector" parent_link="r_wrist_roll_link" group="r_end_effector"/>
    <end_effector name="l_end_effector" parent_link="l_wrist_roll_link" group="l_end_effector"/>
 
-   <disable_collisions link1="r_shoulder_pan_link" link2="r_shoulder_lift_link" />
+   <disable_collisions link1="r_shoulder_pan_link" link2="r_shoulder_lift_link" reason="adjacent" />
    <disable_collisions link1="r_shoulder_pan_link" link2="l_gripper_palm_link" />
    <!-- and many more disable_collisions tags -->
 

@@ -477,19 +477,23 @@ void srdf::Model::loadDisabledCollisions(const urdf::ModelInterface &urdf_model,
       ROS_ERROR("A pair of links needs to be specified to disable collisions");
       continue;
     }
-    std::string link1_str = boost::trim_copy(std::string(link1));
-    std::string link2_str = boost::trim_copy(std::string(link2));
-    if (!urdf_model.getLink(link1_str))
+    DisabledCollision dc;
+    dc.link1_ = boost::trim_copy(std::string(link1));
+    dc.link2_ = boost::trim_copy(std::string(link2));
+    if (!urdf_model.getLink(dc.link1_))
     {
       ROS_ERROR("Link '%s' is not known to URDF. Cannot disable collisons.", link1);
       continue;
     }
-    if (!urdf_model.getLink(link2_str))
+    if (!urdf_model.getLink(dc.link2_))
     {
       ROS_ERROR("Link '%s' is not known to URDF. Cannot disable collisons.", link2);
       continue;
     }
-    disabled_collisions_.push_back(std::make_pair(link1_str, link2_str));
+    const char *reason = c_xml->Attribute("reason");
+    if (reason)
+      dc.reason_ = std::string(reason);
+    disabled_collisions_.push_back(dc);
   }
 }
 
@@ -575,4 +579,12 @@ void srdf::Model::clear(void)
   end_effectors_.clear();
   visual_sensors_.clear();
   disabled_collisions_.clear();
+}
+
+std::vector<std::pair<std::string, std::string> > srdf::Model::getDisabledCollisions(void) const
+{
+  std::vector<std::pair<std::string, std::string> > result;
+  for (std::size_t i = 0 ; i < disabled_collisions_.size() ; ++i)
+    result.push_back(std::make_pair(disabled_collisions_[i].link1_, disabled_collisions_[i].link2_));
+  return result;
 }
