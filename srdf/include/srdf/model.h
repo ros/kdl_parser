@@ -135,25 +135,6 @@ public:
     /// The name of the group that includes the joints & links this end effector consists of
     std::string component_group_;
   };
-
-  /// Representation of a visual sensor
-  struct VisualSensor
-  {
-    /// The name of the sensor
-    std::string name_;
-    
-    /// The reference frame for the data produced by the sensor, such that the sensor looks in the direction of the z axis and the optical centre is at the origin of the sensor frame
-    std::string frame_;
-    
-    /// The field of view angle with respect to the z axis (radians)
-    double      fov_angle_;
-    
-    /// The minimum distance along the z axis for sensor data to be considered valid
-    double      min_range_;
-
-    /// The maximum distance along the z axis for sensor data to be considered valid
-    double      max_range_;
-  };
   
   /// A named state for a particular group
   struct GroupState
@@ -230,7 +211,6 @@ private:
   void loadGroups(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
   void loadGroupStates(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
   void loadEndEffectors(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
-  void loadVisualSensors(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
   void loadDisabledCollisions(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml);
 
   std::string                    name_;
@@ -238,7 +218,6 @@ private:
   std::vector<GroupState>        group_states_;
   std::vector<VirtualJoint>      virtual_joints_;
   std::vector<EndEffector>       end_effectors_;
-  std::vector<VisualSensor>      visual_sensors_;
   std::vector<DisabledCollision> disabled_collisions_;
 };
 
