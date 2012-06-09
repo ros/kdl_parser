@@ -351,74 +351,6 @@ void srdf::Model::loadGroupStates(const urdf::ModelInterface &urdf_model, TiXmlE
   }
 }
 
-void srdf::Model::loadVisualSensors(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml)
-{
-  for (TiXmlElement* s_xml = robot_xml->FirstChildElement("visual_sensor"); s_xml; s_xml = s_xml->NextSiblingElement("visual_sensor"))
-  {
-    const char *sname = s_xml->Attribute("name");
-    const char *frame = s_xml->Attribute("frame");
-    const char *fov_angle = s_xml->Attribute("fov_angle");
-    const char *min_range = s_xml->Attribute("min_range");
-    const char *max_range = s_xml->Attribute("max_range");
-    if (!sname)
-    {
-      ROS_ERROR("Name of visual sensor is not specified");
-      continue;
-    }
-    if (!frame)
-    {
-      ROS_ERROR("No frame specified for visual sensor '%s'", sname);
-      continue;
-    }
-    if (!fov_angle)
-    {
-      ROS_ERROR("No field of view angle specified for visual sensor '%s'", sname);
-      continue;
-    }
-    if (!min_range)
-    {
-      ROS_ERROR("No minimum range along Z axis specified for visual sensor '%s'", sname);
-      continue;
-    }
-    if (!max_range)
-    {
-      ROS_ERROR("No maximum range along Z axis specified for visual sensor '%s'", sname);
-      continue;
-    }
-    VisualSensor s;
-    s.name_ = std::string(sname); boost::trim(s.name_);
-    s.frame_ = std::string(frame); boost::trim(s.frame_);
-    try
-    {
-      s.fov_angle_ = boost::lexical_cast<double>(std::string(fov_angle));
-    }
-    catch (boost::bad_lexical_cast &e)
-    {     
-      ROS_ERROR("Unable to parse field of view angle ('%s') for sensor '%s'", fov_angle, sname);
-      continue;
-    }
-    try
-    {
-      s.min_range_ = boost::lexical_cast<double>(std::string(min_range));
-    }
-    catch (boost::bad_lexical_cast &e)
-    {     
-      ROS_ERROR("Unable to parse minimum range ('%s') for sensor '%s'", min_range, sname);
-      continue;
-    }
-    try
-    {
-      s.max_range_ = boost::lexical_cast<double>(std::string(max_range));
-    }
-    catch (boost::bad_lexical_cast &e)
-    {     
-      ROS_ERROR("Unable to parse maximum range ('%s') for sensor '%s'", max_range, sname);
-      continue;
-    }
-    visual_sensors_.push_back(s);
-  }
-}
-
 void srdf::Model::loadEndEffectors(const urdf::ModelInterface &urdf_model, TiXmlElement *robot_xml)
 {
   for (TiXmlElement* eef_xml = robot_xml->FirstChildElement("end_effector"); eef_xml; eef_xml = eef_xml->NextSiblingElement("end_effector"))
@@ -521,7 +453,6 @@ bool srdf::Model::initXml(const urdf::ModelInterface &urdf_model, TiXmlElement *
   loadGroups(urdf_model, robot_xml);
   loadGroupStates(urdf_model, robot_xml);
   loadEndEffectors(urdf_model, robot_xml); 
-  loadVisualSensors(urdf_model, robot_xml);
   loadDisabledCollisions(urdf_model, robot_xml);
   
   return true;
@@ -577,7 +508,6 @@ void srdf::Model::clear(void)
   group_states_.clear();
   virtual_joints_.clear();
   end_effectors_.clear();
-  visual_sensors_.clear();
   disabled_collisions_.clear();
 }
 
