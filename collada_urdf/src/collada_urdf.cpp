@@ -51,7 +51,7 @@
 #include <dom/domTypes.h>
 #include <resource_retriever/retriever.h>
 #include <urdf/model.h>
-#include <urdf_interface/pose.h>
+#include <urdf_model/pose.h>
 #include <angles/angles.h>
 #include <ros/assert.h>
 
@@ -60,11 +60,23 @@
 #include <boost/format.hpp>
 #include <boost/array.hpp>
 
-#include <assimp/assimp.hpp>
-#include <assimp/aiScene.h>
-#include <assimp/aiPostProcess.h>
-#include <assimp/IOStream.h>
-#include <assimp/IOSystem.h>
+#if defined(IS_ASSIMP3)
+#include <assimp/scene.h>
+#include <assimp/LogStream.hpp>
+#include <assimp/DefaultLogger.hpp>
+#include <assimp/IOStream.hpp>
+#include <assimp/IOSystem.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#else
+#include <assimp.hpp>
+#include <aiScene.h>
+#include <aiPostProcess.h>
+#include <DefaultLogger.h>
+#include <IOStream.h>
+#include <IOSystem.h>
+
+#endif
 
 #define FOREACH(it, v) for(typeof((v).begin())it = (v).begin(); it != (v).end(); (it)++)
 #define FOREACHC FOREACH

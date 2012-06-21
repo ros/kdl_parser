@@ -56,7 +56,7 @@
 
 #include <ros/ros.h>
 #include <collada_parser/collada_parser.h>
-#include <urdf_interface/model.h>
+#include <urdf_model/model.h>
 
 #ifndef HAVE_MKSTEMPS
 #include <fstream>
@@ -419,7 +419,7 @@ public:
     bool InitFromFile(const std::string& filename) {
         ROS_DEBUG_STREAM(str(boost::format("init COLLADA reader version: %s, namespace: %s, filename: %s\n")%COLLADA_VERSION%COLLADA_NAMESPACE%filename));
         _collada.reset(new DAE);
-        _dom = _collada->open(filename);
+        _dom = (domCOLLADA*)_collada->open(filename);
         if (!_dom) {
             return false;
         }
@@ -438,7 +438,7 @@ public:
     bool InitFromData(const std::string& pdata) {
         ROS_DEBUG_STREAM(str(boost::format("init COLLADA reader version: %s, namespace: %s\n")%COLLADA_VERSION%COLLADA_NAMESPACE));
         _collada.reset(new DAE);
-        _dom = _collada->openFromMemory(".",pdata.c_str());
+        _dom = (domCOLLADA*)_collada->openFromMemory(".",pdata.c_str());
         if (!_dom) {
             return false;
         }

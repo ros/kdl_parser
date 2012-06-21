@@ -11,11 +11,15 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 rosbuild_init()
 
+rosbuild_add_boost_directories()
+
 set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/ )
 find_package(PkgConfig)
-pkg_check_modules(COLLADADOM collada15dom)
-include_directories(${COLLADADOM_INCLUDE_DIRS})
-#link_directories(${COLLADADOM_LIBRARY_DIRS})
+find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
+if( COLLADA_DOM_FOUND )
+  include_directories(${COLLADA_DOM_INCLUDE_DIRS})
+  #link_directories(${COLLADA_DOM_LIBRARY_DIRS})
+endif()
 
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -31,11 +35,14 @@ endif()
 #common commands for building c++ executables and libraries
 rosbuild_add_library(${PROJECT_NAME} src/collada_parser.cpp)
 
+rosbuild_add_compile_flags(${PROJECT_NAME} "${COLLADA_DOM_CFLAGS_OTHER}")
+rosbuild_add_link_flags(${PROJECT_NAME} "${COLLADA_DOM_LDFLAGS_OTHER}")
+
 if(APPLE) 
-  set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 
+  rosbuild_add_link_flags(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 
 endif(APPLE)
 
 #target_link_libraries(${PROJECT_NAME} another_library)
-rosbuild_add_boost_directories()
+
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 
