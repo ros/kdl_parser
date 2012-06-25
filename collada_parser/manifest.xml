@@ -17,10 +17,9 @@
   <rosdep name="colladadom"/>
 
   <export>
-    <cpp cflags="-I${prefix}/include `pkg-config --silence-errors --cflags collada15dom` `pkg-config --silence-errors --cflags collada-dom-150` " 
-         lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lcollada_parser `pkg-config --silence-errors --libs collada15dom` `pkg-config --silence-errors --libs collada-dom-150`"/>
+    <cpp cflags="-I${prefix}/include `pkg-config --silence-errors --cflags collada15dom || echo` `pkg-config --silence-errors --cflags collada-dom-150 || echo`" 
+         lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lcollada_parser `pkg-config --silence-errors --libs collada15dom || echo` `pkg-config --silence-errors --libs collada-dom-150 || echo`"/>
   </export>
 
 </package>
-
 
