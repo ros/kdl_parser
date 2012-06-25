@@ -13,7 +13,7 @@
   <rosdep name="urdfdom" />
 
   <export>
-    <cpp cflags="`pkg-config --cflags urdfdom`"/>
+    <cpp cflags="-I${prefix}/include `pkg-config --cflags urdfdom`"/>
   </export>
 
 </package>

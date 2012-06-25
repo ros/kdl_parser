@@ -56,7 +56,7 @@
 
 #include <ros/ros.h>
 #include <collada_parser/collada_parser.h>
-#include <urdf_interface/model.h>
+#include <urdf_model/model.h>
 
 #ifndef HAVE_MKSTEMPS
 #include <fstream>
