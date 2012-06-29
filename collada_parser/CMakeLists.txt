@@ -33,7 +33,7 @@ if( HAVE_MKSTEMPS )
 endif()
 
 #common commands for building c++ executables and libraries
-rosbuild_add_library(${PROJECT_NAME} src/collada_parser.cpp src/hack.cpp)
+rosbuild_add_library(${PROJECT_NAME} src/collada_parser.cpp)
 
 rosbuild_add_compile_flags(${PROJECT_NAME} "${COLLADA_DOM_CFLAGS_OTHER}")
 rosbuild_add_link_flags(${PROJECT_NAME} "${COLLADA_DOM_LDFLAGS_OTHER}")

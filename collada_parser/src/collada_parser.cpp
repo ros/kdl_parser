@@ -500,13 +500,23 @@ protected:
     {
         std::map<std::string, std::string> parent_link_tree;
         // building tree: name mapping
-        if (!_model->initTree(parent_link_tree)) {
-            ROS_ERROR("failed to build tree");
+        try
+        {
+          _model->initTree(parent_link_tree);
+        }
+        catch(ParseError &e)
+        {
+          ROS_ERROR("Failed to build tree: %s", e.what());
         }
 
         // find the root link
-        if (!_model->initRoot(parent_link_tree)) {
-            ROS_ERROR("failed to find root link");
+        try
+        {
+          _model->initRoot(parent_link_tree);
+        }
+        catch(ParseError &e)
+        {
+          ROS_ERROR("Failed to find root link: %s", e.what());
         }
     }
 
