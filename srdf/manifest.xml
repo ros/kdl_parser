@@ -7,23 +7,14 @@
   </description>
   <author>Ioan Sucan</author>
   <license>BSD</license>
-  <review status="unreviewed" notes=""/>
+  <review status="deprecated" notes=""/>
   <url>http://ros.org/wiki/srdf</url>
 
   <rosdep name="tinyxml" />
-
-  <depend package="urdf" />  
-  <depend package="rosconsole" />  
+  <rosdep name="srdfdom" />
 
   <export>
-    <cpp cflags="-I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsrdf"/>
+    <cpp cflags="`pkg-config --cflags srdfdom`" lflags="`pkg-config --libs srdfdom`"/>
   </export>
 
-  <platform os="ubuntu" version="10.04"/>
-  <platform os="ubuntu" version="10.10"/>
-  <platform os="ubuntu" version="11.04"/>
-  <platform os="ubuntu" version="11.10"/>
-
 </package>
-
-

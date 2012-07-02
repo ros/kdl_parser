@@ -21,13 +21,14 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_gensrv()
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(urdfdom REQUIRED urdfdom)
+find_package(urdfdom REQUIRED)
 include_directories(${urdfdom_INCLUDE_DIRS})
-link_directories(${urdfdom_LIBRARY_DIRS})
 
-rosbuild_add_library(${PROJECT_NAME} src/model.cpp)
-target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES})
+find_package(rosconsole_bridge REQUIRED)
+include_directories(${rosconsole_bridge_INCLUDE_DIRS})
+
+rosbuild_add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
+target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES} ${rosconsole_bridge_LIBRARIES})
 
 if(APPLE) 
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 

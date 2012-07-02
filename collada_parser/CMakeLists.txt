@@ -13,6 +13,9 @@ rosbuild_init()
 
 rosbuild_add_boost_directories()
 
+find_package(urdfdom_headers REQUIRED)
+include_directories(${urdfdom_headers_INCLUDE_DIRS})
+
 set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/ )
 find_package(PkgConfig)
 find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)

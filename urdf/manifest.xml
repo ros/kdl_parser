@@ -11,8 +11,10 @@
   <url>http://ros.org/wiki/urdf</url>
 
   <depend package="roscpp" />
-  <depend package="urdf_parser" />
   <depend package="collada_parser" />
+
+  <rosdep name="rosconsole_bridge" /> 
+  <rosdep name="urdfdom" /> 
 
   <export>
     <cpp cflags="-I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lurdf"/>
