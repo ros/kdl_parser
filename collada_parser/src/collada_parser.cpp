@@ -502,21 +502,21 @@ protected:
         // building tree: name mapping
         try
         {
-          _model->initTree(parent_link_tree);
+            _model->initTree(parent_link_tree);
         }
         catch(ParseError &e)
         {
-          ROS_ERROR("Failed to build tree: %s", e.what());
+            ROS_ERROR("Failed to build tree: %s", e.what());
         }
 
         // find the root link
         try
         {
-          _model->initRoot(parent_link_tree);
+            _model->initRoot(parent_link_tree);
         }
         catch(ParseError &e)
         {
-          ROS_ERROR("Failed to find root link: %s", e.what());
+            ROS_ERROR("Failed to find root link: %s", e.what());
         }
     }
 
@@ -805,14 +805,7 @@ protected:
             plink->visual->material->color.g = 1.0;
             plink->visual->material->color.b = 0.0;
             plink->visual->material->color.a = 1.0;
-            plink->inertial.reset(new Inertial());
-            plink->inertial->mass = 1.0;
-            plink->inertial->ixx = 1.0;
-            plink->inertial->iyy = 1.0;
-            plink->inertial->izz = 1.0;
-            plink->inertial->ixy = 0.0;
-            plink->inertial->ixz = 0.0;
-            plink->inertial->iyz = 0.0;
+            plink->inertial.reset();
             _model->links_.insert(std::make_pair(linkname,plink));
         }
 
@@ -836,15 +829,24 @@ protected:
         if( !!rigidbody && !!rigidbody->getTechnique_common() ) {
             domRigid_body::domTechnique_commonRef rigiddata = rigidbody->getTechnique_common();
             if( !!rigiddata->getMass() ) {
+                if ( !plink->inertial ) {
+                    plink->inertial.reset(new Inertial());
+                }
                 plink->inertial->mass = rigiddata->getMass()->getValue();
             }
             if( !!rigiddata->getInertia() ) {
+                if ( !plink->inertial ) {
+                    plink->inertial.reset(new Inertial());
+                }
                 plink->inertial->ixx = rigiddata->getInertia()->getValue()[0];
                 plink->inertial->iyy = rigiddata->getInertia()->getValue()[1];
                 plink->inertial->izz = rigiddata->getInertia()->getValue()[2];
             }
             if( !!rigiddata->getMass_frame() ) {
-                plink->inertial->origin = _poseMult(tParentLink, _poseFromMatrix(_ExtractFullTransform(rigiddata->getMass_frame())));
+                if ( !plink->inertial ) {
+                    plink->inertial.reset(new Inertial());
+                }
+                plink->inertial->origin = _poseMult(_poseInverse(tParentWorldLink), _poseFromMatrix(_ExtractFullTransform(rigiddata->getMass_frame())));
             }
         }
 
@@ -1077,7 +1079,7 @@ protected:
                     }
 
                     //ROS_INFO("joint %s axis: %f %f %f",pjoint->name.c_str(),pjoint->axis.x,pjoint->axis.y,pjoint->axis.z);
-                    pjoint->parent_to_joint_origin_transform = tatt;
+                    pjoint->parent_to_joint_origin_transform = _poseMult(tatt,_poseFromMatrix(_ExtractFullTransform(pattfull->getLink())));
                     pjoint->limits->velocity = pjoint->type == Joint::PRISMATIC ? 0.01 : 0.5f;
                     pchildlink.reset();
                     ++numjoints;
