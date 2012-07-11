@@ -1,0 +1,15 @@
+= 1.9.0 (Forthcoming) =
+ * Branch from 1.8.0
+ * Read dynamics info from collada <<Ticket(ros-pkg 5429)>>
+
+ * [[urdf_interface]]
+  * This package is now deprecated
+  * The stub that is in place points to header files installed from the urdfdom_headers library (available as deb)
+ * [[urdf_parser]]
+  * This package is now deprecated
+  * The stub that is in place points to header files and the libs installed from the urdfdom library  (available as deb)
+ * [[srdf]]
+  * This package is now deprecated
+  * The stub that is in place points to header files and the libs installed from the srdfdom library (available as deb)
+ * [[urdf]]
+  * Use the rosconsole_bridge library (available as deb) to forward output from urdfdom to ROS console (effectively making things behave as they did before in terms of logging, but without having urdfdom depend on rosconsole, but on console_bridge, a much lighter dependency)
