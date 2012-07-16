@@ -37,6 +37,9 @@ endif(APPLE)
 rosbuild_add_executable(check_urdf src/check_urdf.cpp)
 target_link_libraries(check_urdf ${PROJECT_NAME})
 
+rosbuild_add_executable(urdf_to_graphiz src/urdf_to_graphiz.cpp)
+target_link_libraries(urdf_to_graphiz ${PROJECT_NAME})
+
 rosbuild_add_executable(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
 target_link_libraries(test_parser ${PROJECT_NAME})
 rosbuild_add_gtest_build_flags(test_parser)
