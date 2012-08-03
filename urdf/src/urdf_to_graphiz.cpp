@@ -36,6 +36,7 @@
 
 #include "urdf_parser/urdf_parser.h"
 #include "collada_parser/collada_parser.h"
+#include <ros/console.h>
 #include <iostream>
 #include <fstream>
 
