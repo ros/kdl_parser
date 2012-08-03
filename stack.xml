@@ -1,6 +1,6 @@
 <stack>
   <name>robot_model</name>
-  <version>1.9.0</version>
+  <version>1.9.1</version>
   <description brief="Modeling robot information">
     <tt>robot_model</tt> contains packages for modeling various
     aspects of robot information, specified in the Xml Robot
@@ -32,6 +32,7 @@
   <build_depends>rosconsole_bridge</build_depends>
   <build_depends>graphviz</build_depends>
   <build_depends>geometry</build_depends>
+  <build_depends>curl</build_depends>
 
   <depends>common_msgs</depends>
   <depends>orocos_kdl</depends> 
@@ -41,5 +42,6 @@
   <depends>rosconsole_bridge</depends>
   <depends>graphviz</depends>
   <depends>geometry</depends>
+  <depends>curl</depends>
 
 </stack>
