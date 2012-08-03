@@ -22,6 +22,12 @@ target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES} ${ROS_LIBRARIES})
 
 add_subdirectory(test EXCLUDE_FROM_ALL)
 
+install(TARGETS ${PROJECT_NAME} 
+  DESTINATION lib)
+
+install(DIRECTORY include/
+  DESTINATION include)
+
 # for compatibility with old build system
 install(FILES manifest.xml
         DESTINATION share/${PROJECT_NAME})

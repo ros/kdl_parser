@@ -2,7 +2,8 @@ project(collada_parser)
 
 catkin_project(${PROJECT_NAME} 
   LIBRARIES ${PROJECT_NAME}
-  INCLUDE_DIRS include)
+  INCLUDE_DIRS include
+  DEPENDS Boost urdfdom_headers)
 
 include_directories(include)
 
@@ -37,6 +38,12 @@ if(APPLE)
 else()
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${COLLADA_DOM_LDFLAGS_OTHER}") 
 endif()
+
+install(TARGETS ${PROJECT_NAME} 
+  DESTINATION lib)
+
+install(DIRECTORY include/
+  DESTINATION include)
 
 # for compatibility with old build system
 install(FILES manifest.xml

@@ -2,9 +2,13 @@ project(urdf)
 
 catkin_project(${PROJECT_NAME} 
   LIBRARIES ${PROJECT_NAME}
-  INCLUDE_DIRS include)
+  INCLUDE_DIRS include
+  DEPENDS urdfdom urdfdom_headers collada_parser)
 
 include_directories(include)
+
+find_package(urdfdom_headers REQUIRED)
+include_directories(${urdfdom_headers_INCLUDE_DIRS})
 
 find_package(urdfdom REQUIRED)
 include_directories(${urdfdom_INCLUDE_DIRS})
@@ -39,6 +43,13 @@ target_link_libraries(test_parser ${PROJECT_NAME})
 
 # no idea how CATKIN does this
 # rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_robot_model_parser.launch)
+
+install(TARGETS ${PROJECT_NAME} check_urdf urdf_to_graphiz
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+install(DIRECTORY include/
+  DESTINATION include)
 
 # for compatibility with old build system
 install(FILES manifest.xml
