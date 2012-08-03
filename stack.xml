@@ -33,6 +33,10 @@
   <build_depends>graphviz</build_depends>
   <build_depends>geometry</build_depends>
   <build_depends>curl</build_depends>
+  <build_depends>assimp</build_depends>
+  <build_depends>urdfdom</build_depends>
+  <build_depends>urdfdom_headers</build_depends>
+  <build_depends>collada-dom</build_depends>
 
   <depends>common_msgs</depends>
   <depends>orocos_kdl</depends> 
@@ -43,5 +47,9 @@
   <depends>graphviz</depends>
   <depends>geometry</depends>
   <depends>curl</depends>
+  <depends>assimp</depends>
+  <depends>urdfdom</depends>
+  <depends>urdfdom_headers</depends>
+  <depends>collada-dom</depends>
 
 </stack>
