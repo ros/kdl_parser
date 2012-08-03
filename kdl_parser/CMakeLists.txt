@@ -1,37 +1,37 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+project(kdl_parser)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+catkin_project(${PROJECT_NAME} 
+  LIBRARIES ${PROJECT_NAME}
+  INCLUDE_DIRS include)
 
-rosbuild_init()
+include_directories(include)
 
-rosbuild_add_boost_directories()
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+find_library(tinyxml_library tinyxml)
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+find_package(ROS REQUIRED COMPONENTS roscpp rosconsole)
+include_directories(${ROS_INCLUDE_DIRS})
 
-link_libraries(tinyxml)
+find_package(Orocos-KDL REQUIRED)
+include_directories(${Orocos-KDL_INCLUDE_DIRS})
+link_directories(${Orocos-KDL_LIBRARY_DIRS})
 
-rosbuild_add_library(${PROJECT_NAME} src/kdl_parser.cpp)
+find_package(urdf)
+include_directories(${urdf_INCLUDE_DIRS})
 
-rosbuild_add_executable(check_kdl_parser src/check_kdl_parser.cpp )
+find_package(collada_parser)
+include_directories(${collada_parser_INCLUDE_DIRS})
+
+add_library(${PROJECT_NAME} src/kdl_parser.cpp)
+target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${Orocos-KDL_LIBRARIES} ${collada_parser_LIBRARIES} ${urdf_LIBRARIES} ${ROS_LIBRARIES})
+
+add_executable(check_kdl_parser src/check_kdl_parser.cpp )
 target_link_libraries(check_kdl_parser ${PROJECT_NAME})
 
-rosbuild_add_executable(test_parser test/test_kdl_parser.cpp )
-target_link_libraries(test_parser ${PROJECT_NAME})
+add_gtest(test_kdl_parser test/test_kdl_parser.cpp )
+target_link_libraries(test_kdl_parser ${PROJECT_NAME})
 
-rosbuild_add_gtest_build_flags(test_parser)
-rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_kdl_parser.launch)
+# How does CATKIN do this?
+#rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_kdl_parser.launch)

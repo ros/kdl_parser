@@ -1,47 +1,45 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+project(urdf)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-set(ROS_BUILD_TYPE Debug)
+catkin_project(${PROJECT_NAME} 
+  LIBRARIES ${PROJECT_NAME}
+  INCLUDE_DIRS include)
 
-rosbuild_init()
-
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-
-rosbuild_gensrv()
+include_directories(include)
 
 find_package(urdfdom REQUIRED)
 include_directories(${urdfdom_INCLUDE_DIRS})
+link_directories(${urdfdom_LIBRARY_DIRS})
+
+find_package(collada_parser REQUIRED)
+include_directories(${collada_parser_INCLUDE_DIRS})
+link_directories(${collada_parser_LIBRARY_DIRS})
 
 find_package(rosconsole_bridge REQUIRED)
 include_directories(${rosconsole_bridge_INCLUDE_DIRS})
+link_directories(${rosconsole_bridge_LIBRARY_DIRS})
 
-rosbuild_add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
-target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES} ${rosconsole_bridge_LIBRARIES})
+find_package(ROS REQUIRED COMPONENTS roscpp rosconsole rostime)
+include_directories(${ROS_INCLUDE_DIRS})
+
+add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
+target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES} ${collada_parser_LIBRARIES} ${rosconsole_bridge_LIBRARIES} ${ROS_LIBRARIES})
 
 if(APPLE) 
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 
 endif(APPLE)
 
-rosbuild_add_executable(check_urdf src/check_urdf.cpp)
+add_executable(check_urdf src/check_urdf.cpp)
 target_link_libraries(check_urdf ${PROJECT_NAME})
 
-rosbuild_add_executable(urdf_to_graphiz src/urdf_to_graphiz.cpp)
+add_executable(urdf_to_graphiz src/urdf_to_graphiz.cpp)
 target_link_libraries(urdf_to_graphiz ${PROJECT_NAME})
 
-rosbuild_add_executable(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
+add_gtest(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
 target_link_libraries(test_parser ${PROJECT_NAME})
-rosbuild_add_gtest_build_flags(test_parser)
-rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_robot_model_parser.launch)
 
+# no idea how CATKIN does this
+# rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_robot_model_parser.launch)
+
+# for compatibility with old build system
+install(FILES manifest.xml
+        DESTINATION share/${PROJECT_NAME})

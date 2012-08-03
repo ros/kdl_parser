@@ -1,4 +1,6 @@
 <stack>
+  <name>robot_model</name>
+  <version>1.9.0</version>
   <description brief="Modeling robot information">
     <tt>robot_model</tt> contains packages for modeling various
     aspects of robot information, specified in the Xml Robot
@@ -6,14 +8,38 @@
     is <a href="http://ros.org/wiki/urdf">urdf</a>, which parses URDF files, and constructs an
     object model (C++) of the robot.
   </description>
-  <author>Wim Meeussen, John Hsu, David Lu, Rosen Diankov, Tim Field</author>
+  <author email="wim@willowgarage.com">Wim Meeussen</author>
+  <author email="hsu@osrfoundation.com">John Hsu</author>
+  <author email="davidlu@wustl.edu">David Lu</author>
+  <author email="isucan@willowgarage.com">Ioan Sucan</author>
+  <author email="rosen.diankov@gmail.com">Rosen Diankov</author>
+  <author email="tim.field@willowgarage.com">Tim Field</author>
+
+  <maintainer email="tfoote@willowgarage.com">Tully Foote</maintainer>
   <license>BSD,GPL,MIT</license>  
-  <review status="Doc reviewed" notes="2009-10-02"/>
+
+  <copyright>Willow Garage</copyright>
+
+  <review status="doc reviewed" notes="2009-10-02"/>
   <url>http://ros.org/wiki/robot_model</url>
-  <depend stack="common_msgs" /> <!-- sensor_msgs -->
-  <depend stack="geometry" /> <!-- tf, angles, tf_conversions -->
-  <depend stack="orocos_kinematics_dynamics" /> <!-- kdl -->
-  <depend stack="ros" /> <!-- roslib -->
-  <depend stack="ros_comm" /> <!-- rosconsole, rospy, roscpp -->
+
+  <build_depends>catkin</build_depends>
+  <build_depends>common_msgs</build_depends>
+  <build_depends>orocos_kdl</build_depends> 
+  <build_depends>ros</build_depends>
+  <build_depends>ros_comm</build_depends> 
+  <build_depends>geometry_angles_utils</build_depends> 
+  <build_depends>rosconsole_bridge</build_depends>
+  <build_depends>graphviz</build_depends>
+  <build_depends>geometry</build_depends>
+
+  <depends>common_msgs</depends>
+  <depends>orocos_kdl</depends> 
+  <depends>ros</depends>
+  <depends>ros_comm</depends> 
+  <depends>geometry_angles_utils</depends> 
+  <depends>rosconsole_bridge</depends>
+  <depends>graphviz</depends>
+  <depends>geometry</depends>
 
 </stack>

@@ -1,16 +1,19 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
-set(ROS_BUILD_TYPE RelWithDebInfo)
-rosbuild_init()
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+project(collada_urdf)
 
-link_libraries(tinyxml)
+catkin_project(${PROJECT_NAME} 
+  LIBRARIES ${PROJECT_NAME}
+  INCLUDE_DIRS include)
 
-find_package(ASSIMP)
-if( NOT ASSIMP_FOUND )
+include_directories(include)
+
+find_package(Boost REQUIRED COMPONENTS system)
+include_directories(${Boost_INCLUDE_DIR})
+
+find_package(assimp QUIET)
+if( NOT assimp_FOUND )
+  find_package(PkgConfig REQUIRED)
   pkg_check_modules(ASSIMP assimp)
 endif()
-
 if( ASSIMP_FOUND )
   if( ${ASSIMP_VERSION} STRGREATER "2.0.0" )
     set(IS_ASSIMP3 1)
@@ -29,14 +32,42 @@ else()
   set(IS_ASSIMP3 0) # most likely not
 endif()
 
-rosbuild_add_library(collada_urdf src/collada_urdf.cpp)
-rosbuild_link_boost(collada_urdf system)
-target_link_libraries(collada_urdf ${ASSIMP_LIBRARIES})
-rosbuild_add_compile_flags(collada_urdf "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
-rosbuild_add_link_flags(collada_urdf "${ASSIMP_LINK_FLAGS}")
+find_library(tinyxml_library tinyxml)
 
-rosbuild_add_executable(urdf_to_collada src/urdf_to_collada.cpp)
-target_link_libraries(urdf_to_collada collada_urdf)
+find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
+if( COLLADA_DOM_FOUND )
+  include_directories(${COLLADA_DOM_INCLUDE_DIRS})
+  link_directories(${COLLADA_DOM_LIBRARY_DIRS})
+endif()
 
-rosbuild_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
-target_link_libraries(test_collada_writer collada_urdf)
+find_package(urdf)
+include_directories(${urdf_INCLUDE_DIRS})
+
+find_package(urdfdom)
+include_directories(${urdfdom_INCLUDE_DIRS})
+
+find_package(collada_parser)
+include_directories(${collada_parser_INCLUDE_DIRS})
+
+find_package(resource_retriever)
+include_directories(${resource_retriever_INCLUDE_DIRS})
+
+find_package(geometry_angles_utils)
+include_directories(${geometry_angles_utils_INCLUDE_DIRS})
+
+add_library(collada_urdf src/collada_urdf.cpp)
+target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${ASSIMP_LIBRARIES} ${collada_parser_LIBRARIES} ${COLLADA_DOM_LIBRARIES} ${urdf_LIBRARIES} ${urdfdom_LIBRARIES}
+  ${resource_retriever_LIBRARIES} ${geometry_angles_utils_LIBRARIES} ${Boost_LIBRARIES})
+set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
+
+add_executable(urdf_to_collada src/urdf_to_collada.cpp)
+target_link_libraries(urdf_to_collada ${PROJECT_NAME})
+
+add_gtest(test_collada_writer test/test_collada_urdf.cpp)
+target_link_libraries(test_collada_writer ${PROJECT_NAME})
+
+
+# for compatibility with old build system
+install(FILES manifest.xml
+        DESTINATION share/${PROJECT_NAME})
