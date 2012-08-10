@@ -1104,6 +1104,7 @@ protected:
         // collision
         plink->collision.reset(new Collision());
         plink->collision->geometry = plink->visual->geometry;
+        plink->collision->origin   = plink->visual->origin;
 
         // collision_groups
         boost::shared_ptr<std::vector<boost::shared_ptr<Collision > > > cols;
