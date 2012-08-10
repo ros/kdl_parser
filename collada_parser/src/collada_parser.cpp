@@ -1291,7 +1291,7 @@ protected:
         }
         close(fd);
         _listTempFilenames.push_back(boost::shared_ptr<UnlinkFilename>(new UnlinkFilename(geometry->filename)));
-        //geometry->filename = std::string("file://") + geometry->filename;
+        geometry->filename = std::string("file://") + geometry->filename;
         return geometry;
     }
 
