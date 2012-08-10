@@ -1,7 +1,9 @@
 = 1.9.0 (Forthcoming) =
  * Branch from 1.8.0
- * Read dynamics info from collada <<Ticket(ros-pkg 5429)>>
 
+ * [[collada_parser]]
+  * Read dynamics info from collada <<Ticket(ros-pkg 5429)>>
+  * collada parser fixes with inertial frames and parent_to_joint_origin_transformrobot_model-1.6 
  * [[urdf_interface]]
   * This package is now deprecated
   * The stub that is in place points to header files installed from the urdfdom_headers library (available as deb)
