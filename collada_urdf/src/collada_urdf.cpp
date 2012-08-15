@@ -85,6 +85,8 @@ using namespace std;
 
 namespace collada_urdf {
 
+using namespace ColladaDOM150;
+
 /// ResourceIOStream is copied from rviz (BSD, Willow Garage)
 class ResourceIOStream : public Assimp::IOStream
 {

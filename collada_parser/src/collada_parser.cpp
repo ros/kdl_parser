@@ -72,6 +72,7 @@
 
 namespace urdf {
 
+using namespace ColladaDOM150;
 
 class UnlinkFilename
 {

@@ -8,14 +8,10 @@
     is <a href="http://ros.org/wiki/urdf">urdf</a>, which parses URDF files, and constructs an
     object model (C++) of the robot.
   </description>
-  <author email="wim@willowgarage.com">Wim Meeussen</author>
-  <author email="hsu@osrfoundation.com">John Hsu</author>
-  <author email="davidlu@wustl.edu">David Lu</author>
-  <author email="isucan@willowgarage.com">Ioan Sucan</author>
-  <author email="rosen.diankov@gmail.com">Rosen Diankov</author>
-  <author email="tim.field@willowgarage.com">Tim Field</author>
 
-  <maintainer email="tfoote@willowgarage.com">Tully Foote</maintainer>
+  <author email="isucan@willowgarage.com">Maintained by Ioan Sucan</author>
+
+  <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
   <license>BSD,GPL,MIT</license>  
 
   <copyright>Willow Garage</copyright>
@@ -36,7 +32,7 @@
   <build_depends>assimp</build_depends>
   <build_depends>urdfdom</build_depends>
   <build_depends>urdfdom_headers</build_depends>
-  <build_depends>collada-dom</build_depends>
+  <build_depends>collada-dev</build_depends>
 
   <depends>common_msgs</depends>
   <depends>orocos_kdl</depends> 
@@ -50,6 +46,6 @@
   <depends>assimp</depends>
   <depends>urdfdom</depends>
   <depends>urdfdom_headers</depends>
-  <depends>collada-dom</depends>
+  <depends>collada-dev</depends>
 
 </stack>
