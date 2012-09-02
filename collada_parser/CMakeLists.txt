@@ -7,7 +7,7 @@ catkin_project(${PROJECT_NAME}
 
 include_directories(include)
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED system)
 include_directories(${Boost_INCLUDE_DIR})
 
 find_package(urdfdom_headers REQUIRED)
@@ -30,7 +30,7 @@ endif()
 
 #common commands for building c++ executables and libraries
 add_library(${PROJECT_NAME} src/collada_parser.cpp)
-target_link_libraries(${PROJECT_NAME} ${COLLADA_DOM_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${COLLADA_DOM_LIBRARIES} ${Boost_LIBRARIES})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${COLLADA_DOM_CFLAGS_OTHER}")
 if(APPLE) 

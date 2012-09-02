@@ -6,8 +6,9 @@ catkin_project(${PROJECT_NAME}
 
 include_directories(include)
 
-find_package(ROS REQUIRED COMPONENTS rosconsole roslib)
-include_directories(${ROS_INCLUDE_DIRS})
+find_package(catkin REQUIRED COMPONENTS rosconsole roslib)
+include_directories(${catkin_INCLUDE_DIRS})
+link_directories(${catkin_LIBRARY_DIRS})
 
 include(FindCURL)
 if(NOT CURL_FOUND)
@@ -18,7 +19,7 @@ include_directories(${CURL_INCLUDE_DIRS})
 
 
 add_library(${PROJECT_NAME} src/retriever.cpp)
-target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES} ${ROS_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES} ${catkin_LIBRARIES})
 
 add_subdirectory(test EXCLUDE_FROM_ALL)
 

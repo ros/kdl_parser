@@ -22,11 +22,14 @@ find_package(rosconsole_bridge REQUIRED)
 include_directories(${rosconsole_bridge_INCLUDE_DIRS})
 link_directories(${rosconsole_bridge_LIBRARY_DIRS})
 
-find_package(ROS REQUIRED COMPONENTS roscpp rosconsole rostime)
-include_directories(${ROS_INCLUDE_DIRS})
+find_package(catkin REQUIRED COMPONENTS roscpp rosconsole rostime)
+include_directories(${catkin_INCLUDE_DIRS})
+link_directories(${catkin_LIBRARY_DIRS})
+
+find_library(TINYXML tinyxml)
 
 add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
-target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES} ${collada_parser_LIBRARIES} ${rosconsole_bridge_LIBRARIES} ${ROS_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES} ${collada_parser_LIBRARIES} ${rosconsole_bridge_LIBRARIES} ${TINYXML} ${catkin_LIBRARIES})
 
 if(APPLE) 
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 
