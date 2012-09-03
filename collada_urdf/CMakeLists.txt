@@ -3,7 +3,7 @@ project(collada_urdf)
 catkin_project(${PROJECT_NAME} 
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS collada_parser)
+  DEPENDS collada_parser urdf)
 
 include_directories(include)
 
@@ -43,9 +43,11 @@ endif()
 
 find_package(urdf)
 include_directories(${urdf_INCLUDE_DIRS})
+link_directories(${urdf_LIBRARY_DIRS})
 
 find_package(resource_retriever)
 include_directories(${resource_retriever_INCLUDE_DIRS})
+link_directories(${resource_retriever_LIBRARY_DIRS})
 
 find_package(geometry_angles_utils)
 include_directories(${geometry_angles_utils_INCLUDE_DIRS})

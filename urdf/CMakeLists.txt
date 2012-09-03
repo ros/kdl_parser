@@ -3,7 +3,7 @@ project(urdf)
 catkin_project(${PROJECT_NAME} 
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS urdfdom urdfdom_headers collada_parser)
+  DEPENDS urdfdom urdfdom_headers collada_parser roscpp)
 
 include_directories(include)
 
