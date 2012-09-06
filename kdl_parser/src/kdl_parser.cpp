@@ -35,6 +35,7 @@
 /* Author: Wim Meeussen */
 
 #include "kdl_parser/kdl_parser.hpp"
+#include <urdf/model.h>
 #include <kdl/frames_io.hpp>
 #include <ros/console.h>
 
@@ -164,7 +165,7 @@ bool treeFromXml(TiXmlDocument *xml_doc, Tree& tree)
 }
 
 
-bool treeFromUrdfModel(const urdf::Model& robot_model, Tree& tree)
+bool treeFromUrdfModel(const urdf::ModelInterface& robot_model, Tree& tree)
 {
   tree = Tree(robot_model.getRoot()->name);
 

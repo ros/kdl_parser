@@ -34,9 +34,10 @@
 
 /* Author: Wim Meeussen */
 
+#include "kdl_parser/kdl_parser.hpp"
 #include <kdl/chainfksolverpos_recursive.hpp>
 #include <kdl/frames_io.hpp>
-#include "kdl_parser/kdl_parser.hpp"
+#include <urdf/model.h>
 #include <iostream>
 
 using namespace KDL;

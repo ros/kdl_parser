@@ -39,8 +39,8 @@
 
 #include <kdl/tree.hpp>
 #include <string>
-#include <urdf/model.h>
-
+#include <urdf_model/model.h>
+#include <tinyxml.h>
 
 namespace kdl_parser{
 
@@ -77,7 +77,7 @@ bool treeFromXml(TiXmlDocument *xml_doc, KDL::Tree& tree);
  * \param tree The resulting KDL Tree
  * returns true on success, false on failure
  */
-bool treeFromUrdfModel(const urdf::Model& robot_model, KDL::Tree& tree);
+bool treeFromUrdfModel(const urdf::ModelInterface& robot_model, KDL::Tree& tree);
 }
 
 #endif
