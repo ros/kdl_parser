@@ -61,7 +61,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS
 add_executable(urdf_to_collada src/urdf_to_collada.cpp)
 target_link_libraries(urdf_to_collada ${PROJECT_NAME})
 
-add_gtest(test_collada_writer test/test_collada_urdf.cpp)
+catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
 target_link_libraries(test_collada_writer ${PROJECT_NAME})
 
 install(TARGETS ${PROJECT_NAME} urdf_to_collada

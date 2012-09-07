@@ -1,6 +1,6 @@
 <stack>
   <name>robot_model</name>
-  <version>1.9.5</version>
+  <version>1.9.6</version>
   <description brief="Modeling robot information">
     <tt>robot_model</tt> contains packages for modeling various
     aspects of robot information, specified in the Xml Robot

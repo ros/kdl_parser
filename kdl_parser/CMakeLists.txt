@@ -29,7 +29,7 @@ target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${Orocos-KDL_LIBRARIES}
 add_executable(check_kdl_parser src/check_kdl_parser.cpp )
 target_link_libraries(check_kdl_parser ${PROJECT_NAME})
 
-add_gtest(test_kdl_parser test/test_kdl_parser.cpp )
+catkin_add_gtest(test_kdl_parser test/test_kdl_parser.cpp )
 target_link_libraries(test_kdl_parser ${PROJECT_NAME})
 
 # How does CATKIN do this?
@@ -39,7 +39,3 @@ install(TARGETS ${PROJECT_NAME}
 
 install(DIRECTORY include/
   DESTINATION include)
-
-# for compatibility with old build system
-install(FILES manifest.xml
-        DESTINATION share/${PROJECT_NAME})

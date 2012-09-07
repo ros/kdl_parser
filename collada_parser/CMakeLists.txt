@@ -44,7 +44,3 @@ install(TARGETS ${PROJECT_NAME}
 
 install(DIRECTORY include/
   DESTINATION include)
-
-# for compatibility with old build system
-install(FILES manifest.xml
-        DESTINATION share/${PROJECT_NAME})
