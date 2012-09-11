@@ -3,7 +3,7 @@ project(collada_parser)
 catkin_project(${PROJECT_NAME} 
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS Boost urdfdom_headers)
+  DEPENDS urdfdom_headers)
 
 include_directories(include)
 
