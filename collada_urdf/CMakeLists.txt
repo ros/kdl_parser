@@ -49,6 +49,10 @@ find_package(resource_retriever)
 include_directories(${resource_retriever_INCLUDE_DIRS})
 link_directories(${resource_retriever_LIBRARY_DIRS})
 
+find_package(collada_parser)
+include_directories(${collada_parser_INCLUDE_DIRS})
+link_directories(${collada_parser_LIBRARY_DIRS})
+
 find_package(geometry_angles_utils)
 include_directories(${geometry_angles_utils_INCLUDE_DIRS})
 
