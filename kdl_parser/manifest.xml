@@ -17,13 +17,10 @@
   <depend package="urdf" />
   <depend package="roscpp" />
   
-<export>
-  <cpp cflags="-I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lkdl_parser"/>
-
-</export>
-  <platform os="ubuntu" version="9.04"/>
-  <platform os="ubuntu" version="9.10"/>
-  <platform os="ubuntu" version="10.04"/>
+  <export>
+    <cpp cflags="`pkg-config --cflags kdl_parser`" lflags="`pkg-config --libs kdl_parser`"/>
+  </export>
+  
 </package>
 
 

@@ -5,7 +5,7 @@
     The code API of the parser has been through our review process and will remain
     backwards compatible in future releases.
   </description>
-  <author>Wim Meeussen, John Hsu, Rosen Diankov</author>
+  <author>Maintained by Ioan Sucan</author>
   <license>BSD</license>
   <review status="Doc reviewed" notes=""/>
   <url>http://ros.org/wiki/urdf</url>
@@ -17,12 +17,9 @@
   <rosdep name="urdfdom" /> 
 
   <export>
-    <cpp cflags="-I${prefix}/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lurdf"/>
+    <cpp cflags="`pkg-config --cflags urdf`" lflags="`pkg-config --libs urdf`"/>
   </export>
 
-  <platform os="ubuntu" version="9.04"/>
-  <platform os="ubuntu" version="9.10"/>
-  <platform os="ubuntu" version="10.04"/>
 </package>
 
 
