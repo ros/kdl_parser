@@ -13,7 +13,6 @@
   <review status="Doc reviewed" notes=""/>
   <url>http://ros.org/wiki/kdl_parser</url>
 
-  <depend package="kdl" />
   <depend package="urdf" />
   <depend package="roscpp" />
   
