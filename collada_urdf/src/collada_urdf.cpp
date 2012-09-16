@@ -52,7 +52,7 @@
 #include <resource_retriever/retriever.h>
 #include <urdf/model.h>
 #include <urdf_model/pose.h>
-#include <geometry_angles_utils/angles.h>
+#include <angles/angles.h>
 #include <ros/assert.h>
 
 #include <boost/date_time/posix_time/posix_time.hpp>

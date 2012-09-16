@@ -53,12 +53,12 @@ find_package(collada_parser)
 include_directories(${collada_parser_INCLUDE_DIRS})
 link_directories(${collada_parser_LIBRARY_DIRS})
 
-find_package(geometry_angles_utils)
-include_directories(${geometry_angles_utils_INCLUDE_DIRS})
+find_package(catkin REQUIRED angles)
+include_directories(${angles_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} src/collada_urdf.cpp)
 target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${ASSIMP_LIBRARIES} ${collada_parser_LIBRARIES} ${COLLADA_DOM_LIBRARIES} ${urdf_LIBRARIES} 
-  ${resource_retriever_LIBRARIES} ${geometry_angles_utils_LIBRARIES} ${Boost_LIBRARIES})
+  ${resource_retriever_LIBRARIES} ${angles_LIBRARIES} ${Boost_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
 
