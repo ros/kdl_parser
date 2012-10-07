@@ -1,0 +1,60 @@
+<package>
+  <name>robot_model</name>
+  <version>1.9.13</version>
+  <description>
+    <tt>robot_model</tt> contains packages for modeling various
+    aspects of robot information, specified in the Xml Robot
+    Description Format (URDF). The core package of this stack
+    is <a href="http://ros.org/wiki/urdf">urdf</a>, which parses URDF files, and constructs an
+    object model (C++) of the robot.
+  </description>
+
+  <author email="isucan@willowgarage.com">Ioan Sucan</author>
+  <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
+
+  <license>BSD</license>  
+  <license>GPL</license>
+  <license>MIT</license>  
+
+  <copyright>Willow Garage</copyright>
+
+  <url type="website">http://ros.org/wiki/robot_model</url>
+
+  <build_depend>catkin</build_depend>
+  <build_depend>common_msgs</build_depend>
+  <build_depend>orocos_kdl</build_depend> 
+  <build_depend>ros</build_depend>
+  <build_depend>ros_comm</build_depend> 
+  <build_depend>geometry_angles_utils</build_depend> 
+  <build_depend>rosconsole_bridge</build_depend>
+  <build_depend>graphviz</build_depend>
+  <build_depend>geometry</build_depend>
+  <build_depend>curl</build_depend>
+  <build_depend>assimp</build_depend>
+  <build_depend>urdfdom</build_depend>
+  <build_depend>urdfdom_headers</build_depend>
+  <build_depend>collada-dev</build_depend>
+  <build_depend>convex_decomposition</build_depend>
+  <build_depend>ivcon</build_depend>
+
+  <depend>common_msgs</depend>
+  <depend>orocos_kdl</depend> 
+  <depend>ros</depend>
+  <depend>ros_comm</depend> 
+  <depend>geometry_angles_utils</depend> 
+  <depend>rosconsole_bridge</depend>
+  <depend>graphviz</depend>
+  <depend>geometry</depend>
+  <depend>curl</depend>
+  <depend>assimp</depend>
+  <depend>urdfdom</depend>
+  <depend>urdfdom_headers</depend>
+  <depend>collada-dev</depend>
+  <depend>convex_decomposition</depend>
+  <depend>ivcon</depend>
+
+  <export>
+    <metapackage/>
+  </export>
+
+</package>

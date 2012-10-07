@@ -1,7 +1,10 @@
 project(urdf_interface)
 
-catkin_project(${PROJECT_NAME} 
+find_package(catkin REQUIRED COMPONENTS urdfdom)
+
+catkin_package(
   INCLUDE_DIRS include
+  DEPENDS urdfdom
 )
 
 install(DIRECTORY include/

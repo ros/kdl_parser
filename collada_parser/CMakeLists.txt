@@ -1,6 +1,12 @@
+cmake_minimum_required(VERSION 2.8.3)
 project(collada_parser)
 
-catkin_project(${PROJECT_NAME} 
+
+find_package(catkin REQUIRED)
+
+find_package(catkin REQUIRED COMPONENTS urdfdom_headers)
+
+catkin_package( 
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
   DEPENDS urdfdom_headers)
@@ -10,8 +16,7 @@ include_directories(include)
 find_package(Boost REQUIRED system)
 include_directories(${Boost_INCLUDE_DIR})
 
-find_package(urdfdom_headers REQUIRED)
-include_directories(${urdfdom_headers_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
 
 set(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake-extensions/ )
 find_package(PkgConfig)

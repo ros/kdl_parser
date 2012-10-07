@@ -1,9 +1,11 @@
 project(collada_urdf)
 
-catkin_project(${PROJECT_NAME} 
+find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf)
+
+catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS collada_parser urdf)
+  DEPENDS angles collada_parser resource_retriever urdf)
 
 include_directories(include)
 
@@ -41,24 +43,15 @@ if( COLLADA_DOM_FOUND )
   link_directories(${COLLADA_DOM_LIBRARY_DIRS})
 endif()
 
-find_package(urdf)
-include_directories(${urdf_INCLUDE_DIRS})
-link_directories(${urdf_LIBRARY_DIRS})
 
-find_package(resource_retriever)
-include_directories(${resource_retriever_INCLUDE_DIRS})
-link_directories(${resource_retriever_LIBRARY_DIRS})
 
-find_package(collada_parser)
-include_directories(${collada_parser_INCLUDE_DIRS})
-link_directories(${collada_parser_LIBRARY_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
+link_directories(${catkin_LIBRARY_DIRS})
 
-find_package(catkin REQUIRED angles)
-include_directories(${angles_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} src/collada_urdf.cpp)
-target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${ASSIMP_LIBRARIES} ${collada_parser_LIBRARIES} ${COLLADA_DOM_LIBRARIES} ${urdf_LIBRARIES} 
-  ${resource_retriever_LIBRARIES} ${angles_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+  ${Boost_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
 

@@ -1,0 +1,43 @@
+<package>
+  <name>collada_urdf</name>
+  <version>1.9.13</version>
+  <description>
+
+    This package contains a tool to convert Unified Robot Description Format (URDF) documents into COLLAborative Design Activity (COLLADA) documents.
+
+    Implements robot-specific COLLADA extensions as defined by
+    http://openrave.programmingvision.com/index.php/Started:COLLADA
+  </description>
+  <author>Tim Field</author>
+  <author>Rosen Diankov</author>
+  <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/collada_urdf</url>
+
+
+  <build_depend>angles</build_depend> 
+  <build_depend>assimp</build_depend> 
+  <build_depend>resource_retriever</build_depend> 
+  <build_depend>collada_parser</build_depend> 
+  <build_depend>roscpp</build_depend> 
+  <build_depend>urdf</build_depend> 
+
+  <run_depend>angles</run_depend> 
+  <run_depend>assimp</run_depend> 
+  <run_depend>collada_parser</run_depend> 
+  <run_depend>resource_retriever</run_depend> 
+  <run_depend>roscpp</run_depend> 
+  <run_depend>urdf</run_depend> 
+
+<!--
+  <depend package="roscpp" />
+  <depend package="urdf" />
+  <depend package="resource_retriever" />
+  <depend package="angles" />
+  <depend package="common_rosdeps" />
+
+  <rosdep name="assimp"/>
+-->
+  <export>
+  </export>
+
+</package>

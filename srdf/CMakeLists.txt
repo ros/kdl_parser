@@ -1,6 +1,6 @@
 project(srdf)
 
-catkin_project(${PROJECT_NAME} 
+catkin_package(
   INCLUDE_DIRS include
 )
 

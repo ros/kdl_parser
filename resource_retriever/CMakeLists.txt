@@ -1,6 +1,8 @@
 project(resource_retriever)
 
-catkin_project(${PROJECT_NAME} 
+find_package(catkin REQUIRED COMPONENTS rosconsole roslib)
+
+catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include)
 

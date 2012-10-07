@@ -1,28 +1,18 @@
 project(urdf)
 
-catkin_project(${PROJECT_NAME} 
+find_package(catkin REQUIRED COMPONENTS urdfdom urdfdom_headers collada_parser rosconsole_bridge roscpp)
+
+catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS urdfdom urdfdom_headers collada_parser roscpp)
+  DEPENDS urdfdom urdfdom_headers collada_parser rosconsole_bridge roscpp)
 
 include_directories(include)
 
-find_package(urdfdom_headers REQUIRED)
-include_directories(${urdfdom_headers_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
+link_directories(${catkin_LIBRARY_DIRS})
 
-find_package(urdfdom REQUIRED)
-include_directories(${urdfdom_INCLUDE_DIRS})
-link_directories(${urdfdom_LIBRARY_DIRS})
-
-find_package(collada_parser REQUIRED)
-include_directories(${collada_parser_INCLUDE_DIRS})
-link_directories(${collada_parser_LIBRARY_DIRS})
-
-find_package(rosconsole_bridge REQUIRED)
-include_directories(${rosconsole_bridge_INCLUDE_DIRS})
-link_directories(${rosconsole_bridge_LIBRARY_DIRS})
-
-find_package(catkin REQUIRED COMPONENTS roscpp rosconsole rostime)
+find_package(catkin REQUIRED COMPONENTS roscpp rosconsole_bridge rostime)
 include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
