@@ -14,11 +14,11 @@
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/collada_parser</url>
   
-  <build_depend>colladadom</build_depend> 
+  <build_depend>collada-dom</build_depend> 
   <build_depend>roscpp</build_depend> 
   <build_depend>urdfdom_headers</build_depend> 
   
-  <depend>colladadom</depend> 
+  <depend>collada-dom</depend> 
   <depend>roscpp</depend> 
   <depend>urdfdom_headers</depend> 
   
