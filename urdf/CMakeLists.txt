@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8.3)
 project(urdf)
 
 find_package(catkin REQUIRED COMPONENTS urdfdom urdfdom_headers collada_parser rosconsole_bridge roscpp)
