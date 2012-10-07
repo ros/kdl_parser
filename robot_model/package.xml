@@ -33,7 +33,7 @@
   <build_depend>assimp</build_depend>
   <build_depend>urdfdom</build_depend>
   <build_depend>urdfdom_headers</build_depend>
-  <build_depend>collada-dev</build_depend>
+  <build_depend>collada-dom</build_depend>
   <build_depend>convex_decomposition</build_depend>
   <build_depend>ivcon</build_depend>
 
@@ -49,7 +49,7 @@
   <depend>assimp</depend>
   <depend>urdfdom</depend>
   <depend>urdfdom_headers</depend>
-  <depend>collada-dev</depend>
+  <depend>collada-dom</depend>
   <depend>convex_decomposition</depend>
   <depend>ivcon</depend>
 
