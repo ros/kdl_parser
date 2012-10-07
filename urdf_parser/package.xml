@@ -1,6 +1,6 @@
 <package>
   <name>urdf_parser</name>
-  <version>1.9.13</version>
+  <version>1.9.14</version>
 
   <description>
     This package is DEPRECATED. Please use the urdfdom dependency directly instead of this package.
