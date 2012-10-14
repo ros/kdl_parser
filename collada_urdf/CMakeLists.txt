@@ -68,7 +68,3 @@ install(TARGETS ${PROJECT_NAME} urdf_to_collada
 
 install(DIRECTORY include/
   DESTINATION include)
-
-# for compatibility with old build system
-install(FILES manifest.xml
-        DESTINATION share/${PROJECT_NAME})
