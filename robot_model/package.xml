@@ -31,27 +31,29 @@
   <build_depend>geometry</build_depend>
   <build_depend>curl</build_depend>
   <build_depend>assimp</build_depend>
+  <build_depend>urdf_interface</build_depend>
   <build_depend>urdfdom</build_depend>
   <build_depend>urdfdom_headers</build_depend>
   <build_depend>collada-dom</build_depend>
   <build_depend>convex_decomposition</build_depend>
   <build_depend>ivcon</build_depend>
-
-  <depend>common_msgs</depend>
-  <depend>orocos_kdl</depend> 
-  <depend>ros</depend>
-  <depend>ros_comm</depend> 
-  <depend>angles</depend> 
-  <depend>rosconsole_bridge</depend>
-  <depend>graphviz</depend>
-  <depend>geometry</depend>
-  <depend>curl</depend>
-  <depend>assimp</depend>
-  <depend>urdfdom</depend>
-  <depend>urdfdom_headers</depend>
-  <depend>collada-dom</depend>
-  <depend>convex_decomposition</depend>
-  <depend>ivcon</depend>
+  
+  <run_depend>common_msgs</run_depend>
+  <run_depend>orocos_kdl</run_depend> 
+  <run_depend>ros</run_depend>
+  <run_depend>ros_comm</run_depend> 
+  <run_depend>angles</run_depend> 
+  <run_depend>rosconsole_bridge</run_depend>
+  <run_depend>graphviz</run_depend>
+  <run_depend>geometry</run_depend>
+  <run_depend>curl</run_depend>
+  <run_depend>assimp</run_depend>
+  <run_depend>urdf_interface</run_depend>
+  <run_depend>urdfdom</run_depend>
+  <run_depend>urdfdom_headers</run_depend>
+  <run_depend>collada-dom</run_depend>
+  <run_depend>convex_decomposition</run_depend>
+  <run_depend>ivcon</run_depend>
 
   <export>
     <metapackage/>
