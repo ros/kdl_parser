@@ -1,6 +1,6 @@
 <package>
   <name>resource_retriever</name>
-  <version>1.9.20</version>
+  <version>1.9.21</version>
   <description>
 
    This package retrieves data from url-format files such as http://,
