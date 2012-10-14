@@ -18,14 +18,10 @@
   <build_depend>roscpp</build_depend> 
   <build_depend>urdfdom_headers</build_depend> 
   
-  <depend>collada-dom</depend> 
-  <depend>roscpp</depend> 
-  <depend>urdfdom_headers</depend> 
+  <run_depend>collada-dom</run_depend> 
+  <run_depend>roscpp</run_depend> 
+  <run_depend>urdfdom_headers</run_depend> 
   
-  <!--  <depend package="roscpp"/>
-  <rosdep name="urdfdom_headers"/>
-  <rosdep name="colladadom"/>
-  -->
   <export>
   </export>
   
