@@ -1,6 +1,6 @@
 <package>
   <name>kdl_parser</name>
-  <version>1.9.23</version>
+  <version>1.9.24</version>
 
   <description brief="Package to parse urdf in to kdl tree">
 
