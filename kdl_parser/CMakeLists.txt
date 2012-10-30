@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 
 project(kdl_parser)
 
-find_package(catkin REQUIRED COMPONENTS collada_parser roscpp rosconsole urdf)
+find_package(catkin REQUIRED COMPONENTS collada_parser orocos_kdl roscpp rosconsole urdf)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
