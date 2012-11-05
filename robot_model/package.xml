@@ -1,6 +1,6 @@
 <package>
   <name>robot_model</name>
-  <version>1.9.25</version>
+  <version>1.9.26</version>
   <description>
     <tt>robot_model</tt> contains packages for modeling various
     aspects of robot information, specified in the Xml Robot
@@ -9,14 +9,12 @@
     object model (C++) of the robot.
   </description>
 
-  <author email="isucan@willowgarage.com">Ioan Sucan</author>
+  <author email="isucan@willowgarage.com">Maintained by Ioan Sucan</author>
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
 
   <license>BSD</license>  
   <license>GPL</license>
   <license>MIT</license>  
-
-  <copyright>Willow Garage</copyright>
 
   <url type="website">http://ros.org/wiki/robot_model</url>
 

@@ -14,7 +14,7 @@ find_package(Boost REQUIRED COMPONENTS system)
 include_directories(${Boost_INCLUDE_DIR})
 
 find_package(assimp QUIET)
-if( NOT assimp_FOUND )
+if ( NOT assimp_FOUND )
   find_package(PkgConfig REQUIRED)
   pkg_check_modules(ASSIMP assimp)
 endif()
@@ -26,7 +26,7 @@ if( ASSIMP_FOUND )
   include_directories(${ASSIMP_INCLUDE_DIRS})
   link_directories(${ASSIMP_LIBRARY_DIRS})
 else()
-  message(STATUS "could not find assimp (perhaps available thorugh ROS package?), so assimping assimp v2")
+  message(STATUS "could not find assimp (perhaps available thorugh ROS package?), so assuming assimp v2")
   set(ASSIMP_LIBRARIES assimp)
   set(ASSIMP_LIBRARY_DIRS)
   set(ASSIMP_CXX_FLAGS)
@@ -63,8 +63,8 @@ catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
 target_link_libraries(test_collada_writer ${PROJECT_NAME})
 
 install(TARGETS ${PROJECT_NAME} urdf_to_collada
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY include/
-  DESTINATION include)
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})

@@ -35,7 +35,7 @@ target_link_libraries(test_kdl_parser ${PROJECT_NAME})
 # How does CATKIN do this?
 #rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_kdl_parser.launch)
 install(TARGETS ${PROJECT_NAME} 
-  DESTINATION lib)
+  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
 install(DIRECTORY include/
-  DESTINATION include)
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})

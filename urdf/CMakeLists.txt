@@ -39,8 +39,8 @@ target_link_libraries(test_parser ${PROJECT_NAME})
 # rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_robot_model_parser.launch)
 
 install(TARGETS ${PROJECT_NAME} check_urdf urdf_to_graphiz
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY include/
-  DESTINATION include)
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})

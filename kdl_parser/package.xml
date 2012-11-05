@@ -1,8 +1,8 @@
 <package>
   <name>kdl_parser</name>
-  <version>1.9.25</version>
+  <version>1.9.26</version>
 
-  <description brief="Package to parse urdf in to kdl tree">
+  <description>
 
    The Kinematics and Dynamics Library (KDL) defines a tree structure
    to represent the kinematic and dynamic parameters of a robot
