@@ -1,6 +1,6 @@
 <package>
   <name>robot_model</name>
-  <version>1.9.27</version>
+  <version>1.9.28</version>
   <description>
     <tt>robot_model</tt> contains packages for modeling various
     aspects of robot information, specified in the Xml Robot
@@ -68,6 +68,8 @@
   <run_depend>urdfdom</run_depend>
   <run_depend>urdfdom_headers</run_depend>
 
+  <!-- Add this dep for backward compatibility -->
+  <run_depend>robot_state_publisher</run_depend> 
 
   <export>
     <metapackage/>
