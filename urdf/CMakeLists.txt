@@ -26,19 +26,13 @@ if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 
 endif(APPLE)
 
-add_executable(check_urdf src/check_urdf.cpp)
-target_link_libraries(check_urdf ${PROJECT_NAME})
-
-add_executable(urdf_to_graphiz src/urdf_to_graphiz.cpp)
-target_link_libraries(urdf_to_graphiz ${PROJECT_NAME})
-
 catkin_add_gtest(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
 target_link_libraries(test_parser ${PROJECT_NAME})
 
 # no idea how CATKIN does this
 # rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_robot_model_parser.launch)
 
-install(TARGETS ${PROJECT_NAME} check_urdf urdf_to_graphiz
+install(TARGETS ${PROJECT_NAME} 
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
