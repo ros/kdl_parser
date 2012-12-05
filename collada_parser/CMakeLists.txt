@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS urdfdom_headers)
 catkin_package( 
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS urdfdom_headers)
+  CATKIN_DEPENDS urdfdom_headers)
 
 include_directories(include)
 

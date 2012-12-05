@@ -7,7 +7,7 @@ find_package(catkin REQUIRED COMPONENTS collada_parser orocos_kdl roscpp roscons
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  DEPENDS collada_parser roscpp rosconsole urdf)
+  CATKIN_DEPENDS collada_parser roscpp rosconsole urdf)
 
 include_directories(include)
 
