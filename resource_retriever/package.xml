@@ -16,24 +16,14 @@
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/resource_retriever</url>
 
-  <build_depend>catkin</build_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+
   <build_depend>curl</build_depend>
   <build_depend>rosconsole</build_depend> 
   <build_depend>roslib</build_depend> 
 
-
-  <run_depend>catkin</run_depend>
   <run_depend>curl</run_depend>
   <run_depend>rosconsole</run_depend> 
   <run_depend>roslib</run_depend> 
-
-<!--
-  <depend package="roslib"/>
-  <depend package="rosconsole"/>
-  <rosdep name="curl"/>
--->
-  <export>
-  </export>
-
 
 </package>

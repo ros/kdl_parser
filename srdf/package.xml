@@ -13,21 +13,12 @@
 
   <url type="website">http://ros.org/wiki/srdf</url>
 
+  <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>catkin</build_depend>
   <build_depend>srdfdom</build_depend>
   <build_depend>tinyxml</build_depend>
 
-
-  <run_depend>catkin</run_depend>
   <run_depend>srdfdom</run_depend>
   <run_depend>tinyxml</run_depend>
-
-<!--
-  <rosdep name="tinyxml" />
-  <rosdep name="srdfdom" />
--->
-  <export>
-  </export>
 
 </package>

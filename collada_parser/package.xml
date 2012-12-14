@@ -13,6 +13,8 @@
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/collada_parser</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
   
   <build_depend>collada-dom</build_depend> 
   <build_depend>roscpp</build_depend> 

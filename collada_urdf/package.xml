@@ -13,6 +13,7 @@
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>  <license>BSD</license>
   <url type="website">http://ros.org/wiki/collada_urdf</url>
 
+  <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>angles</build_depend> 
   <build_depend>assimp</build_depend> 
@@ -29,17 +30,5 @@
   <run_depend>resource_retriever</run_depend> 
   <run_depend>roscpp</run_depend> 
   <run_depend>urdf</run_depend> 
-
-<!--
-  <depend package="roscpp" />
-  <depend package="urdf" />
-  <depend package="resource_retriever" />
-  <depend package="angles" />
-  <depend package="common_rosdeps" />
-
-  <rosdep name="assimp"/>
--->
-  <export>
-  </export>
 
 </package>

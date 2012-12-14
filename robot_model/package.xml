@@ -18,7 +18,7 @@
 
   <url type="website">http://ros.org/wiki/robot_model</url>
 
-  <build_depend>catkin</build_depend>
+  <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>angles</build_depend> 
   <build_depend>assimp</build_depend>

@@ -20,15 +20,10 @@
 
   <url type="website">http://ros.org/wiki/urdf_parser</url>
 
+  <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>catkin</build_depend>
   <build_depend>urdfdom</build_depend>
 
-  <run_depend>catkin</run_depend>
   <run_depend>urdfdom</run_depend>
-  <!--rosdep name="urdfdom" /-->
-
-  <export>  
-  </export>
 
 </package>
