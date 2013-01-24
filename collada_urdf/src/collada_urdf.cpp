@@ -83,6 +83,8 @@
 
 using namespace std;
 
+namespace ColladaDOM150 { }
+
 namespace collada_urdf {
 
 using namespace ColladaDOM150;

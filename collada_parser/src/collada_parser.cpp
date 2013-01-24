@@ -70,6 +70,8 @@
 #define FOREACH(it, v) for(typeof((v).begin())it = (v).begin(); it != (v).end(); (it)++)
 #define FOREACHC FOREACH
 
+namespace ColladaDOM150 { }
+
 namespace urdf {
 
 using namespace ColladaDOM150;
