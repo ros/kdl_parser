@@ -50,40 +50,12 @@ public:
     ColladaUrdfException(std::string const& what);
 };
 
-/** Construct a COLLADA DOM from an URDF file
- * \param file The filename from where to read the URDF
- * \param dom The resulting COLLADA DOM
- * \return true on success, false on failure
- */
-bool colladaFromUrdfFile(std::string const& file, boost::shared_ptr<DAE>& dom);
-
-/** Construct a COLLADA DOM from a string containing URDF
- * \param xml A string containing the XML description of the robot
- * \param dom The resulting COLLADA DOM
- * \return true on success, false on failure
- */
-bool colladaFromUrdfString(std::string const& xml, boost::shared_ptr<DAE>& dom);
-
-/** Construct a COLLADA DOM from a TiXmlDocument containing URDF
- * \param xml_doc The TiXmlDocument containing URDF
- * \param dom The resulting COLLADA DOM
- * \return true on success, false on failure
- */
-bool colladaFromUrdfXml(TiXmlDocument* xml_doc, boost::shared_ptr<DAE>& dom);
-
-/** Construct a COLLADA DOM from a URDF robot model
- * \param robot_model The URDF robot model
- * \param dom The resulting COLLADA DOM
- * \return true on success, false on failure
- */
-bool colladaFromUrdfModel(urdf::Model const& robot_model, boost::shared_ptr<DAE>& dom);
-
 /** Write a COLLADA DOM to a file
- * \param dom COLLADA DOM to write
+ * \param robot_model The URDF robot model
  * \param file The filename to write the document to
  * \return true on success, false on failure
  */
-bool colladaToFile(boost::shared_ptr<DAE> dom, std::string const& file);
+bool WriteUrdfModelToColladaFile(urdf::Model const& robot_model, std::string const& file);
 
 }
 

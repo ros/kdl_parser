@@ -595,24 +595,24 @@ private:
 public:
     ColladaWriter(const urdf::Model& robot, int writeoptions) : _writeoptions(writeoptions), _robot(robot), _dom(NULL) {
         daeErrorHandler::setErrorHandler(this);
-        _collada.reset(new DAE);
-        _collada->setIOPlugin(NULL);
-        _collada->setDatabase(NULL);
         _importer.SetIOHandler(new ResourceIOSystem());
     }
     virtual ~ColladaWriter() {
     }
 
-    boost::shared_ptr<DAE> convert()
+    daeDocument* doc() {
+        return _doc;
+    }
+
+    bool convert()
     {
         try {
             const char* documentName = "urdf_snapshot";
-            daeDocument *doc = NULL;
-            daeInt error = _collada->getDatabase()->insertDocument(documentName, &doc ); // also creates a collada root
-            if (error != DAE_OK || doc == NULL) {
+            daeInt error = _collada.getDatabase()->insertDocument(documentName, &_doc ); // also creates a collada root
+            if (error != DAE_OK || _doc == NULL) {
                 throw ColladaUrdfException("Failed to create document");
             }
-            _dom = daeSafeCast<domCOLLADA>(doc->getDomRoot());
+            _dom = daeSafeCast<domCOLLADA>(_doc->getDomRoot());
             _dom->setAttribute("xmlns:math","http://www.w3.org/1998/Math/MathML");
 
             //create the required asset tag
@@ -674,12 +674,22 @@ public:
             _WritePhysics();
             _WriteRobot();
             _WriteBindingsInstance_kinematics_scene();
-            return _collada;
+            return true;
         }
         catch (ColladaUrdfException ex) {
             ROS_ERROR("Error converting: %s", ex.what());
-            return boost::shared_ptr<DAE>();
+            return false;
         }
+    }
+
+    bool writeTo(string const& file) {
+        try {
+            daeString uri = _doc->getDocumentURI()->getURI();
+            _collada.writeTo(uri, file);
+        } catch (ColladaUrdfException ex) {
+            return false;
+        }
+        return true;
     }
 
 protected:
@@ -1764,8 +1774,9 @@ private:
     int _writeoptions;
 
     const urdf::Model& _robot;
-    boost::shared_ptr<DAE> _collada;
+    DAE _collada;
     domCOLLADA* _dom;
+    daeDocument *_doc;
     domCOLLADA::domSceneRef _globalscene;
 
     domLibrary_visual_scenesRef _visualScenesLib;
@@ -1794,45 +1805,13 @@ ColladaUrdfException::ColladaUrdfException(std::string const& what)
 {
 }
 
-bool colladaFromUrdfFile(string const& file, boost::shared_ptr<DAE>& dom) {
-    TiXmlDocument urdf_xml;
-    if (!urdf_xml.LoadFile(file)) {
-        ROS_ERROR("Could not load XML file");
-        return false;
-    }
-
-    return colladaFromUrdfXml(&urdf_xml, dom);
-}
-
-bool colladaFromUrdfString(string const& xml, boost::shared_ptr<DAE>& dom) {
-    TiXmlDocument urdf_xml;
-    if (urdf_xml.Parse(xml.c_str()) == 0) {
-        ROS_ERROR("Could not parse XML document");
-        return false;
-    }
-
-    return colladaFromUrdfXml(&urdf_xml, dom);
-}
-
-bool colladaFromUrdfXml(TiXmlDocument* xml_doc, boost::shared_ptr<DAE>& dom) {
-    urdf::Model robot_model;
-    if (!robot_model.initXml(xml_doc)) {
-        ROS_ERROR("Could not generate robot model");
-        return false;
-    }
-
-    return colladaFromUrdfModel(robot_model, dom);
-}
-
-bool colladaFromUrdfModel(urdf::Model const& robot_model, boost::shared_ptr<DAE>& dom) {
+bool WriteUrdfModelToColladaFile(urdf::Model const& robot_model, string const& file) {
     ColladaWriter writer(robot_model,0);
-    dom = writer.convert();
-    return dom != boost::shared_ptr<DAE>();
-}
-
-bool colladaToFile(boost::shared_ptr<DAE> dom, string const& file) {
-    daeString uri = dom->getDoc(0)->getDocumentURI()->getURI();
-    return dom->writeTo(uri, file);
+    if ( ! writer.convert() ) {
+        std::cerr << std::endl << "Error converting document" << std::endl;
+        return -1;
+    }
+    return writer.writeTo(file);
 }
 
 }
