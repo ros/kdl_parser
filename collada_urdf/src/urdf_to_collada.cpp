@@ -54,13 +54,7 @@ int main(int argc, char** argv)
         ROS_ERROR("failed to open urdf file %s",input_filename.c_str());
     }
 
-    boost::shared_ptr<DAE> dom;
-    if (!collada_urdf::colladaFromUrdfModel(robot_model, dom)) {
-        std::cerr << std::endl << "Error converting document" << std::endl;
-        return -1;
-    }
-
-    collada_urdf::colladaToFile(dom, output_filename);
+    collada_urdf::WriteUrdfModelToColladaFile(robot_model, output_filename);
     std::cout << std::endl << "Document successfully written to " << output_filename << std::endl;
 
     return 0;
