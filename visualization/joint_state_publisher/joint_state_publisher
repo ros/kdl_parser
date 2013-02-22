@@ -27,6 +27,7 @@ class JointStatePublisher():
         self.joint_list = [] # for maintaining the original order of the joints
         self.dependent_joints = get_param("dependent_joints", {})
         use_mimic = get_param('use_mimic_tags', True)
+        use_small = get_param('use_smallest_joint_limits', True)
         
         pub_def_positions = get_param("publish_default_positions", True)
         pub_def_vels = get_param("publish_default_velocities", False)
@@ -49,6 +50,14 @@ class JointStatePublisher():
                     limit = child.getElementsByTagName('limit')[0]
                     minval = float(limit.getAttribute('lower'))
                     maxval = float(limit.getAttribute('upper'))
+                    
+                safety_tags = child.getElementsByTagName('safety_controller')
+                if use_small and len(safety_tags)==1:
+                    tag = safety_tags[0]
+                    if tag.hasAttribute('soft_lower_limit'):
+                        minval = max(minval, float(tag.getAttribute('soft_lower_limit')))
+                    if tag.hasAttribute('soft_upper_limit'):
+                        maxval = min(maxval, float(tag.getAttribute('soft_upper_limit')))
                     
                 mimic_tags = child.getElementsByTagName('mimic')
                 if use_mimic and len(mimic_tags)==1:
