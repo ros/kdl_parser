@@ -26,7 +26,13 @@ class JointStatePublisher():
         self.free_joints = {}
         self.joint_list = [] # for maintaining the original order of the joints
         self.dependent_joints = get_param("dependent_joints", {})
+        use_mimic = get_param('use_mimic_tags', True)
+        use_small = get_param('use_smallest_joint_limits', True)
         
+        pub_def_positions = get_param("publish_default_positions", True)
+        pub_def_vels = get_param("publish_default_velocities", False)
+        pub_def_efforts = get_param("publish_default_efforts", False)
+
         # Find all non-fixed joints
         for child in robot.childNodes:
             if child.nodeType is child.TEXT_NODE:
@@ -36,6 +42,7 @@ class JointStatePublisher():
                 if jtype == 'fixed':
                     continue
                 name = child.getAttribute('name')
+                self.joint_list.append(name)
                 if jtype == 'continuous':
                     minval = -pi
                     maxval = pi
@@ -43,6 +50,26 @@ class JointStatePublisher():
                     limit = child.getElementsByTagName('limit')[0]
                     minval = float(limit.getAttribute('lower'))
                     maxval = float(limit.getAttribute('upper'))
+                    
+                safety_tags = child.getElementsByTagName('safety_controller')
+                if use_small and len(safety_tags)==1:
+                    tag = safety_tags[0]
+                    if tag.hasAttribute('soft_lower_limit'):
+                        minval = max(minval, float(tag.getAttribute('soft_lower_limit')))
+                    if tag.hasAttribute('soft_upper_limit'):
+                        maxval = min(maxval, float(tag.getAttribute('soft_upper_limit')))
+                    
+                mimic_tags = child.getElementsByTagName('mimic')
+                if use_mimic and len(mimic_tags)==1:
+                    tag = mimic_tags[0]
+                    entry = {'parent': tag.getAttribute('joint')}
+                    if tag.hasAttribute('multiplier'):
+                        entry['factor'] = float(tag.getAttribute('multiplier'))
+                    if tag.hasAttribute('offset'):
+                        entry['offset'] = float(tag.getAttribute('offset'))
+
+                    self.dependent_joints[name] = entry
+                    continue
 
                 if name in self.dependent_joints:
                     continue
@@ -51,17 +78,25 @@ class JointStatePublisher():
                 else:
                     zeroval = 0
 
-                joint = {'min':minval, 'max':maxval, 'zero':zeroval, 'value':zeroval }
+                joint = {'min':minval, 'max':maxval, 'zero':zeroval}
+                if pub_def_positions:
+                    joint['position'] = zeroval
+                if pub_def_vels:
+                    joint['velocity'] = 0.0
+                if pub_def_efforts:
+                    joint['effort'] = 0.0
+                    
+                if jtype == 'continuous':
+                    joint['continuous'] = True
                 self.free_joints[name] = joint
-                self.joint_list.append(name)
+                
 
         use_gui = get_param("use_gui", False)
 
         if use_gui:
-            app = wx.App()
+            self.app = wx.App()
             self.gui = JointStatePublisherGui("Joint State Publisher", self)
             self.gui.Show()
-            Thread(target=app.MainLoop).start()
         else:
             self.gui = None
 
@@ -75,10 +110,30 @@ class JointStatePublisher():
     def source_cb(self, msg):
         for i in range(len(msg.name)):
             name = msg.name[i]
-            position = msg.position[i]
-            if name in self.free_joints:
-                joint = self.free_joints[name]
-                joint['value'] = position
+            if name not in self.free_joints:
+                continue
+
+            if msg.position:
+                position = msg.position[i]
+            else:
+                position = None
+            if msg.velocity:
+                velocity = msg.velocity[i]
+            else:
+                velocity = None
+            if msg.effort:
+                effort = msg.effort[i]
+            else:
+                effort = None
+
+            joint = self.free_joints[name]
+            if position is not None:
+                joint['position'] = position
+            if velocity is not None:
+                joint['velocity'] = velocity
+            if effort is not None:
+                joint['effort'] = effort
+
         if self.gui is not None:
             self.gui.update_sliders()
         
@@ -87,28 +142,80 @@ class JointStatePublisher():
         hz = get_param("rate", 10) # 10hz
         r = rospy.Rate(hz) 
 
+        delta = get_param("delta", 0.0)
+
         # Publish Joint States
         while not rospy.is_shutdown():
             msg = JointState()
             msg.header.stamp = rospy.Time.now()
 
-            # Add Free Joints
+            if delta > 0:
+                self.update(delta)
+
+            # Initialize msg.position, msg.velocity, and msg.effort.
+            has_position = len(self.dependent_joints.items()) > 0
+            has_velocity = False
+            has_effort = False
             for (name,joint) in self.free_joints.items():
-                msg.name.append(str(name))
-                msg.position.append(joint['value'])
+                if not has_position and 'position' in joint:
+                    has_position = True
+                if not has_velocity and 'velocity' in joint:
+                    has_velocity = True
+                if not has_effort and 'effort' in joint:
+                    has_effort = True
+            num_joints = (len(self.free_joints.items()) +
+                          len(self.dependent_joints.items()))
+            if has_position:
+                msg.position = num_joints * [0.0]
+            if has_velocity:
+                msg.velocity = num_joints * [0.0]
+            if has_effort:
+                msg.effort = num_joints * [0.0]
 
-            # Add Dependent Joints
-            for (name,param) in self.dependent_joints.items():
-                parent = param['parent']
-                baseval = self.free_joints[parent]['value']
-                value = baseval * param.get('factor', 1)
-
+            
+            for i, name in enumerate(self.joint_list):
                 msg.name.append(str(name))
-                msg.position.append(value)
+                joint = None
+
+                # Add Free Joint
+                if name in self.free_joints:
+                    joint = self.free_joints[name]
+                    factor = 1
+                    offset = 0
+                # Add Dependent Joint
+                elif name in self.dependent_joints:
+                    param = self.dependent_joints[name]
+                    parent = param['parent']
+                    joint = self.free_joints[parent]
+                    factor = param.get('factor', 1)
+                    offset = param.get('offset', 0)
+                
+                if has_position and 'position' in joint:
+                    msg.position[i] = joint['position'] * factor + offset
+                if has_velocity and 'velocity' in joint:
+                    msg.velocity[i] = joint['velocity'] * factor
+                if has_effort and 'effort' in joint:
+                    msg.effort[i] = joint['effort']
 
             self.pub.publish(msg)
-
             r.sleep()
+
+    def update(self, delta):
+        for name, joint in self.free_joints.iteritems():
+            forward = joint.get('forward', True)
+            if forward:
+                joint['position'] += delta
+                if joint['position'] > joint['max']:
+                    if joint.get('continuous', False):
+                        joint['position'] = joint['min']
+                    else:
+                        joint['position'] = joint['max']
+                        joint['forward'] = not forward
+            else:
+                joint['position'] -= delta
+                if joint['position'] < joint['min']:
+                    joint['position'] = joint['min']
+                    joint['forward'] = not forward
 
 class JointStatePublisherGui(wx.Frame):
     def __init__(self, title, jsp):
@@ -121,6 +228,8 @@ class JointStatePublisherGui(wx.Frame):
         
         ### Sliders ###
         for name in self.jsp.joint_list:
+            if name not in self.jsp.free_joints:
+                continue
             joint = self.jsp.free_joints[name]
 
             if joint['min'] == joint['max']:
@@ -163,15 +272,16 @@ class JointStatePublisherGui(wx.Frame):
             purevalue = joint_info['slidervalue']
             joint = joint_info['joint']
             value = self.sliderToValue(purevalue, joint)
-            joint['value'] = value
+            joint['position'] = value
         self.update_sliders()
 
     def update_sliders(self):
         for (name,joint_info) in self.joint_map.items():
             joint = joint_info['joint']
-            joint_info['slidervalue'] = self.valueToSlider(joint['value'], joint)
+            joint_info['slidervalue'] = self.valueToSlider(joint['position'],
+                                                           joint)
             joint_info['slider'].SetValue(joint_info['slidervalue'])
-            joint_info['display'].SetValue("%.2f"%joint['value'])
+            joint_info['display'].SetValue("%.2f"%joint['position'])
 
     def center_event(self, event):
         self.center()
@@ -200,7 +310,12 @@ if __name__ == '__main__':
     try:
         rospy.init_node('joint_state_publisher')
         jsp = JointStatePublisher()
-        jsp.loop()
+
+        if jsp.gui is None:
+            jsp.loop()
+        else:
+            Thread(target=jsp.loop).start()
+            jsp.app.MainLoop()
         
     except rospy.ROSInterruptException: pass
 
