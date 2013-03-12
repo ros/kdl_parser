@@ -10,7 +10,8 @@
   </description>
   <author>Tim Field</author>
   <author>Rosen Diankov</author>
-  <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>  <license>BSD</license>
+  <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
+  <license>BSD</license>
   <url type="website">http://ros.org/wiki/collada_urdf</url>
 
   <buildtool_depend>catkin</buildtool_depend>

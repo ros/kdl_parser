@@ -13,8 +13,6 @@
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
 
   <license>BSD</license>  
-  <license>GPL</license>
-  <license>MIT</license>  
 
   <url type="website">http://ros.org/wiki/robot_model</url>
 
@@ -37,13 +35,12 @@
   <build_depend>ros</build_depend>
   <build_depend>ros_comm</build_depend> 
   <build_depend>rosconsole_bridge</build_depend>
-  <build_depend>srdf</build_depend>
   <build_depend>urdf</build_depend>
-  <build_depend>urdf_interface</build_depend>
   <build_depend>urdf_parser</build_depend>
   <build_depend>urdfdom</build_depend>
   <build_depend>urdfdom_headers</build_depend>
-  
+  <build_depend>joint_state_publisher</build_depend>
+
   <run_depend>angles</run_depend> 
   <run_depend>assimp</run_depend>
   <run_depend>collada-dom</run_depend>
@@ -61,12 +58,11 @@
   <run_depend>ros</run_depend>
   <run_depend>ros_comm</run_depend> 
   <run_depend>rosconsole_bridge</run_depend>
-  <run_depend>srdf</run_depend>
   <run_depend>urdf</run_depend>
-  <run_depend>urdf_interface</run_depend>
   <run_depend>urdf_parser</run_depend>
   <run_depend>urdfdom</run_depend>
   <run_depend>urdfdom_headers</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
 
   <!-- Add this dep for backward compatibility -->
   <run_depend>robot_state_publisher</run_depend> 
