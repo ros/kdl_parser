@@ -681,7 +681,12 @@ protected:
 
         ROS_DEBUG_STREAM(str(boost::format("Number of root links in the kmodel %d\n")%ktec->getLink_array().getCount()));
         for (size_t ilink = 0; ilink < ktec->getLink_array().getCount(); ++ilink) {
-            _ExtractLink(ktec->getLink_array()[ilink], ilink == 0 ? pnode : domNodeRef(), Pose(), Pose(), vdomjoints, bindings);
+            domLinkRef pdomlink = ktec->getLink_array()[ilink];
+            _RootOrigin  = _poseFromMatrix(_ExtractFullTransform(pdomlink));
+            ROS_DEBUG("RootOrigin: %lf %lf %lf %lf %lf %lf %lf",
+                      _RootOrigin.position.x,  _RootOrigin.position.y, _RootOrigin.position.z,
+                      _RootOrigin.rotation.x, _RootOrigin.rotation.y, _RootOrigin.rotation.z, _RootOrigin.rotation.w);
+            _ExtractLink(pdomlink, ilink == 0 ? pnode : domNodeRef(), Pose(), Pose(), vdomjoints, bindings);
         }
 
         //  TODO: implement mathml
@@ -849,7 +854,11 @@ protected:
                 if ( !plink->inertial ) {
                     plink->inertial.reset(new Inertial());
                 }
-                plink->inertial->origin = _poseMult(_poseInverse(tParentWorldLink), _poseFromMatrix(_ExtractFullTransform(rigiddata->getMass_frame())));
+                //plink->inertial->origin = _poseMult(_poseInverse(tParentWorldLink), _poseFromMatrix(_ExtractFullTransform(rigiddata->getMass_frame())));
+                Pose tlink = _poseFromMatrix(_ExtractFullTransform(pdomlink));
+                plink->inertial->origin = _poseMult(_poseInverse(_poseMult(_poseInverse(_RootOrigin),
+                                                                           _poseMult(tParentWorldLink, tlink))),
+                                                    _poseFromMatrix(_ExtractFullTransform(rigiddata->getMass_frame())));
             }
         }
 
@@ -862,6 +871,10 @@ protected:
         else {
             ROS_DEBUG_STREAM(str(boost::format("Attachment link elements: %d\n")%pdomlink->getAttachment_full_array().getCount()));
             Pose tlink = _poseFromMatrix(_ExtractFullTransform(pdomlink));
+            ROS_DEBUG("tlink: %s: %lf %lf %lf %lf %lf %lf %lf",
+                      linkname.c_str(),
+                      tlink.position.x,  tlink.position.y, tlink.position.z,
+                      tlink.rotation.x, tlink.rotation.y, tlink.rotation.z, tlink.rotation.w);
             plink->visual->origin = _poseMult(tParentLink, tlink); // use the kinematics coordinate system for each link
             //            ROS_INFO("link %s rot: %f %f %f %f",linkname.c_str(),plink->visual->origin.rotation.w, plink->visual->origin.rotation.x,plink->visual->origin.rotation.y,plink->visual->origin.rotation.z);
             //            ROS_INFO("link %s trans: %f %f %f",linkname.c_str(),plink->visual->origin.position.x,plink->visual->origin.position.y,plink->visual->origin.position.z);
@@ -2679,7 +2692,7 @@ protected:
     std::string _filename;
     std::string _resourcedir;
     boost::shared_ptr<ModelInterface> _model;
-
+    Pose _RootOrigin;
 };
 
 
