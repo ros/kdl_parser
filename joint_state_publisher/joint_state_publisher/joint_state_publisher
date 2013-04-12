@@ -49,10 +49,13 @@ class JointStatePublisher():
                     minval = -pi
                     maxval = pi
                 else:
-                    limit = child.getElementsByTagName('limit')[0]
-                    minval = float(limit.getAttribute('lower'))
-                    maxval = float(limit.getAttribute('upper'))
-                    
+                    try:
+                        limit = child.getElementsByTagName('limit')[0]
+                        minval = float(limit.getAttribute('lower'))
+                        maxval = float(limit.getAttribute('upper'))
+                    except:
+                        continue
+
                 safety_tags = child.getElementsByTagName('safety_controller')
                 if use_small and len(safety_tags)==1:
                     tag = safety_tags[0]
