@@ -511,7 +511,9 @@ private:
 class Triangle
 {
 public:
-    Triangle(const urdf::Vector3 _p1, const urdf::Vector3 _p2, const urdf::Vector3 _p3) { this->p1 = _p1; this->p2 = _p2; this->p3 = _p3;};
+    Triangle(const urdf::Vector3 &_p1, const urdf::Vector3 &_p2, const urdf::Vector3 &_p3) :
+      p1(_p1), p2(_p2), p3(_p3)
+    {}
     Triangle() { this->clear(); };
     urdf::Vector3 p1, p2, p3;
 
@@ -1457,7 +1459,7 @@ protected:
         return pmout;
     }
 
-    void _loadVertices(const std::vector<Triangle> vertices, domGeometryRef pdomgeom) {
+    void _loadVertices(const std::vector<Triangle> &vertices, domGeometryRef pdomgeom) {
             aiScene* scene = new aiScene();
             scene->mRootNode = new aiNode();
             scene->mRootNode->mNumMeshes = 1;
