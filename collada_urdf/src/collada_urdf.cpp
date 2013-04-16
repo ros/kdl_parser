@@ -508,6 +508,16 @@ private:
     mutable resource_retriever::Retriever retriever_;
 };
 
+class Point
+{
+public:
+    Point(urdf::Vector3 _p1, urdf::Vector3 _p2, urdf::Vector3 _p3) { this->p1 = _p1; this->p2 = _p2; this->p3 = _p3;};
+    Point() { this->clear(); };
+    urdf::Vector3 p1, p2, p3;
+
+    void clear() { p1.clear(); p2.clear(); p3.clear(); };
+};
+
 /// \brief Implements writing urdf::Model objects to a COLLADA DOM.
 class ColladaWriter : public daeErrorHandler
 {
@@ -1231,15 +1241,136 @@ protected:
             break;
         }
         case urdf::Geometry::SPHERE: {
-            ROS_WARN_STREAM(str(boost::format("cannot export sphere geometries yet! %s")%geometry_id));
+            urdf::Sphere* urdf_sphere = (urdf::Sphere *) geometry.get();
+            double r = urdf_sphere->radius;
+
+            std::vector<Point> sphere_vertices;
+
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.309, r* 0.500, r* 0.809), urdf::Vector3(r* 0.809, r* 0.309, r* 0.500), urdf::Vector3(r* 0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r* 0.526, r* 0.000), urdf::Vector3(r* 0.500, r* 0.809, r* 0.309), urdf::Vector3(r* 0.809, r* 0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r* 0.851), urdf::Vector3(r* 0.809, r* 0.309, r* 0.500), urdf::Vector3(r* 0.309, r* 0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r* 0.526), urdf::Vector3(r* 0.309, r* 0.500, r* 0.809), urdf::Vector3(r* 0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.000, r* 1.000), urdf::Vector3(r*-0.309, r*-0.500, r* 0.809), urdf::Vector3(r* 0.309, r*-0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r* 0.526), urdf::Vector3(r* 0.309, r*-0.500, r* 0.809), urdf::Vector3(r*-0.309, r*-0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r* 0.851), urdf::Vector3(r*-0.309, r*-0.500, r* 0.809), urdf::Vector3(r* 0.000, r* 0.000, r* 1.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r* 0.851), urdf::Vector3(r* 0.000, r* 0.000, r* 1.000), urdf::Vector3(r* 0.309, r*-0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.500, r* 0.809, r* 0.309), urdf::Vector3(r* 0.000, r* 1.000, r* 0.000), urdf::Vector3(r*-0.500, r* 0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r*-0.526), urdf::Vector3(r*-0.500, r* 0.809, r*-0.309), urdf::Vector3(r* 0.000, r* 1.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r* 0.526), urdf::Vector3(r* 0.000, r* 1.000, r* 0.000), urdf::Vector3(r*-0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r* 0.526, r* 0.000), urdf::Vector3(r*-0.500, r* 0.809, r* 0.309), urdf::Vector3(r*-0.500, r* 0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.309, r* 0.500, r* 0.809), urdf::Vector3(r* 0.000, r* 0.000, r* 1.000), urdf::Vector3(r* 0.309, r* 0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r* 0.851), urdf::Vector3(r* 0.309, r* 0.500, r* 0.809), urdf::Vector3(r* 0.000, r* 0.000, r* 1.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r* 0.851), urdf::Vector3(r* 0.000, r* 0.000, r* 1.000), urdf::Vector3(r*-0.309, r* 0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r* 0.526), urdf::Vector3(r*-0.309, r* 0.500, r* 0.809), urdf::Vector3(r* 0.309, r* 0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.809, r* 0.309, r* 0.500), urdf::Vector3(r*-0.309, r* 0.500, r* 0.809), urdf::Vector3(r*-0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r* 0.526), urdf::Vector3(r*-0.500, r* 0.809, r* 0.309), urdf::Vector3(r*-0.309, r* 0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r* 0.851), urdf::Vector3(r*-0.309, r* 0.500, r* 0.809), urdf::Vector3(r*-0.809, r* 0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r* 0.526, r* 0.000), urdf::Vector3(r*-0.809, r* 0.309, r* 0.500), urdf::Vector3(r*-0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-1.000, r* 0.000, r* 0.000), urdf::Vector3(r*-0.809, r*-0.309, r* 0.500), urdf::Vector3(r*-0.809, r* 0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r* 0.851), urdf::Vector3(r*-0.809, r* 0.309, r* 0.500), urdf::Vector3(r*-0.809, r*-0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r*-0.526, r* 0.000), urdf::Vector3(r*-0.809, r*-0.309, r* 0.500), urdf::Vector3(r*-1.000, r* 0.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r* 0.526, r* 0.000), urdf::Vector3(r*-1.000, r* 0.000, r* 0.000), urdf::Vector3(r*-0.809, r* 0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.809, r*-0.309, r*-0.500), urdf::Vector3(r*-1.000, r* 0.000, r* 0.000), urdf::Vector3(r*-0.809, r* 0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r* 0.526, r* 0.000), urdf::Vector3(r*-0.809, r* 0.309, r*-0.500), urdf::Vector3(r*-1.000, r* 0.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r*-0.526, r* 0.000), urdf::Vector3(r*-1.000, r* 0.000, r* 0.000), urdf::Vector3(r*-0.809, r*-0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r*-0.851), urdf::Vector3(r*-0.809, r*-0.309, r*-0.500), urdf::Vector3(r*-0.809, r* 0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.500, r*-0.809, r*-0.309), urdf::Vector3(r*-0.809, r*-0.309, r*-0.500), urdf::Vector3(r*-0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r*-0.851), urdf::Vector3(r*-0.309, r*-0.500, r*-0.809), urdf::Vector3(r*-0.809, r*-0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r*-0.526, r* 0.000), urdf::Vector3(r*-0.809, r*-0.309, r*-0.500), urdf::Vector3(r*-0.500, r*-0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r*-0.526), urdf::Vector3(r*-0.500, r*-0.809, r*-0.309), urdf::Vector3(r*-0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.500, r*-0.809, r* 0.309), urdf::Vector3(r*-0.309, r*-0.500, r* 0.809), urdf::Vector3(r*-0.809, r*-0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r* 0.851), urdf::Vector3(r*-0.809, r*-0.309, r* 0.500), urdf::Vector3(r*-0.309, r*-0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r* 0.526), urdf::Vector3(r*-0.309, r*-0.500, r* 0.809), urdf::Vector3(r*-0.500, r*-0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r*-0.526, r* 0.000), urdf::Vector3(r*-0.500, r*-0.809, r* 0.309), urdf::Vector3(r*-0.809, r*-0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-1.000, r* 0.000), urdf::Vector3(r*-0.500, r*-0.809, r* 0.309), urdf::Vector3(r*-0.500, r*-0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r*-0.526, r* 0.000), urdf::Vector3(r*-0.500, r*-0.809, r*-0.309), urdf::Vector3(r*-0.500, r*-0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r* 0.526), urdf::Vector3(r*-0.500, r*-0.809, r* 0.309), urdf::Vector3(r* 0.000, r*-1.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r*-0.526), urdf::Vector3(r* 0.000, r*-1.000, r* 0.000), urdf::Vector3(r*-0.500, r*-0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.500, r*-0.809, r* 0.309), urdf::Vector3(r* 0.809, r*-0.309, r* 0.500), urdf::Vector3(r* 0.309, r*-0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r* 0.851), urdf::Vector3(r* 0.309, r*-0.500, r* 0.809), urdf::Vector3(r* 0.809, r*-0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r*-0.526, r* 0.000), urdf::Vector3(r* 0.809, r*-0.309, r* 0.500), urdf::Vector3(r* 0.500, r*-0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r* 0.526), urdf::Vector3(r* 0.500, r*-0.809, r* 0.309), urdf::Vector3(r* 0.309, r*-0.500, r* 0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.500, r*-0.809, r*-0.309), urdf::Vector3(r* 0.500, r*-0.809, r* 0.309), urdf::Vector3(r* 0.000, r*-1.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r* 0.526), urdf::Vector3(r* 0.000, r*-1.000, r* 0.000), urdf::Vector3(r* 0.500, r*-0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r*-0.526, r* 0.000), urdf::Vector3(r* 0.500, r*-0.809, r* 0.309), urdf::Vector3(r* 0.500, r*-0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r*-0.526), urdf::Vector3(r* 0.500, r*-0.809, r*-0.309), urdf::Vector3(r* 0.000, r*-1.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.809, r*-0.309, r*-0.500), urdf::Vector3(r* 0.500, r*-0.809, r*-0.309), urdf::Vector3(r* 0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r*-0.526), urdf::Vector3(r* 0.309, r*-0.500, r*-0.809), urdf::Vector3(r* 0.500, r*-0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r*-0.526, r* 0.000), urdf::Vector3(r* 0.500, r*-0.809, r*-0.309), urdf::Vector3(r* 0.809, r*-0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r*-0.851), urdf::Vector3(r* 0.809, r*-0.309, r*-0.500), urdf::Vector3(r* 0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 1.000, r* 0.000, r* 0.000), urdf::Vector3(r* 0.809, r* 0.309, r* 0.500), urdf::Vector3(r* 0.809, r*-0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r* 0.851), urdf::Vector3(r* 0.809, r*-0.309, r* 0.500), urdf::Vector3(r* 0.809, r* 0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r* 0.526, r* 0.000), urdf::Vector3(r* 0.809, r* 0.309, r* 0.500), urdf::Vector3(r* 1.000, r* 0.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r*-0.526, r* 0.000), urdf::Vector3(r* 1.000, r* 0.000, r* 0.000), urdf::Vector3(r* 0.809, r*-0.309, r* 0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.809, r* 0.309, r*-0.500), urdf::Vector3(r* 1.000, r* 0.000, r* 0.000), urdf::Vector3(r* 0.809, r*-0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r*-0.526, r* 0.000), urdf::Vector3(r* 0.809, r*-0.309, r*-0.500), urdf::Vector3(r* 1.000, r* 0.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r* 0.526, r* 0.000), urdf::Vector3(r* 1.000, r* 0.000, r* 0.000), urdf::Vector3(r* 0.809, r* 0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r*-0.851), urdf::Vector3(r* 0.809, r* 0.309, r*-0.500), urdf::Vector3(r* 0.809, r*-0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.500, r* 0.809, r*-0.309), urdf::Vector3(r* 0.000, r* 1.000, r* 0.000), urdf::Vector3(r* 0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r* 0.526), urdf::Vector3(r* 0.500, r* 0.809, r* 0.309), urdf::Vector3(r* 0.000, r* 1.000, r* 0.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r*-0.526), urdf::Vector3(r* 0.000, r* 1.000, r* 0.000), urdf::Vector3(r* 0.500, r* 0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r* 0.526, r* 0.000), urdf::Vector3(r* 0.500, r* 0.809, r*-0.309), urdf::Vector3(r* 0.500, r* 0.809, r* 0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.309, r* 0.500, r*-0.809), urdf::Vector3(r* 0.500, r* 0.809, r*-0.309), urdf::Vector3(r* 0.809, r* 0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.851, r* 0.526, r* 0.000), urdf::Vector3(r* 0.809, r* 0.309, r*-0.500), urdf::Vector3(r* 0.500, r* 0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r*-0.526), urdf::Vector3(r* 0.500, r* 0.809, r*-0.309), urdf::Vector3(r* 0.309, r* 0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r*-0.851), urdf::Vector3(r* 0.309, r* 0.500, r*-0.809), urdf::Vector3(r* 0.809, r* 0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.309, r* 0.500, r*-0.809), urdf::Vector3(r*-0.809, r* 0.309, r*-0.500), urdf::Vector3(r*-0.500, r* 0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.851, r* 0.526, r* 0.000), urdf::Vector3(r*-0.500, r* 0.809, r*-0.309), urdf::Vector3(r*-0.809, r* 0.309, r*-0.500)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r*-0.851), urdf::Vector3(r*-0.809, r* 0.309, r*-0.500), urdf::Vector3(r*-0.309, r* 0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r*-0.526), urdf::Vector3(r*-0.309, r* 0.500, r*-0.809), urdf::Vector3(r*-0.500, r* 0.809, r*-0.309)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.000, r*-1.000), urdf::Vector3(r* 0.309, r*-0.500, r*-0.809), urdf::Vector3(r*-0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r*-0.851, r*-0.526), urdf::Vector3(r*-0.309, r*-0.500, r*-0.809), urdf::Vector3(r* 0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r*-0.851), urdf::Vector3(r* 0.309, r*-0.500, r*-0.809), urdf::Vector3(r* 0.000, r* 0.000, r*-1.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r*-0.851), urdf::Vector3(r* 0.000, r* 0.000, r*-1.000), urdf::Vector3(r*-0.309, r*-0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.000, r*-1.000), urdf::Vector3(r*-0.309, r* 0.500, r*-0.809), urdf::Vector3(r* 0.309, r* 0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.000, r* 0.851, r*-0.526), urdf::Vector3(r* 0.309, r* 0.500, r*-0.809), urdf::Vector3(r*-0.309, r* 0.500, r*-0.809)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r*-0.526, r* 0.000, r*-0.851), urdf::Vector3(r*-0.309, r* 0.500, r*-0.809), urdf::Vector3(r* 0.000, r* 0.000, r*-1.000)));
+            sphere_vertices.push_back(Point(urdf::Vector3(r* 0.526, r* 0.000, r*-0.851), urdf::Vector3(r* 0.000, r* 0.000, r*-1.000), urdf::Vector3(r* 0.309, r* 0.500, r*-0.809)));
+
+            _loadVertices(sphere_vertices, cgeometry);
             break;
         }
         case urdf::Geometry::BOX: {
-            ROS_WARN_STREAM(str(boost::format("cannot export box geometries yet! %s")%geometry_id));
+            urdf::Box* urdf_box = (urdf::Box*) geometry.get();
+            double x = urdf_box->dim.x/2;
+            double y = urdf_box->dim.y/2;
+            double z = urdf_box->dim.z/2;
+            std::vector<Point> box_vertices;
+            box_vertices.push_back(Point(urdf::Vector3( x,  y, -z), urdf::Vector3(-x, -y, -z), urdf::Vector3(-x,  y, -z)));
+            box_vertices.push_back(Point(urdf::Vector3(-x, -y, -z), urdf::Vector3( x,  y, -z), urdf::Vector3( x, -y, -z)));
+            box_vertices.push_back(Point(urdf::Vector3(-x,  y,  z), urdf::Vector3( x, -y,  z), urdf::Vector3( x,  y,  z)));
+            box_vertices.push_back(Point(urdf::Vector3( x, -y,  z), urdf::Vector3(-x,  y,  z), urdf::Vector3(-x, -y,  z)));
+
+            box_vertices.push_back(Point(urdf::Vector3( x,  y, -z), urdf::Vector3(-x,  y,  z), urdf::Vector3( x,  y,  z)));
+            box_vertices.push_back(Point(urdf::Vector3(-x,  y,  z), urdf::Vector3( x,  y, -z), urdf::Vector3(-x,  y, -z)));
+            box_vertices.push_back(Point(urdf::Vector3( x, -y, -z), urdf::Vector3( x,  y,  z), urdf::Vector3( x, -y,  z)));
+            box_vertices.push_back(Point(urdf::Vector3( x,  y,  z), urdf::Vector3( x, -y, -z), urdf::Vector3( x,  y, -z)));
+
+            box_vertices.push_back(Point(urdf::Vector3(-x, -y, -z), urdf::Vector3( x, -y,  z), urdf::Vector3(-x, -y,  z)));
+            box_vertices.push_back(Point(urdf::Vector3( x, -y,  z), urdf::Vector3(-x, -y, -z), urdf::Vector3( x, -y, -z)));
+            box_vertices.push_back(Point(urdf::Vector3(-x,  y, -z), urdf::Vector3(-x, -y,  z), urdf::Vector3(-x,  y,  z)));
+            box_vertices.push_back(Point(urdf::Vector3(-x, -y,  z), urdf::Vector3(-x,  y, -z), urdf::Vector3(-x, -y, -z)));
+
+            _loadVertices(box_vertices, cgeometry);
             break;
         }
         case urdf::Geometry::CYLINDER: {
-            ROS_WARN_STREAM(str(boost::format("cannot export cylinder geometries yet! %s")%geometry_id));
+            urdf::Cylinder* urdf_cylinder = (urdf::Cylinder*) geometry.get();
+            double l = urdf_cylinder->length;
+            double r = urdf_cylinder->radius;
+            std::vector<Point> cylinder_vertices;
+            for(int i = 0; i < 32; i++ ) {
+                double s1 = sin(2*M_PI*i/32);
+                double c1 = cos(2*M_PI*i/32);
+                double s2 = sin(2*M_PI*(i+1)/32);
+                double c2 = cos(2*M_PI*(i+1)/32);
+                cylinder_vertices.push_back(Point(urdf::Vector3(0, 0,-l/2), urdf::Vector3(r*s2, r*c2,-l/2), urdf::Vector3(r*s1, r*c1,-l/2)));
+                cylinder_vertices.push_back(Point(urdf::Vector3(r*s1, r*c1,-l/2), urdf::Vector3(r*s2, r*c2,-l/2), urdf::Vector3(r*s2, r*c2, l/2)));
+                cylinder_vertices.push_back(Point(urdf::Vector3(r*s1, r*c1,-l/2), urdf::Vector3(r*s2, r*c2, l/2), urdf::Vector3(r*s1, r*c1, l/2)));
+                cylinder_vertices.push_back(Point(urdf::Vector3(0, 0, l/2), urdf::Vector3(r*s1, r*c1, l/2), urdf::Vector3(r*s2, r*c2, l/2)));
+            }
+            _loadVertices(cylinder_vertices, cgeometry);
+
             break;
         }
         default: {
@@ -1366,6 +1497,79 @@ protected:
             }
         }
         return pmout;
+    }
+
+    void _loadVertices(std::vector<Point> vertices, domGeometryRef pdomgeom) {
+            aiScene* scene = new aiScene();
+            scene->mRootNode = new aiNode();
+            scene->mRootNode->mNumMeshes = 1;
+            scene->mRootNode->mMeshes  = (unsigned int*)malloc(sizeof(unsigned int));
+            scene->mRootNode->mMeshes[0] = 0;
+            scene->mNumMeshes = 1;
+            scene->mMeshes = (aiMesh **)malloc(sizeof(aiMesh*));
+            scene->mMeshes[0] = new aiMesh();
+            scene->mMeshes[0]->mNumFaces = 0;
+            scene->mMeshes[0]->mFaces = (aiFace *)malloc(sizeof(aiFace)*vertices.size());
+            scene->mMeshes[0]->mNumVertices = 0;
+            scene->mMeshes[0]->mVertices = (aiVector3D *)malloc(sizeof(aiVector3D)*vertices.size()*3);
+
+            FOREACH(it, vertices) {
+                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mNumIndices = 3;
+                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices = (unsigned int *)malloc(sizeof(unsigned int)*3);
+
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].x = it->p1.x;
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].y = it->p1.y;
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].z = it->p1.z;
+                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices[0] = scene->mMeshes[0]->mNumVertices;
+                scene->mMeshes[0]->mNumVertices++;
+
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].x = it->p2.x;
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].y = it->p2.y;
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].z = it->p2.z;
+                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices[1] = scene->mMeshes[0]->mNumVertices;
+                scene->mMeshes[0]->mNumVertices++;
+
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].x = it->p3.x;
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].y = it->p3.y;
+                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].z = it->p3.z;
+                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices[2] = scene->mMeshes[0]->mNumVertices;
+                scene->mMeshes[0]->mNumVertices++;
+
+                scene->mMeshes[0]->mNumFaces++;
+            }
+
+            domMeshRef pdommesh = daeSafeCast<domMesh>(pdomgeom->add(COLLADA_ELEMENT_MESH));
+            domSourceRef pvertsource = daeSafeCast<domSource>(pdommesh->add(COLLADA_ELEMENT_SOURCE));
+            domAccessorRef pacc;
+            domFloat_arrayRef parray;
+            {
+                pvertsource->setId(str(boost::format("%s_positions")%pdomgeom->getID()).c_str());
+
+                parray = daeSafeCast<domFloat_array>(pvertsource->add(COLLADA_ELEMENT_FLOAT_ARRAY));
+                parray->setId(str(boost::format("%s_positions-array")%pdomgeom->getID()).c_str());
+                parray->setDigits(6); // 6 decimal places
+
+                domSource::domTechnique_commonRef psourcetec = daeSafeCast<domSource::domTechnique_common>(pvertsource->add(COLLADA_ELEMENT_TECHNIQUE_COMMON));
+                pacc = daeSafeCast<domAccessor>(psourcetec->add(COLLADA_ELEMENT_ACCESSOR));
+                pacc->setSource(xsAnyURI(*parray, std::string("#")+string(parray->getID())));
+                pacc->setStride(3);
+
+                domParamRef px = daeSafeCast<domParam>(pacc->add(COLLADA_ELEMENT_PARAM));
+                px->setName("X"); px->setType("float");
+                domParamRef py = daeSafeCast<domParam>(pacc->add(COLLADA_ELEMENT_PARAM));
+                py->setName("Y"); py->setType("float");
+                domParamRef pz = daeSafeCast<domParam>(pacc->add(COLLADA_ELEMENT_PARAM));
+                pz->setName("Z"); pz->setType("float");
+            }
+            domVerticesRef pverts = daeSafeCast<domVertices>(pdommesh->add(COLLADA_ELEMENT_VERTICES));
+            {
+                pverts->setId("vertices");
+                domInput_localRef pvertinput = daeSafeCast<domInput_local>(pverts->add(COLLADA_ELEMENT_INPUT));
+                pvertinput->setSemantic("POSITION");
+                pvertinput->setSource(domUrifragment(*pvertsource, std::string("#")+std::string(pvertsource->getID())));
+            }
+            _buildAiMesh(scene,scene->mRootNode,pdommesh,parray, pdomgeom->getID(), urdf::Vector3(1,1,1));
+            pacc->setCount(parray->getCount());
     }
 
     void _loadMesh(std::string const& filename, domGeometryRef pdomgeom, const urdf::Vector3& scale)
