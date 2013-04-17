@@ -9,12 +9,14 @@
     object model (C++) of the robot.
   </description>
 
-  <author email="isucan@willowgarage.com">Maintained by Ioan Sucan</author>
+  <author email="isucan@willowgarage.com">Ioan Sucan</author>
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
 
-  <license>BSD</license>  
+  <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/robot_model</url>
+  <url type="repository">https://github.com/ros/robot_model</url>
+  <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
@@ -30,10 +32,10 @@
   <run_depend>graphviz</run_depend>
   <run_depend>ivcon</run_depend>
   <run_depend>kdl_parser</run_depend>
-  <run_depend>orocos_kdl</run_depend> 
+  <run_depend>orocos_kdl</run_depend>
   <run_depend>resource_retriever</run_depend>
   <run_depend>ros</run_depend>
-  <run_depend>ros_comm</run_depend> 
+  <run_depend>ros_comm</run_depend>
   <run_depend>rosconsole_bridge</run_depend>
   <run_depend>urdf</run_depend>
   <run_depend>urdf_parser</run_depend>
@@ -42,7 +44,7 @@
   <run_depend>joint_state_publisher</run_depend>
 
   <!-- Add this dep for backward compatibility -->
-  <run_depend>robot_state_publisher</run_depend> 
+  <run_depend>robot_state_publisher</run_depend>
 
   <export>
     <metapackage/>

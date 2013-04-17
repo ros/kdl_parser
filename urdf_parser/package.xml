@@ -1,7 +1,6 @@
 <package>
   <name>urdf_parser</name>
   <version>1.10.5</version>
-
   <description>
     This package is DEPRECATED. Please use the urdfdom dependency directly instead of this package.
 
@@ -12,13 +11,17 @@
     this parser when working with URDF robot descriptions, the
     preferred user API is found in the urdf package.
   </description>
+
   <author>Wim Meeussen</author>
   <author>John Hsu</author>
   <author>Rosen Diankov</author>
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
+
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/urdf_parser</url>
+  <url type="repository">https://github.com/ros/robot_model</url>
+  <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 

@@ -2,28 +2,31 @@
   <name>resource_retriever</name>
   <version>1.10.5</version>
   <description>
-
    This package retrieves data from url-format files such as http://,
    ftp://, package:// file://, etc., and loads the data into memory.
    The package:// url for ros packages is translated into a local
    file:// url.  The resourse retriever was initially designed to load
    mesh files into memory, but it can be used for any type of
    data. The resource retriever is based on the the libcurl library.
-
   </description>
+
   <author email="jfaust@willowgarage.com">Josh Faust</author>
   <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
+
   <license>BSD</license>
+
   <url type="website">http://ros.org/wiki/resource_retriever</url>
+  <url type="repository">https://github.com/ros/robot_model</url>
+  <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>curl</build_depend>
-  <build_depend>rosconsole</build_depend> 
-  <build_depend>roslib</build_depend> 
+  <build_depend>rosconsole</build_depend>
+  <build_depend>roslib</build_depend>
 
   <run_depend>curl</run_depend>
-  <run_depend>rosconsole</run_depend> 
-  <run_depend>roslib</run_depend> 
+  <run_depend>rosconsole</run_depend>
+  <run_depend>roslib</run_depend>
 
 </package>
