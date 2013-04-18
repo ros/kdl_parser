@@ -57,10 +57,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FL
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
 
 add_executable(urdf_to_collada src/urdf_to_collada.cpp)
-target_link_libraries(urdf_to_collada ${PROJECT_NAME})
+target_link_libraries(urdf_to_collada ${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+  ${Boost_LIBRARIES})
 
 catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
-target_link_libraries(test_collada_writer ${PROJECT_NAME})
+target_link_libraries(test_collada_writer ${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+  ${Boost_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} urdf_to_collada
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
