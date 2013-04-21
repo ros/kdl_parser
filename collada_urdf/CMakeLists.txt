@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(collada_urdf)
 
-find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf)
+find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf geometric_shapes)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
@@ -51,17 +51,17 @@ include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/collada_urdf.cpp)
-target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
-  ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+  ${Boost_LIBRARIES} ${ASSIMP_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
 
 add_executable(urdf_to_collada src/urdf_to_collada.cpp)
-target_link_libraries(urdf_to_collada ${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
-  ${Boost_LIBRARIES})
+target_link_libraries(urdf_to_collada ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+  ${Boost_LIBRARIES} ${PROJECT_NAME})
 
 catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
-target_link_libraries(test_collada_writer ${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+target_link_libraries(test_collada_writer ${PROJECT_NAME} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
   ${Boost_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME} urdf_to_collada

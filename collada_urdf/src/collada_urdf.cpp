@@ -59,6 +59,8 @@
 #include <boost/date_time/posix_time/posix_time_io.hpp>
 #include <boost/format.hpp>
 #include <boost/array.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #if defined(IS_ASSIMP3)
 #include <assimp/scene.h>
@@ -75,8 +77,10 @@
 #include <DefaultLogger.h>
 #include <IOStream.h>
 #include <IOSystem.h>
-
 #endif
+
+#include <geometric_shapes/shapes.h>
+#include <geometric_shapes/mesh_operations.h>
 
 #define FOREACH(it, v) for(typeof((v).begin())it = (v).begin(); it != (v).end(); (it)++)
 #define FOREACHC FOREACH
@@ -1243,94 +1247,24 @@ protected:
             break;
         }
         case urdf::Geometry::SPHERE: {
-            urdf::Sphere* urdf_sphere = (urdf::Sphere *) geometry.get();
-            double r = urdf_sphere->radius;
-            double phi, phid;
-            int seg = 64, ring = 64;
-            phid = M_PI * 2 / seg;
-            phi = 0;
-
-            double theta, thetad;
-            thetad = M_PI / (ring + 1);
-            theta = 0;
-
-            std::vector<Triangle> sphere_vertices;
-            std::vector<urdf::Vector3> points;
-
-            for ( unsigned int i = 0; i < ring; ++ i ) {
-                double theta_ = theta + thetad * ( i + 1 );
-                for (unsigned int j = 0; j < seg; ++ j ) {
-                    points.push_back(urdf::Vector3(r * sin(theta_) * cos(phi + j * phid), r * sin(theta_) * sin(phi + j * phid), r * cos(theta_)));
-                }
-            }
-            points.push_back(urdf::Vector3(0, 0,  r));
-            points.push_back(urdf::Vector3(0, 0, -r));
-            for(unsigned int i = 0; i < ring - 1; ++i) {
-                for(unsigned int j = 0; j < seg; ++j) {
-                    unsigned int a, b, c, d;
-                    a = i * seg + j;
-                    b = (j == seg - 1) ? (i * seg) : (i * seg + j + 1);
-                    c = (i + 1) * seg + j;
-                    d = (j == seg - 1) ? ((i + 1) * seg) : ((i + 1) * seg + j + 1);
-                    sphere_vertices.push_back(Triangle(points[a], points[c], points[b]));
-                    sphere_vertices.push_back(Triangle(points[b], points[c], points[d]));
-                }
-            }
-
-            for(unsigned int j = 0; j < seg; ++j) {
-                unsigned int a, b;
-                a = j;
-                b = (j == seg - 1) ? 0 : (j + 1);
-                sphere_vertices.push_back(Triangle(points[ring*seg], points[a], points[b]));
-                a = (ring - 1) * seg + j;
-                b = (j == seg - 1) ? (ring - 1) * seg : ((ring - 1) * seg + j + 1);
-                sphere_vertices.push_back(Triangle(points[a], points[ring*seg+1], points[b]));
-            }
-
-            _loadVertices(sphere_vertices, cgeometry);
+	    shapes::Sphere sphere(static_cast<urdf::Sphere*>(geometry.get())->radius);
+	    boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(sphere));
+            _loadVertices(mesh.get(), cgeometry);
             break;
         }
         case urdf::Geometry::BOX: {
-            urdf::Box* urdf_box = (urdf::Box*) geometry.get();
-            double x = urdf_box->dim.x/2;
-            double y = urdf_box->dim.y/2;
-            double z = urdf_box->dim.z/2;
-            std::vector<Triangle> box_vertices;
-            box_vertices.push_back(Triangle(urdf::Vector3( x,  y, -z), urdf::Vector3(-x, -y, -z), urdf::Vector3(-x,  y, -z)));
-            box_vertices.push_back(Triangle(urdf::Vector3(-x, -y, -z), urdf::Vector3( x,  y, -z), urdf::Vector3( x, -y, -z)));
-            box_vertices.push_back(Triangle(urdf::Vector3(-x,  y,  z), urdf::Vector3( x, -y,  z), urdf::Vector3( x,  y,  z)));
-            box_vertices.push_back(Triangle(urdf::Vector3( x, -y,  z), urdf::Vector3(-x,  y,  z), urdf::Vector3(-x, -y,  z)));
-
-            box_vertices.push_back(Triangle(urdf::Vector3( x,  y, -z), urdf::Vector3(-x,  y,  z), urdf::Vector3( x,  y,  z)));
-            box_vertices.push_back(Triangle(urdf::Vector3(-x,  y,  z), urdf::Vector3( x,  y, -z), urdf::Vector3(-x,  y, -z)));
-            box_vertices.push_back(Triangle(urdf::Vector3( x, -y, -z), urdf::Vector3( x,  y,  z), urdf::Vector3( x, -y,  z)));
-            box_vertices.push_back(Triangle(urdf::Vector3( x,  y,  z), urdf::Vector3( x, -y, -z), urdf::Vector3( x,  y, -z)));
-
-            box_vertices.push_back(Triangle(urdf::Vector3(-x, -y, -z), urdf::Vector3( x, -y,  z), urdf::Vector3(-x, -y,  z)));
-            box_vertices.push_back(Triangle(urdf::Vector3( x, -y,  z), urdf::Vector3(-x, -y, -z), urdf::Vector3( x, -y, -z)));
-            box_vertices.push_back(Triangle(urdf::Vector3(-x,  y, -z), urdf::Vector3(-x, -y,  z), urdf::Vector3(-x,  y,  z)));
-            box_vertices.push_back(Triangle(urdf::Vector3(-x, -y,  z), urdf::Vector3(-x,  y, -z), urdf::Vector3(-x, -y, -z)));
-
-            _loadVertices(box_vertices, cgeometry);
+	    shapes::Box box(static_cast<urdf::Box*>(geometry.get())->dim.x / 2.0,
+			    static_cast<urdf::Box*>(geometry.get())->dim.y / 2.0,
+			    static_cast<urdf::Box*>(geometry.get())->dim.z / 2.0);
+	    boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(box));
+            _loadVertices(mesh.get(), cgeometry);
             break;
         }
         case urdf::Geometry::CYLINDER: {
-            urdf::Cylinder* urdf_cylinder = (urdf::Cylinder*) geometry.get();
-            double l = urdf_cylinder->length;
-            double r = urdf_cylinder->radius;
-            std::vector<Triangle> cylinder_vertices;
-            for(int i = 0; i < 32; i++ ) {
-                double s1 = sin(2*M_PI*i/32);
-                double c1 = cos(2*M_PI*i/32);
-                double s2 = sin(2*M_PI*(i+1)/32);
-                double c2 = cos(2*M_PI*(i+1)/32);
-                cylinder_vertices.push_back(Triangle(urdf::Vector3(0, 0,-l/2), urdf::Vector3(r*s2, r*c2,-l/2), urdf::Vector3(r*s1, r*c1,-l/2)));
-                cylinder_vertices.push_back(Triangle(urdf::Vector3(r*s1, r*c1,-l/2), urdf::Vector3(r*s2, r*c2,-l/2), urdf::Vector3(r*s2, r*c2, l/2)));
-                cylinder_vertices.push_back(Triangle(urdf::Vector3(r*s1, r*c1,-l/2), urdf::Vector3(r*s2, r*c2, l/2), urdf::Vector3(r*s1, r*c1, l/2)));
-                cylinder_vertices.push_back(Triangle(urdf::Vector3(0, 0, l/2), urdf::Vector3(r*s1, r*c1, l/2), urdf::Vector3(r*s2, r*c2, l/2)));
-            }
-            _loadVertices(cylinder_vertices, cgeometry);
-
+	    shapes::Cylinder cyl(static_cast<urdf::Cylinder*>(geometry.get())->radius,
+				 static_cast<urdf::Cylinder*>(geometry.get())->length);
+	    boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(cyl));
+            _loadVertices(mesh.get(), cgeometry);
             break;
         }
         default: {
@@ -1459,44 +1393,24 @@ protected:
         return pmout;
     }
 
-    void _loadVertices(const std::vector<Triangle> &vertices, domGeometryRef pdomgeom) {
-            aiScene* scene = new aiScene();
-            scene->mRootNode = new aiNode();
-            scene->mRootNode->mNumMeshes = 1;
-            scene->mRootNode->mMeshes  = (unsigned int*)malloc(sizeof(unsigned int));
-            scene->mRootNode->mMeshes[0] = 0;
-            scene->mNumMeshes = 1;
-            scene->mMeshes = (aiMesh **)malloc(sizeof(aiMesh*));
-            scene->mMeshes[0] = new aiMesh();
-            scene->mMeshes[0]->mNumFaces = 0;
-            scene->mMeshes[0]->mFaces = (aiFace *)malloc(sizeof(aiFace)*vertices.size());
-            scene->mMeshes[0]->mNumVertices = 0;
-            scene->mMeshes[0]->mVertices = (aiVector3D *)malloc(sizeof(aiVector3D)*vertices.size()*3);
-
-            FOREACH(it, vertices) {
-                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mNumIndices = 3;
-                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices = (unsigned int *)malloc(sizeof(unsigned int)*3);
-
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].x = it->p1.x;
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].y = it->p1.y;
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].z = it->p1.z;
-                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices[0] = scene->mMeshes[0]->mNumVertices;
-                scene->mMeshes[0]->mNumVertices++;
-
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].x = it->p2.x;
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].y = it->p2.y;
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].z = it->p2.z;
-                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices[1] = scene->mMeshes[0]->mNumVertices;
-                scene->mMeshes[0]->mNumVertices++;
-
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].x = it->p3.x;
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].y = it->p3.y;
-                scene->mMeshes[0]->mVertices[scene->mMeshes[0]->mNumVertices].z = it->p3.z;
-                scene->mMeshes[0]->mFaces[scene->mMeshes[0]->mNumFaces].mIndices[2] = scene->mMeshes[0]->mNumVertices;
-                scene->mMeshes[0]->mNumVertices++;
-
-                scene->mMeshes[0]->mNumFaces++;
-            }
+    void _loadVertices(const shapes::Mesh *mesh, domGeometryRef pdomgeom) {
+	
+	// convert the mesh into an STL binary (in memory)
+	std::vector<char> buffer;
+	shapes::writeSTLBinary(mesh, buffer);
+	
+	// Create an instance of the Importer class
+	Assimp::Importer importer;
+	
+	// And have it read the given file with some postprocessing
+	const aiScene* scene = importer.ReadFileFromMemory(reinterpret_cast<const void*>(&buffer[0]), buffer.size(),
+							   aiProcess_Triangulate            |
+							   aiProcess_JoinIdenticalVertices  |
+							   aiProcess_SortByPType            |
+							   aiProcess_OptimizeGraph          |
+							   aiProcess_OptimizeMeshes, "stl");
+	
+	// Note: we do this mesh -> STL -> assimp mesh because the aiScene::aiScene symbol is hidden by default 
 
             domMeshRef pdommesh = daeSafeCast<domMesh>(pdomgeom->add(COLLADA_ELEMENT_MESH));
             domSourceRef pvertsource = daeSafeCast<domSource>(pdommesh->add(COLLADA_ELEMENT_SOURCE));
