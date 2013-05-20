@@ -41,6 +41,9 @@
 /* we include the default parser for plain URDF files; 
    other parsers are loaded via plugins (if available) */
 #include <urdf_parser/urdf_parser.h>
+#include <urdf_parser_plugin/parser.h>
+#include <pluginlib/class_loader.h>
+
 #include <collada_parser/collada_parser.h>
 
 #include <boost/algorithm/string.hpp>
