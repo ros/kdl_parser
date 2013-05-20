@@ -3,12 +3,12 @@ project(collada_parser)
 
 find_package(Boost REQUIRED system)
 
-find_package(catkin REQUIRED COMPONENTS urdfdom_headers roscpp)
+find_package(catkin REQUIRED COMPONENTS urdfdom_headers urdf_parser_plugin roscpp)
 
 catkin_package( 
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp
+  CATKIN_DEPENDS roscpp urdf_parser_plugin
   DEPENDS urdfdom_headers
 )
 
