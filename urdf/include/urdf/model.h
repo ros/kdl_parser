@@ -39,9 +39,8 @@
 
 #include <string>
 #include <map>
-#include <urdf_parser/urdf_parser.h>
-#include <collada_parser/collada_parser.h>
-
+#include <urdf_model/model.h>
+#include <tinyxml.h>
 
 namespace urdf{
 

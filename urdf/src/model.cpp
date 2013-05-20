@@ -34,10 +34,17 @@
 
 /* Author: Wim Meeussen */
 
-#include <boost/algorithm/string.hpp>
-#include <ros/ros.h>
-#include <vector>
 #include "urdf/model.h"
+
+#include <ros/ros.h>
+
+/* we include the default parser for plain URDF files; 
+   other parsers are loaded via plugins (if available) */
+#include <urdf_parser/urdf_parser.h>
+#include <collada_parser/collada_parser.h>
+
+#include <boost/algorithm/string.hpp>
+#include <vector>
 #include <fstream>
 #include <iostream>
 
