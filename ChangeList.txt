@@ -1,3 +1,18 @@
+= 1.10.10 =
+ * [[urdf_parser]]
+  * Package was removed
+ * [[urdf_parser_plugin]]
+  * New package containing base class for URDF parsers
+ * [[urdf]]
+  * Package now only depends on the plain URDF parser (no longer on [[collada_parser]])
+  * Plugins are used to load other formats into URDF. 
+ * [[collada_parser]]
+  * Interface as plugin for loading URDFs was added
+
+= 1.10.0 =
+ * Banch from 1.9.32
+ * Build system updates
+
 = 1.9.0 =
  * Branch from 1.8.0
 
