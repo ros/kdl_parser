@@ -38,7 +38,7 @@
   <run_depend>ros_comm</run_depend>
   <run_depend>rosconsole_bridge</run_depend>
   <run_depend>urdf</run_depend>
-  <run_depend>urdf_parser</run_depend>
+  <run_depend>urdf_parser_plugin</run_depend>
   <run_depend>urdfdom</run_depend>
   <run_depend>urdfdom_headers</run_depend>
   <run_depend>joint_state_publisher</run_depend>

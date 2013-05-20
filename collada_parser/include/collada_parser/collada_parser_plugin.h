@@ -34,29 +34,21 @@
 
 /* Author: Ioan Sucan */
 
-#ifndef URDF_PARSER_PLUGIN_H
-#define URDF_PARSER_PLUGIN_H
+#ifndef COLLADA_PARSER_COLLADA_PARSER_PLUGIN_H
+#define COLLADA_PARSER_COLLADA_PARSER_PLUGIN_H
 
-#include <urdf_model/model.h>
+#include <urdf_parser_plugin/parser.h>
 
 namespace urdf
 {
 
-/** \brief Base class for URDF parsers */
-class URDFParser 
+class ColladaURDFParser : public URDFParser
 {
 public:
-  URDFParser()
-  {
-  }
-  virtual ~URDFParser()
-  {
-  }
 
-  /// \brief Load Model from string
-  virtual boost::shared_ptr<ModelInterface> parse(const std::string &xml_string) = 0;
+  virtual boost::shared_ptr<ModelInterface> parse(const std::string &xml_string);    
 };
-  
+
 }
 
 #endif

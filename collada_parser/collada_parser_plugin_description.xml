@@ -1,0 +1,7 @@
+<library path="lib/libcollada_parser_plugin">
+  <class name="urdf/ColladaURDFParser" type="urdf::ColladaURDFParser" base_class_type="urdf::URDFParser">
+    <description>
+      Parse models as URDF from Collada files.
+    </description>
+  </class>
+</library>
