@@ -1,28 +1,28 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(urdf)
 
-find_package(catkin REQUIRED COMPONENTS urdfdom urdfdom_headers collada_parser rosconsole_bridge roscpp)
+find_package(Boost REQUIRED thread)
+find_package(catkin REQUIRED COMPONENTS urdfdom urdfdom_headers urdf_parser_plugin pluginlib rosconsole_bridge roscpp)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  CATKIN_DEPENDS collada_parser rosconsole_bridge roscpp
-  DEPENDS urdfdom_headers urdfdom
+  CATKIN_DEPENDS rosconsole_bridge roscpp
+  DEPENDS urdfdom_headers urdfdom Boost
 )
+
+include_directories(SYSTEM ${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIRS})
 
 include_directories(include)
 
 include_directories(${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
-find_package(catkin REQUIRED COMPONENTS roscpp rosconsole_bridge rostime)
-include_directories(${catkin_INCLUDE_DIRS})
-link_directories(${catkin_LIBRARY_DIRS})
-
 find_library(TINYXML tinyxml)
 
 add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
-target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES} ${collada_parser_LIBRARIES} ${rosconsole_bridge_LIBRARIES} ${TINYXML} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${TINYXML} ${catkin_LIBRARIES})
 
 if(APPLE) 
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup") 

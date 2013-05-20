@@ -44,16 +44,17 @@
 #include <urdf_parser_plugin/parser.h>
 #include <pluginlib/class_loader.h>
 
-#include <collada_parser/collada_parser.h>
-
 #include <boost/algorithm/string.hpp>
+#include <boost/scoped_ptr.hpp>
+#include <boost/thread.hpp>
+
 #include <vector>
 #include <fstream>
 #include <iostream>
 
 namespace urdf{
 
-bool IsColladaData(const std::string& data)
+static bool IsColladaData(const std::string& data)
 {
   return data.find("<COLLADA") != std::string::npos;
 }
@@ -140,7 +141,33 @@ bool Model::initString(const std::string& xml_string)
   // necessary for COLLADA compatibility
   if( IsColladaData(xml_string) ) {
     ROS_DEBUG("Parsing robot collada xml string");
-    model = parseCollada(xml_string);
+
+    static boost::mutex PARSER_PLUGIN_LOCK;
+    static boost::scoped_ptr<pluginlib::ClassLoader<urdf::URDFParser> > PARSER_PLUGIN_LOADER;
+    boost::mutex::scoped_lock _(PARSER_PLUGIN_LOCK);
+
+    try
+    {
+      if (!PARSER_PLUGIN_LOADER)
+	PARSER_PLUGIN_LOADER.reset(new pluginlib::ClassLoader<urdf::URDFParser>("urdf_parser_plugin", "urdf::URDFParser"));
+      const std::vector<std::string> &classes = PARSER_PLUGIN_LOADER->getDeclaredClasses();
+      bool found = false;
+      for (std::size_t i = 0 ; i < classes.size() ; ++i)
+	if (classes[i].find("collada") != std::string::npos)
+	{
+	  boost::shared_ptr<urdf::URDFParser> instance = PARSER_PLUGIN_LOADER->createInstance(classes[i]);
+	  if (instance)
+	    model = instance->parse(xml_string);
+	  found = true;
+	  break;
+	}
+      if (!found)
+	ROS_ERROR_STREAM("No URDF parser plugin found for Collada files. Did you install the corresponding package?");
+    }
+    catch(pluginlib::PluginlibException& ex)
+    {
+      ROS_ERROR_STREAM("Exception while creating planning plugin loader " << ex.what() << ". Will not parse Collada file.");
+    }
   }
   else {
     ROS_DEBUG("Parsing robot urdf xml string");

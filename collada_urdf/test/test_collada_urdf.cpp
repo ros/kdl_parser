@@ -34,7 +34,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-
+/*
 std::string readTestUrdfString() {
     std::ifstream file("test/pr2.urdf");
     std::stringstream ss;
@@ -79,7 +79,7 @@ TEST(collada_urdf, collada_from_urdf_model_works)
     ASSERT_TRUE(collada_urdf::colladaFromUrdfModel(robot_model, dom));
     ASSERT_TRUE(collada_urdf::colladaToFile(dom, "test/pr2.dae"));
 }
-
+*/
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
