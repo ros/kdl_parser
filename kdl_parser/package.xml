@@ -5,8 +5,7 @@
    The Kinematics and Dynamics Library (KDL) defines a tree structure
    to represent the kinematic and dynamic parameters of a robot
    mechanism. <tt>kdl_parser</tt> provides tools to construct a KDL
-   tree from an XML robot representation in either the URDf format or
-   the Collada format.
+   tree from an XML robot representation in URDF.
   </description>
 
   <author email="wim@willowgarage.com">Wim Meeussen</author>
@@ -19,15 +18,12 @@
   <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <buildtool_depend>pkg-config</buildtool_depend>
 
-  <build_depend>collada_parser</build_depend>
   <build_depend>orocos_kdl</build_depend>
   <build_depend>rosconsole</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>urdf</build_depend>
 
-  <run_depend>collada_parser</run_depend>
   <run_depend>orocos_kdl</run_depend>
   <run_depend>rosconsole</run_depend>
   <run_depend>roscpp</run_depend>

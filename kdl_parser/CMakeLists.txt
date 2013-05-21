@@ -8,7 +8,7 @@ include_directories(${Boost_INCLUDE_DIR})
 find_library(tinyxml_library tinyxml)
 
 find_package(catkin REQUIRED
-  COMPONENTS collada_parser roscpp rosconsole urdf
+  COMPONENTS roscpp rosconsole urdf
 )
 find_package(orocos_kdl REQUIRED)
 
@@ -21,7 +21,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
-  CATKIN_DEPENDS collada_parser roscpp rosconsole urdf
+  CATKIN_DEPENDS roscpp rosconsole urdf
 )
 
 add_library(${PROJECT_NAME} src/kdl_parser.cpp)
