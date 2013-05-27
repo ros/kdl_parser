@@ -3,6 +3,7 @@
 import roslib; roslib.load_manifest('joint_state_publisher')
 import rospy
 import wx
+import wx.lib.newevent
 import xml.dom.minidom
 from sensor_msgs.msg import JointState
 from math import pi
@@ -143,7 +144,8 @@ class JointStatePublisher():
                 joint['effort'] = effort
 
         if self.gui is not None:
-            self.gui.update_sliders()
+            # post an event here instead of directly calling the update_sliders method, to switch to the wx thread
+            wx.PostEvent(self.gui.GetEventHandler(), self.gui.UpdateSlidersEvent())
         
 
     def loop(self):
@@ -261,6 +263,9 @@ class JointStatePublisherGui(wx.Frame):
             self.joint_map[name] = {'slidervalue':0, 'display':display, 
                                     'slider':slider, 'joint':joint}
 
+        self.UpdateSlidersEvent, self.EVT_UPDATESLIDERS = wx.lib.newevent.NewEvent()
+        self.Bind(self.EVT_UPDATESLIDERS, self.updateSliders)
+        
         ### Buttons ###
         self.ctrbutton = wx.Button(panel, 1, 'Center')
         self.Bind(wx.EVT_SLIDER, self.sliderUpdate)
@@ -281,6 +286,9 @@ class JointStatePublisherGui(wx.Frame):
             joint = joint_info['joint']
             value = self.sliderToValue(purevalue, joint)
             joint['position'] = value
+        self.update_sliders()
+
+    def updateSliders(self, event):
         self.update_sliders()
 
     def update_sliders(self):
