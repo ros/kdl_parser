@@ -1154,24 +1154,66 @@ protected:
             geometry_origin = plink->collision->origin;
         }
 
-        if( !!geometry ) {
-            int igeom = 0;
-            string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
-            domGeometryRef pdomgeom = _WriteGeometry(geometry, geomid);
-            domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
-            pinstgeom->setUrl((string("#")+geomid).c_str());
+        urdf::Pose geometry_origin_inv = _poseInverse(geometry_origin);
 
-            // material
-            _WriteMaterial(pdomgeom->getID(), material);
-            domBind_materialRef pmat = daeSafeCast<domBind_material>(pinstgeom->add(COLLADA_ELEMENT_BIND_MATERIAL));
-            domBind_material::domTechnique_commonRef pmattec = daeSafeCast<domBind_material::domTechnique_common>(pmat->add(COLLADA_ELEMENT_TECHNIQUE_COMMON));
-            domInstance_materialRef pinstmat = daeSafeCast<domInstance_material>(pmattec->add(COLLADA_ELEMENT_INSTANCE_MATERIAL));
-            pinstmat->setTarget(xsAnyURI(*pdomgeom, string("#")+geomid+string("_mat")));
-            pinstmat->setSymbol("mat0");
+        if( !!geometry ) {
+            bool write_visual = false;
+            if ( !!plink->visual ) {
+              if (plink->visual_groups.size() > 0) {
+                std::map<std::string, boost::shared_ptr<std::vector<boost::shared_ptr<urdf::Visual > > > >::const_iterator def_group
+                  = plink->visual_groups.find("default");
+                if (def_group != plink->visual_groups.end()) {
+                  std::cerr << "found default visual group" << std::endl;
+                  if (def_group->second->size() > 1) {
+                    std::cerr << "visual group size = " << def_group->second->size() << std::endl;
+                    int igeom = 0;
+                    for (std::vector<boost::shared_ptr<urdf::Visual > >::const_iterator it = def_group->second->begin();
+                         it != def_group->second->end(); it++) {
+                      // geom
+                      string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
+                      igeom++;
+                      domGeometryRef pdomgeom;
+                      if ( it != def_group->second->begin() ) {
+                        urdf::Pose org_trans =  _poseMult(geometry_origin_inv, (*it)->origin);
+                        pdomgeom = _WriteGeometry((*it)->geometry, geomid, &org_trans);
+                      } else {
+                        pdomgeom = _WriteGeometry((*it)->geometry, geomid);
+                      }
+                      domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
+                      pinstgeom->setUrl((string("#") + geomid).c_str());
+                      // material
+                      _WriteMaterial(pdomgeom->getID(), (*it)->material);
+                      domBind_materialRef pmat = daeSafeCast<domBind_material>(pinstgeom->add(COLLADA_ELEMENT_BIND_MATERIAL));
+                      domBind_material::domTechnique_commonRef pmattec = daeSafeCast<domBind_material::domTechnique_common>(pmat->add(COLLADA_ELEMENT_TECHNIQUE_COMMON));
+                      domInstance_materialRef pinstmat = daeSafeCast<domInstance_material>(pmattec->add(COLLADA_ELEMENT_INSTANCE_MATERIAL));
+                      pinstmat->setTarget(xsAnyURI(*pdomgeom, string("#")+geomid+string("_mat")));
+                      pinstmat->setSymbol("mat0");
+                      write_visual = true;
+                    }
+                  }
+                }
+              }
+            }
+            if (!write_visual) {
+              std::cerr << "use default visual 1" << std::endl;
+              // just 1 visual
+              int igeom = 0;
+              string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
+              domGeometryRef pdomgeom = _WriteGeometry(geometry, geomid);
+              domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
+              pinstgeom->setUrl((string("#")+geomid).c_str());
+
+              // material
+              _WriteMaterial(pdomgeom->getID(), material);
+              domBind_materialRef pmat = daeSafeCast<domBind_material>(pinstgeom->add(COLLADA_ELEMENT_BIND_MATERIAL));
+              domBind_material::domTechnique_commonRef pmattec = daeSafeCast<domBind_material::domTechnique_common>(pmat->add(COLLADA_ELEMENT_TECHNIQUE_COMMON));
+              domInstance_materialRef pinstmat = daeSafeCast<domInstance_material>(pmattec->add(COLLADA_ELEMENT_INSTANCE_MATERIAL));
+              pinstmat->setTarget(xsAnyURI(*pdomgeom, string("#")+geomid+string("_mat")));
+              pinstmat->setSymbol("mat0");
+            }
         }
 
         _WriteTransformation(pnode, geometry_origin);
-        urdf::Pose geometry_origin_inv = _poseInverse(geometry_origin);
 
         // process all children
         FOREACHC(itjoint, plink->child_joints) {
@@ -1236,14 +1278,14 @@ protected:
         return out;
     }
 
-    domGeometryRef _WriteGeometry(boost::shared_ptr<urdf::Geometry> geometry, const std::string& geometry_id)
+    domGeometryRef _WriteGeometry(boost::shared_ptr<urdf::Geometry> geometry, const std::string& geometry_id, urdf::Pose *org_trans = NULL)
     {
         domGeometryRef cgeometry = daeSafeCast<domGeometry>(_geometriesLib->add(COLLADA_ELEMENT_GEOMETRY));
         cgeometry->setId(geometry_id.c_str());
         switch (geometry->type) {
         case urdf::Geometry::MESH: {
             urdf::Mesh* urdf_mesh = (urdf::Mesh*) geometry.get();
-            _loadMesh(urdf_mesh->filename, cgeometry, urdf_mesh->scale);
+            _loadMesh(urdf_mesh->filename, cgeometry, urdf_mesh->scale, org_trans);
             break;
         }
         case urdf::Geometry::SPHERE: {
@@ -1446,7 +1488,7 @@ protected:
             pacc->setCount(parray->getCount());
     }
 
-    void _loadMesh(std::string const& filename, domGeometryRef pdomgeom, const urdf::Vector3& scale)
+    void _loadMesh(std::string const& filename, domGeometryRef pdomgeom, const urdf::Vector3& scale, urdf::Pose *org_trans)
     {
         const aiScene* scene = _importer.ReadFile(filename, aiProcess_SortByPType|aiProcess_Triangulate); //|aiProcess_GenNormals|aiProcess_GenUVCoords|aiProcess_FlipUVs);
         if( !scene ) {
@@ -1491,11 +1533,11 @@ protected:
             pvertinput->setSemantic("POSITION");
             pvertinput->setSource(domUrifragment(*pvertsource, string("#")+string(pvertsource->getID())));
         }
-        _buildAiMesh(scene,scene->mRootNode,pdommesh,parray, pdomgeom->getID(),scale);
+        _buildAiMesh(scene,scene->mRootNode,pdommesh,parray, pdomgeom->getID(),scale,org_trans);
         pacc->setCount(parray->getCount());
     }
 
-    void _buildAiMesh(const aiScene* scene, aiNode* node, domMeshRef pdommesh, domFloat_arrayRef parray, const string& geomid, const urdf::Vector3& scale)
+    void _buildAiMesh(const aiScene* scene, aiNode* node, domMeshRef pdommesh, domFloat_arrayRef parray, const string& geomid, const urdf::Vector3& scale, urdf::Pose *org_trans = NULL)
     {
         if( !node ) {
             return;
@@ -1527,9 +1569,20 @@ protected:
                 for (uint32_t j = 0; j < input_mesh->mNumVertices; j++) {
                     aiVector3D p = input_mesh->mVertices[j];
                     p *= transform;
-                    parray->getValue().append(p.x*scale.x);
-                    parray->getValue().append(p.y*scale.y);
-                    parray->getValue().append(p.z*scale.z);
+                    if (org_trans) {
+                      urdf::Vector3 vv;
+                      vv.x = p.x*scale.x;
+                      vv.y = p.y*scale.y;
+                      vv.z = p.z*scale.z;
+                      urdf::Vector3 nv = _poseMult(*org_trans, vv);
+                      parray->getValue().append(nv.x);
+                      parray->getValue().append(nv.y);
+                      parray->getValue().append(nv.z);
+                    } else {
+                      parray->getValue().append(p.x*scale.x);
+                      parray->getValue().append(p.y*scale.y);
+                      parray->getValue().append(p.z*scale.z);
+                    }
                 }
             }
 
@@ -1612,7 +1665,7 @@ protected:
         }
 
         for (uint32_t i=0; i < node->mNumChildren; ++i) {
-            _buildAiMesh(scene, node->mChildren[i], pdommesh,parray,geomid,scale);
+            _buildAiMesh(scene, node->mChildren[i], pdommesh,parray,geomid,scale,org_trans);
         }
     }
 
