@@ -1163,9 +1163,7 @@ protected:
                 std::map<std::string, boost::shared_ptr<std::vector<boost::shared_ptr<urdf::Visual > > > >::const_iterator def_group
                   = plink->visual_groups.find("default");
                 if (def_group != plink->visual_groups.end()) {
-                  std::cerr << "found default visual group" << std::endl;
                   if (def_group->second->size() > 1) {
-                    std::cerr << "visual group size = " << def_group->second->size() << std::endl;
                     int igeom = 0;
                     for (std::vector<boost::shared_ptr<urdf::Visual > >::const_iterator it = def_group->second->begin();
                          it != def_group->second->end(); it++) {
@@ -1195,7 +1193,6 @@ protected:
               }
             }
             if (!write_visual) {
-              std::cerr << "use default visual 1" << std::endl;
               // just 1 visual
               int igeom = 0;
               string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
