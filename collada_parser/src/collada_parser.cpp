@@ -1187,7 +1187,7 @@ protected:
       </comments>\n\
     </contributor>\n\
     <unit name=\"meter\" meter=\"1.0\"/>\n\
-    <up_axis>Z_UP</up_axis>\n\
+    <up_axis>Y_UP</up_axis>\n\
   </asset>\n\
   <library_materials>\n"));
         for(unsigned int i=0; i < index; i++) {
