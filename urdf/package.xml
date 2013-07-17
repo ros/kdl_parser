@@ -1,6 +1,6 @@
 <package>
   <name>urdf</name>
-  <version>1.10.12</version>
+  <version>1.10.13</version>
   <description>
     This package contains a C++ parser for the Unified Robot Description
     Format (URDF), which is an XML format for representing a robot model. 
