@@ -3,6 +3,8 @@ project(resource_retriever)
 
 find_package(catkin REQUIRED COMPONENTS rosconsole roslib)
 
+catkin_python_setup()
+
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include)
@@ -26,7 +28,7 @@ target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARIES} ${catkin_LIBRARIES})
 
 add_subdirectory(test EXCLUDE_FROM_ALL)
 
-install(TARGETS ${PROJECT_NAME} 
+install(TARGETS ${PROJECT_NAME}
   DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
 install(DIRECTORY include/${PROJECT_NAME}/
