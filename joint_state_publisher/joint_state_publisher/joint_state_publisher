@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import roslib; roslib.load_manifest('joint_state_publisher')
 import rospy
 import wx
 import wx.lib.newevent
