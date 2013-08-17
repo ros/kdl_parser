@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(collada_urdf)
 
-find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf geometric_shapes)
+find_package(catkin REQUIRED COMPONENTS angles collada_parser resource_retriever urdf geometric_shapes cmake_modules)
+
+find_package(TinyXML REQUIRED)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
@@ -39,19 +41,17 @@ else()
   set(IS_ASSIMP3 0) # most likely not
 endif()
 
-find_library(tinyxml_library tinyxml)
-
 find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
 if( COLLADA_DOM_FOUND )
   include_directories(${COLLADA_DOM_INCLUDE_DIRS})
   link_directories(${COLLADA_DOM_LIBRARY_DIRS})
 endif()
 
-include_directories(${catkin_INCLUDE_DIRS})
+include_directories(${TinyXML_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/collada_urdf.cpp)
-target_link_libraries(${PROJECT_NAME} ${tinyxml_library} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+target_link_libraries(${PROJECT_NAME} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
   ${Boost_LIBRARIES} ${ASSIMP_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
