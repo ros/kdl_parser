@@ -31,5 +31,9 @@
   <run_depend>urdf_parser_plugin</run_depend>
   <run_depend>class_loader</run_depend>
 
+  <export>
+    <urdf_parser_plugin plugin="${prefix}/collada_parser_plugin_description.xml"/>
+  </export>
+
 </package>
 

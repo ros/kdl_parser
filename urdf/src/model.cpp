@@ -153,7 +153,7 @@ bool Model::initString(const std::string& xml_string)
       const std::vector<std::string> &classes = PARSER_PLUGIN_LOADER->getDeclaredClasses();
       bool found = false;
       for (std::size_t i = 0 ; i < classes.size() ; ++i)
-	if (classes[i].find("collada") != std::string::npos)
+	if (classes[i].find("urdf/ColladaURDFParser") != std::string::npos)
 	{
 	  boost::shared_ptr<urdf::URDFParser> instance = PARSER_PLUGIN_LOADER->createInstance(classes[i]);
 	  if (instance)
