@@ -12,7 +12,7 @@ catkin_package(
 
 include_directories(include)
 
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system filesystem program_options)
 include_directories(${Boost_INCLUDE_DIR})
 
 find_package(assimp QUIET)
@@ -60,11 +60,16 @@ add_executable(urdf_to_collada src/urdf_to_collada.cpp)
 target_link_libraries(urdf_to_collada ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
   ${Boost_LIBRARIES} ${PROJECT_NAME})
 
+add_executable(collada_to_urdf src/collada_to_urdf.cpp)
+target_link_libraries(collada_to_urdf ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES} ${Boost_LIBRARIES})
+set_target_properties(collada_to_urdf PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
+set_target_properties(collada_to_urdf PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}")
+
 catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
 target_link_libraries(test_collada_writer ${PROJECT_NAME} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
   ${Boost_LIBRARIES})
 
-install(TARGETS ${PROJECT_NAME} urdf_to_collada
+install(TARGETS ${PROJECT_NAME} urdf_to_collada collada_to_urdf
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

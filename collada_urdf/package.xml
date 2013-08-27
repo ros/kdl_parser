@@ -25,6 +25,8 @@
   <build_depend>collada_parser</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>urdf</build_depend>
+  <build_depend>urdfdom</build_depend>
+  <build_depend>urdfdom_headers</build_depend>
   <build_depend>geometric_shapes</build_depend>
   <build_depend>cmake_modules</build_depend>
 
@@ -35,6 +37,8 @@
   <run_depend>resource_retriever</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>urdf</run_depend>
+  <run_depend>urdfdom</run_depend>
+  <run_depend>urdfdom_headers</run_depend>
   <run_depend>geometric_shapes</run_depend>
 
 </package>
