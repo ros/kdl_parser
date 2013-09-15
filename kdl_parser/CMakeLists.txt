@@ -31,8 +31,10 @@ target_link_libraries(${PROJECT_NAME}
 add_executable(check_kdl_parser src/check_kdl_parser.cpp )
 target_link_libraries(check_kdl_parser ${PROJECT_NAME})
 
-catkin_add_gtest(test_kdl_parser test/test_kdl_parser.cpp )
-target_link_libraries(test_kdl_parser ${PROJECT_NAME})
+if(CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(test_kdl_parser test/test_kdl_parser.cpp )
+  target_link_libraries(test_kdl_parser ${PROJECT_NAME})
+endif()
 
 # How does CATKIN do this?
 #rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_kdl_parser.launch)

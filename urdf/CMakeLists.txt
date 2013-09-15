@@ -33,8 +33,10 @@ if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
 endif(APPLE)
 
-catkin_add_gtest(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
-target_link_libraries(test_parser ${PROJECT_NAME})
+if(CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
+  target_link_libraries(test_parser ${PROJECT_NAME})
+endif()
 
 # no idea how CATKIN does this
 # rosbuild_add_rostest(${PROJECT_SOURCE_DIR}/test/test_robot_model_parser.launch)

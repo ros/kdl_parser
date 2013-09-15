@@ -65,9 +65,11 @@ target_link_libraries(collada_to_urdf ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${
 set_target_properties(collada_to_urdf PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(collada_to_urdf PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}")
 
-catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
-target_link_libraries(test_collada_writer ${PROJECT_NAME} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
-  ${Boost_LIBRARIES})
+if(CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(test_collada_writer test/test_collada_urdf.cpp)
+  target_link_libraries(test_collada_writer ${PROJECT_NAME} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
+    ${Boost_LIBRARIES})
+endif()
 
 install(TARGETS ${PROJECT_NAME} urdf_to_collada collada_to_urdf
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
