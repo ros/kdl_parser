@@ -19,7 +19,7 @@
   <url type="repository">https://github.com/ros/robot_model</url>
   <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend version_gte="0.5.68">catkin</buildtool_depend>
 
   <build_depend>curl</build_depend>
   <build_depend>rosconsole</build_depend>
