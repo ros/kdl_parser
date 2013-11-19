@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.10.16 (2013-11-18)
+--------------------
 * check for CATKIN_ENABLE_TESTING
 * fix for compiling collada_to_urdf, add dependency to tf
 * add collada_to_urdf.cpp for converting collada file to urdf file

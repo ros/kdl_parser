@@ -2,8 +2,8 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.10.16 (2013-11-18)
+--------------------
 * check for CATKIN_ENABLE_TESTING
 * fix for using collada_parser_plugin
 
