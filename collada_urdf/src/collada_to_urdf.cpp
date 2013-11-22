@@ -74,6 +74,7 @@ void assimp_file_export(std::string fname, std::string ofname,
     fname.erase(0, strlen("file://"));
   }
   Assimp::Importer importer;
+  /*
   { // ignore UP_DIRECTION tag in collada
     bool existing;
     importer.SetPropertyBool(AI_CONFIG_IMPORT_COLLADA_IGNORE_UP_DIRECTION, true, &existing);
@@ -81,6 +82,7 @@ void assimp_file_export(std::string fname, std::string ofname,
       fprintf(stderr, ";; OverWrite : Ignore UP_DIRECTION", existing);
     }
   }
+  */
   const aiScene* scene = importer.ReadFile(fname.c_str(),
                                            aiProcess_Triangulate            |
                                            aiProcess_GenNormals             |
