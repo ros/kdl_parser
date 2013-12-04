@@ -10,7 +10,7 @@
   </description>
   <author>Rosen Diankov</author>
   <author>Kei Okada</author>
-  <maintainer email="isucan@willowgarage.com">Ioan Sucan</maintainer>
+  <maintainer email="isucan@gmail.com">Ioan Sucan</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/collada_parser</url>

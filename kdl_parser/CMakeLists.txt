@@ -21,6 +21,7 @@ catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp rosconsole urdf
+  DEPENDS orocos_kdl TinyXML
 )
 
 add_library(${PROJECT_NAME} src/kdl_parser.cpp)
