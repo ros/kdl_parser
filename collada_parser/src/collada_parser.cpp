@@ -951,6 +951,8 @@ protected:
 
                     boost::shared_ptr<Joint> pjoint(new Joint());
                     pjoint->limits.reset(new JointLimits());
+                    pjoint->limits->velocity = 0.0;
+                    pjoint->limits->effort = 0.0;
                     pjoint->parent_link_name = plink->name;
 
                     if( !!pdomjoint->getName() ) {
@@ -1096,7 +1098,9 @@ protected:
 
                     //ROS_INFO("joint %s axis: %f %f %f",pjoint->name.c_str(),pjoint->axis.x,pjoint->axis.y,pjoint->axis.z);
                     pjoint->parent_to_joint_origin_transform = _poseMult(tatt,_poseFromMatrix(_ExtractFullTransform(pattfull->getLink())));
-                    pjoint->limits->velocity = pjoint->type == Joint::PRISMATIC ? 0.01 : 0.5f;
+                    if (pjoint->limits->velocity == 0.0) {
+                      pjoint->limits->velocity = pjoint->type == Joint::PRISMATIC ? 0.01 : 0.5f;
+                    }
                     pchildlink.reset();
                     ++numjoints;
                 }
