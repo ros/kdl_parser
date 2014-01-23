@@ -15,5 +15,5 @@
   <joint name="joint12" type="fixed">
     <parent link="link1"/>
     <child link="link2"/>
-  </link>
+  </joint>
 </robot>

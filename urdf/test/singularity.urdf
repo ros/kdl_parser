@@ -16,7 +16,7 @@
     <parent link="link1"/>
     <child link="link2"/>
     <origin xyz="0 0 0" rpy="1.0 1.5707963267948966 0.5707963267948966"/>
-  </link>
+  </joint>
   <link name="link3">
     <inertial>
       <mass value="1"/>
@@ -27,5 +27,5 @@
     <parent link="link2"/>
     <child link="link3"/>
     <origin xyz="0 0 0" rpy="1.5707963267948966 1.5707963267948966 1.5707963267948966"/>
-  </link>
+  </joint>
 </robot>
