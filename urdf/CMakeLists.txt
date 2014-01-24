@@ -34,8 +34,9 @@ if(APPLE)
 endif(APPLE)
 
 if(CATKIN_ENABLE_TESTING)
-  catkin_add_gtest(test_parser EXCLUDE_FROM_ALL test/test_robot_model_parser.cpp)
-  target_link_libraries(test_parser ${PROJECT_NAME})
+  find_package(catkin REQUIRED COMPONENTS rostest)
+  add_rostest_gtest(test_urdf_parser test/test_robot_model_parser.launch test/test_robot_model_parser.cpp)
+  target_link_libraries(test_urdf_parser ${PROJECT_NAME})
 endif()
 
 # no idea how CATKIN does this

@@ -33,7 +33,8 @@ add_executable(check_kdl_parser src/check_kdl_parser.cpp )
 target_link_libraries(check_kdl_parser ${PROJECT_NAME})
 
 if(CATKIN_ENABLE_TESTING)
-  catkin_add_gtest(test_kdl_parser test/test_kdl_parser.cpp )
+  find_package(catkin REQUIRED COMPONENTS rostest)
+  add_rostest_gtest(test_kdl_parser test/test_kdl_parser.launch test/test_kdl_parser.cpp )
   target_link_libraries(test_kdl_parser ${PROJECT_NAME})
 endif()
 
