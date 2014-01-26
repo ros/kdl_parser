@@ -62,7 +62,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 
-#if defined(IS_ASSIMP3)
+#if defined(ASSIMP_UNIFIED_HEADER_NAMES)
 #include <assimp/scene.h>
 #include <assimp/LogStream.hpp>
 #include <assimp/DefaultLogger.hpp>
