@@ -1022,9 +1022,18 @@ protected:
                     pjoint->child_link_name = pchildlink->name;
 
                     //  Axes and Anchor assignment.
-                    pjoint->axis.x = pdomaxis->getAxis()->getValue()[0];
-                    pjoint->axis.y = pdomaxis->getAxis()->getValue()[1];
-                    pjoint->axis.z = pdomaxis->getAxis()->getValue()[2];
+                    {
+                      Vector3 ax(pdomaxis->getAxis()->getValue()[0],
+                                 pdomaxis->getAxis()->getValue()[1],
+                                 pdomaxis->getAxis()->getValue()[2]);
+
+                      // rotate axis
+                      ax = tatt.rotation * ax;
+
+                      pjoint->axis.x = ax.x;
+                      pjoint->axis.y = ax.y;
+                      pjoint->axis.z = ax.z;
+                    }
 
                     if (!motion_axis_info) {
                         ROS_WARN_STREAM(str(boost::format("No motion axis info for joint %s\n")%pjoint->name));
