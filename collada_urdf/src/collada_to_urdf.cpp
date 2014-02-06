@@ -14,7 +14,9 @@
 #include <assimp/scene.h>
 #else
 #include <assimp.hpp>
+#if defined(ASSIMP_EXPORT_API)
 #include <assimp/export.hpp>
+#endif
 #include <aiScene.h>
 #include <aiPostProcess.h>
 #endif
@@ -67,6 +69,7 @@ os << "xyz: " << origin.position.x << " " << origin.position.y << " " << origin.
 
 void assimp_file_export(std::string fname, std::string ofname,
                         std::string mesh_type = "collada") {
+#if defined(ASSIMP_EXPORT_API)
   if (fname.find("file://") == 0) {
     fname.erase(0, strlen("file://"));
   }
@@ -100,6 +103,7 @@ void assimp_file_export(std::string fname, std::string ofname,
     std::string str( "assimp error" );
     std::cerr << ";; " << str << std::endl;
   }
+#endif
 }
 
 // assimp bounding box calculation
@@ -593,7 +597,9 @@ int main(int argc, char** argv)
     cerr << ";; Adding gazebo description" << endl;
   }
   if (vm.count("use_assimp_export")) {
+#if defined(ASSIMP_EXPORT_API)
     use_assimp_export = true;
+#endif
     cerr << ";; Use assimp export" << endl;
   }
   if (vm.count("original_inertia_rotation")) {
