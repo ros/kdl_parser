@@ -5,8 +5,7 @@
 #include <collada_parser/collada_parser.h>
 #include <urdf_parser/urdf_parser.h>
 
-#if IS_ASSIMP3
-// assimp 3 (assimp_devel)
+#if defined(ASSIMP_UNIFIED_HEADER_NAMES)
 #include <assimp/IOSystem.hpp>
 #include <assimp/IOStream.hpp>
 #include <assimp/Importer.hpp>
@@ -14,9 +13,10 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #else
-// assimp 2
 #include <assimp.hpp>
-//#include <assimp/export.hpp>
+#if defined(ASSIMP_EXPORT_API)
+#include <assimp/export.hpp>
+#endif
 #include <aiScene.h>
 #include <aiPostProcess.h>
 #endif
@@ -69,7 +69,7 @@ os << "xyz: " << origin.position.x << " " << origin.position.y << " " << origin.
 
 void assimp_file_export(std::string fname, std::string ofname,
                         std::string mesh_type = "collada") {
-#if IS_ASSIMP3
+#if defined(ASSIMP_EXPORT_API)
   if (fname.find("file://") == 0) {
     fname.erase(0, strlen("file://"));
   }
@@ -597,7 +597,7 @@ int main(int argc, char** argv)
     cerr << ";; Adding gazebo description" << endl;
   }
   if (vm.count("use_assimp_export")) {
-#if IS_ASSIMP3
+#if defined(ASSIMP_EXPORT_API)
     use_assimp_export = true;
 #endif
     cerr << ";; Use assimp export" << endl;
