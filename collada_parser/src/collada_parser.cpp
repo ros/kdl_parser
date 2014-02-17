@@ -683,9 +683,25 @@ protected:
         for (size_t ilink = 0; ilink < ktec->getLink_array().getCount(); ++ilink) {
             domLinkRef pdomlink = ktec->getLink_array()[ilink];
             _RootOrigin  = _poseFromMatrix(_ExtractFullTransform(pdomlink));
-            ROS_DEBUG("RootOrigin: %lf %lf %lf %lf %lf %lf %lf",
-                      _RootOrigin.position.x,  _RootOrigin.position.y, _RootOrigin.position.z,
+            ROS_DEBUG("RootOrigin: %s %lf %lf %lf %lf %lf %lf %lf",
+                      pdomlink->getName(),
+                      _RootOrigin.position.x, _RootOrigin.position.y, _RootOrigin.position.z,
                       _RootOrigin.rotation.x, _RootOrigin.rotation.y, _RootOrigin.rotation.z, _RootOrigin.rotation.w);
+
+            domNodeRef pvisualnode;
+            FOREACH(it, bindings.listKinematicsVisualBindings) {
+              if(strcmp(it->first->getName() ,pdomlink->getName()) == 0) {
+                pvisualnode = it->first;
+                break;
+              }
+            }
+            if (!!pvisualnode) {
+              _VisualRootOrigin  = _poseFromMatrix(_getNodeParentTransform(pvisualnode));
+              ROS_DEBUG("VisualRootOrigin: %s %lf %lf %lf %lf %lf %lf %lf",
+                        pdomlink->getName(),
+                        _VisualRootOrigin.position.x, _VisualRootOrigin.position.y, _VisualRootOrigin.position.z,
+                        _VisualRootOrigin.rotation.x, _VisualRootOrigin.rotation.y, _VisualRootOrigin.rotation.z, _VisualRootOrigin.rotation.w);
+            }
             _ExtractLink(pdomlink, ilink == 0 ? pnode : domNodeRef(), Pose(), Pose(), vdomjoints, bindings);
         }
 
@@ -862,7 +878,6 @@ protected:
             }
         }
 
-
         std::list<GEOMPROPERTIES> listGeomProperties;
         if (!pdomlink) {
             ROS_WARN_STREAM("Extract object NOT kinematics !!!\n");
@@ -880,7 +895,8 @@ protected:
             //            ROS_INFO("link %s trans: %f %f %f",linkname.c_str(),plink->visual->origin.position.x,plink->visual->origin.position.y,plink->visual->origin.position.z);
 
             // Get the geometry
-            _ExtractGeometry(pdomnode,listGeomProperties,listAxisBindings,_poseMult(_poseMult(tParentWorldLink,tlink),plink->visual->origin));
+            _ExtractGeometry(pdomnode, listGeomProperties, listAxisBindings,
+                             _poseMult(_poseMult(tParentWorldLink,tlink), plink->visual->origin));
 
             ROS_DEBUG_STREAM(str(boost::format("After ExtractGeometry Attachment link elements: %d\n")%pdomlink->getAttachment_full_array().getCount()));
 
@@ -1388,10 +1404,17 @@ protected:
             itgeom++; // change only the transformations of the newly found geometries.
         }
 
-        boost::array<double,12> tmnodegeom = _poseMult(_matrixFromPose(_poseInverse(tlink)), _poseMult(_getNodeParentTransform(pdomnode), _ExtractFullTransform(pdomnode)));
+        boost::array<double,12> tmnodegeom = _poseMult(_matrixFromPose(_poseInverse(tlink)),
+                                                       _poseMult(_poseMult(_matrixFromPose(_poseInverse(_VisualRootOrigin)),
+                                                                           _getNodeParentTransform(pdomnode)),
+                                                                 _ExtractFullTransform(pdomnode)));
         Pose tnodegeom;
         Vector3 vscale(1,1,1);
         _decompose(tmnodegeom, tnodegeom, vscale);
+
+        ROS_DEBUG("tnodegeom: " << pdomnode->getName()
+                  << tnodegeom.position.x << " " << tnodegeom.position.y << " " << tnodegeom.position.z << " / "
+                  << tnodegeom.rotation.x << " " << tnodegeom.rotation.y << " " << tnodegeom.rotation.z << " " << tnodegeom.rotation.w);
 
         //        std::stringstream ss; ss << "geom: ";
         //        for(int i = 0; i < 4; ++i) {
@@ -2706,6 +2729,7 @@ protected:
     std::string _resourcedir;
     boost::shared_ptr<ModelInterface> _model;
     Pose _RootOrigin;
+    Pose _VisualRootOrigin;
 };
 
 
