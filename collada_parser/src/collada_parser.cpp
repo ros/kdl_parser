@@ -1412,9 +1412,10 @@ protected:
         Vector3 vscale(1,1,1);
         _decompose(tmnodegeom, tnodegeom, vscale);
 
-        ROS_DEBUG("tnodegeom: " << pdomnode->getName()
-                  << tnodegeom.position.x << " " << tnodegeom.position.y << " " << tnodegeom.position.z << " / "
-                  << tnodegeom.rotation.x << " " << tnodegeom.rotation.y << " " << tnodegeom.rotation.z << " " << tnodegeom.rotation.w);
+        ROS_DEBUG_STREAM("tnodegeom: " << pdomnode->getName()
+                         << tnodegeom.position.x << " " << tnodegeom.position.y << " " << tnodegeom.position.z << " / "
+                         << tnodegeom.rotation.x << " " << tnodegeom.rotation.y << " " << tnodegeom.rotation.z << " "
+                         << tnodegeom.rotation.w);
 
         //        std::stringstream ss; ss << "geom: ";
         //        for(int i = 0; i < 4; ++i) {
