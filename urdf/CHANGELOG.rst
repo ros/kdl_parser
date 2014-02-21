@@ -2,8 +2,8 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.0 (2014-02-21)
+-------------------
 * fix urdf files for test
 * fix test at urdf
 * Contributors: YoheiKakiuchi

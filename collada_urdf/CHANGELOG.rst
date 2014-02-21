@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.0 (2014-02-21)
+-------------------
 * Use VERSION_LESS instead of STRLESS
   The version comparison routines were added in cmake 2.8.0
 * Fix export API detection (for assimp < 2.0.885)
