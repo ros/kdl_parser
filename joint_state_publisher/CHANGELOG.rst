@@ -5,7 +5,7 @@ Changelog for package joint_state_publisher
 1.11.0 (2014-02-21)
 -------------------
 * Use #!/usr/bin/env python for systems with multiple Python versions.
-* Contributors: Benjamin Chrétien
+* Contributors: Benjamin Chretien
 
 1.10.18 (2013-12-04)
 --------------------
