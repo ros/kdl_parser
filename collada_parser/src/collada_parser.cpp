@@ -1140,22 +1140,22 @@ protected:
         }
 
         plink->visual->geometry = _CreateGeometry(plink->name, listGeomProperties);
-        // visual_groups
-        boost::shared_ptr<std::vector<boost::shared_ptr<Visual > > > viss;
-        viss.reset(new std::vector<boost::shared_ptr<Visual > >);
-        viss->push_back(plink->visual);
-        plink->visual_groups.insert(std::make_pair("default", viss));
+        // visual_groups deprecated
+        //boost::shared_ptr<std::vector<boost::shared_ptr<Visual > > > viss;
+        //viss.reset(new std::vector<boost::shared_ptr<Visual > >);
+        //viss->push_back(plink->visual);
+        //plink->visual_groups.insert(std::make_pair("default", viss));
 
         // collision
         plink->collision.reset(new Collision());
         plink->collision->geometry = plink->visual->geometry;
         plink->collision->origin   = plink->visual->origin;
 
-        // collision_groups
-        boost::shared_ptr<std::vector<boost::shared_ptr<Collision > > > cols;
-        cols.reset(new std::vector<boost::shared_ptr<Collision > >);
-        cols->push_back(plink->collision);
-        plink->collision_groups.insert(std::make_pair("default", cols));
+        // collision_groups deprecated
+        //boost::shared_ptr<std::vector<boost::shared_ptr<Collision > > > cols;
+        //cols.reset(new std::vector<boost::shared_ptr<Collision > >);
+        //cols->push_back(plink->collision);
+        //plink->collision_groups.insert(std::make_pair("default", cols));
 
         return plink;
     }
