@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.1 (2014-03-20)
+-------------------
 * Use assimp-dev dep for building
 * Contributors: Scott K Logan
 

@@ -2,8 +2,8 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.1 (2014-03-20)
+-------------------
 * remove visual and collision if there is no vertices
 * do not use visual and collision group
 * fix debug message
