@@ -2,6 +2,11 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Use assimp-dev dep for building
+* Contributors: Scott K Logan
+
 1.11.0 (2014-02-21)
 -------------------
 * Use VERSION_LESS instead of STRLESS

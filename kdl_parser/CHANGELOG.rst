@@ -2,6 +2,9 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.11.0 (2014-02-21)
 -------------------
 * fix test at kdl_parser

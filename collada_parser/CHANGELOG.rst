@@ -2,6 +2,14 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* remove visual and collision if there is no vertices
+* do not use visual and collision group
+* fix debug message
+* fix problem of root coordinates
+* Contributors: YoheiKakiuchi
+
 1.11.0 (2014-02-21)
 -------------------
 * fix, joint axis should be rotated depend on local coords
