@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.2 (2014-03-22)
+-------------------
 * use new  urdfdom_headers API
 * Contributors: Ioan Sucan
 
