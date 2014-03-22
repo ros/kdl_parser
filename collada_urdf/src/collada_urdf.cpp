@@ -1159,39 +1159,33 @@ protected:
         if( !!geometry ) {
             bool write_visual = false;
             if ( !!plink->visual ) {
-              if (plink->visual_groups.size() > 0) {
-                std::map<std::string, boost::shared_ptr<std::vector<boost::shared_ptr<urdf::Visual > > > >::const_iterator def_group
-                  = plink->visual_groups.find("default");
-                if (def_group != plink->visual_groups.end()) {
-                  if (def_group->second->size() > 1) {
-                    int igeom = 0;
-                    for (std::vector<boost::shared_ptr<urdf::Visual > >::const_iterator it = def_group->second->begin();
-                         it != def_group->second->end(); it++) {
-                      // geom
-                      string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
-                      igeom++;
-                      domGeometryRef pdomgeom;
-                      if ( it != def_group->second->begin() ) {
-                        urdf::Pose org_trans =  _poseMult(geometry_origin_inv, (*it)->origin);
-                        pdomgeom = _WriteGeometry((*it)->geometry, geomid, &org_trans);
-                      } else {
-                        pdomgeom = _WriteGeometry((*it)->geometry, geomid);
-                      }
-                      domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
-                      pinstgeom->setUrl((string("#") + geomid).c_str());
-                      // material
-                      _WriteMaterial(pdomgeom->getID(), (*it)->material);
-                      domBind_materialRef pmat = daeSafeCast<domBind_material>(pinstgeom->add(COLLADA_ELEMENT_BIND_MATERIAL));
-                      domBind_material::domTechnique_commonRef pmattec = daeSafeCast<domBind_material::domTechnique_common>(pmat->add(COLLADA_ELEMENT_TECHNIQUE_COMMON));
-                      domInstance_materialRef pinstmat = daeSafeCast<domInstance_material>(pmattec->add(COLLADA_ELEMENT_INSTANCE_MATERIAL));
-                      pinstmat->setTarget(xsAnyURI(*pdomgeom, string("#")+geomid+string("_mat")));
-                      pinstmat->setSymbol("mat0");
-                      write_visual = true;
-                    }
-                  }
-                }
-              }
-            }
+              if (plink->visual_array.size() > 1) {
+		int igeom = 0;
+		for (std::vector<boost::shared_ptr<urdf::Visual > >::const_iterator it = plink->visual_array.begin();
+		     it != plink->visual_array.end(); it++) {
+		  // geom
+		  string geomid = _ComputeId(str(boost::format("g%s_%s_geom%d")%strModelUri%linksid%igeom));
+		  igeom++;
+		  domGeometryRef pdomgeom;
+		  if ( it != plink->visual_array.begin() ) {
+		    urdf::Pose org_trans =  _poseMult(geometry_origin_inv, (*it)->origin);
+		    pdomgeom = _WriteGeometry((*it)->geometry, geomid, &org_trans);
+		  } else {
+		    pdomgeom = _WriteGeometry((*it)->geometry, geomid);
+		  }
+		  domInstance_geometryRef pinstgeom = daeSafeCast<domInstance_geometry>(pnode->add(COLLADA_ELEMENT_INSTANCE_GEOMETRY));
+		  pinstgeom->setUrl((string("#") + geomid).c_str());
+		  // material
+		  _WriteMaterial(pdomgeom->getID(), (*it)->material);
+		  domBind_materialRef pmat = daeSafeCast<domBind_material>(pinstgeom->add(COLLADA_ELEMENT_BIND_MATERIAL));
+		  domBind_material::domTechnique_commonRef pmattec = daeSafeCast<domBind_material::domTechnique_common>(pmat->add(COLLADA_ELEMENT_TECHNIQUE_COMMON));
+		  domInstance_materialRef pinstmat = daeSafeCast<domInstance_material>(pmattec->add(COLLADA_ELEMENT_INSTANCE_MATERIAL));
+		  pinstmat->setTarget(xsAnyURI(*pdomgeom, string("#")+geomid+string("_mat")));
+		  pinstmat->setSymbol("mat0");
+		  write_visual = true;
+		}
+	      }
+	    }
             if (!write_visual) {
               // just 1 visual
               int igeom = 0;
