@@ -17,8 +17,10 @@ link_directories(${catkin_LIBRARY_DIRS})
 link_directories(${orocos_kdl_LIBRARY_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
+find_library(KDL_LIBRARY REQUIRED NAMES orocos-kdl HINTS ${orocos_kdl_LIBRARY_DIRS})
+
 catkin_package(
-  LIBRARIES ${PROJECT_NAME}
+  LIBRARIES ${PROJECT_NAME} ${KDL_LIBRARY}
   INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp rosconsole urdf
   DEPENDS orocos_kdl TinyXML
