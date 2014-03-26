@@ -123,7 +123,6 @@ RigidBodyInertia toKdl(boost::shared_ptr<urdf::Inertial> i)
 }
 
 
-
 // recursive function to walk through tree
 bool addChildrenToTree(boost::shared_ptr<const urdf::Link> root, Tree& tree)
 {
