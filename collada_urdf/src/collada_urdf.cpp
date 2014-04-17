@@ -1276,6 +1276,7 @@ protected:
         switch (geometry->type) {
         case urdf::Geometry::MESH: {
             urdf::Mesh* urdf_mesh = (urdf::Mesh*) geometry.get();
+	    cgeometry->setName(urdf_mesh->filename.c_str());
             _loadMesh(urdf_mesh->filename, cgeometry, urdf_mesh->scale, org_trans);
             break;
         }
