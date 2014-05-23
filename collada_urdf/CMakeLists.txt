@@ -12,9 +12,6 @@ catkin_package(
 
 include_directories(include)
 
-find_package(Boost REQUIRED COMPONENTS system filesystem program_options)
-include_directories(${Boost_INCLUDE_DIR})
-
 find_package(assimp QUIET)
 if ( NOT ASSIMP_FOUND )
   find_package(Assimp QUIET)
@@ -41,6 +38,11 @@ else()
   set(ASSIMP_LINK_FLAGS)
   set(ASSIMP_INCLUDE_DIRS)
 endif()
+
+# Note: assimp 3.1 overwrites CMake Boost variables, so we need to check for
+# Boost after assimp.
+find_package(Boost REQUIRED COMPONENTS system filesystem program_options)
+include_directories(${Boost_INCLUDE_DIR})
 
 find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
 if( COLLADA_DOM_FOUND )
