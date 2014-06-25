@@ -2,6 +2,11 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* update usage of urdfdom_headers for indigo/trusty
+* Contributors: William Woodall
+
 1.11.2 (2014-03-22)
 -------------------
 

@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* kdl_parser: Adding kdl library explicitly so that dependees can find it
+* Contributors: Jonathan Bohren
+
 1.11.2 (2014-03-22)
 -------------------
 
