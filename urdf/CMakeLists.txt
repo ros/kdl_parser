@@ -3,8 +3,10 @@ project(urdf)
 
 find_package(Boost REQUIRED thread)
 find_package(urdfdom REQUIRED)
+find_package(urdfdom_headers REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
-  urdfdom_headers urdf_parser_plugin pluginlib rosconsole_bridge roscpp cmake_modules)
+  urdf_parser_plugin pluginlib rosconsole_bridge roscpp cmake_modules)
+
 
 find_package(TinyXML REQUIRED)
 
@@ -22,6 +24,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${urdfdom_INCLUDE_DIRS}
+  ${urdfdom_headers_INCLUDE_DIRS}
   ${TinyXML_INCLUDE_DIRS}
   )
 link_directories(${catkin_LIBRARY_DIRS})
