@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.3 (2014-06-24)
+-------------------
 * Merge pull request `#69 <https://github.com/ros/robot_model/issues/69>`_ from YoheiKakiuchi/indigo-devel-store-original-mesh-name
   storing original mesh file name and location
 * storing original mesh file name and location
