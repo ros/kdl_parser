@@ -20,14 +20,14 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>collada-dom</build_depend>
+  <build_depend>liburdfdom-headers-dev</build_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>urdfdom_headers</build_depend>
   <build_depend>urdf_parser_plugin</build_depend>
   <build_depend>class_loader</build_depend>
 
   <run_depend>collada-dom</run_depend>
+  <run_depend>liburdfdom-headers-dev</run_depend>
   <run_depend>roscpp</run_depend>
-  <run_depend>urdfdom_headers</run_depend>
   <run_depend>urdf_parser_plugin</run_depend>
   <run_depend>class_loader</run_depend>
 
