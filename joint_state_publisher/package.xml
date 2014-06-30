@@ -4,8 +4,8 @@
   <description>
     This package contains a tool for setting and publishing joint state values for a given URDF.
   </description>
-  <author email="davidlu@wustl.edu">David Lu!!!</author>
-  <maintainer email="davidlu@wustl.edu">David Lu!!!</maintainer>
+  <author email="davidvlu@gmail.com">David V. Lu!!</author>
+  <maintainer email="davidvlu@gmail.com">David V. Lu!!</maintainer>
   <license>BSD</license>
   <url type="website">http://www.ros.org/wiki/joint_state_publisher</url>
 
