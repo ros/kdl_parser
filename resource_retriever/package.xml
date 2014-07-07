@@ -1,6 +1,6 @@
 <package>
   <name>resource_retriever</name>
-  <version>1.11.3</version>
+  <version>1.11.4</version>
   <description>
    This package retrieves data from url-format files such as http://,
    ftp://, package:// file://, etc., and loads the data into memory.
