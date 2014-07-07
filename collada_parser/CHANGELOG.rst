@@ -2,6 +2,12 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* collada_parser: add extract actuators, fix for using nominal torque
+* moving to new dependency for urdfdom and urdfdom_headers. https://github.com/ros/rosdistro/issues/4633
+* Contributors: Tully Foote, YoheiKakiuchi
+
 1.11.3 (2014-06-24)
 -------------------
 * update usage of urdfdom_headers for indigo/trusty

@@ -2,6 +2,12 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* moving to new dependency for urdfdom and urdfdom_headers. https://github.com/ros/rosdistro/issues/4633
+* Fix clash with assimp 3.1 in CMake.
+* Contributors: Benjamin Chrétien, Tully Foote
+
 1.11.3 (2014-06-24)
 -------------------
 * Merge pull request `#69 <https://github.com/ros/robot_model/issues/69>`_ from YoheiKakiuchi/indigo-devel-store-original-mesh-name

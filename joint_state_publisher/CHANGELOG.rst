@@ -2,6 +2,12 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update package.xml
+  Updating author and maintainer email for consistency
+* Contributors: David Lu!!
+
 1.11.3 (2014-06-24)
 -------------------
 
