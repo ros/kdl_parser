@@ -1,6 +1,6 @@
 <package>
   <name>robot_model</name>
-  <version>1.11.4</version>
+  <version>1.11.5</version>
   <description>
     <tt>robot_model</tt> contains packages for modeling various
     aspects of robot information, specified in the Xml Robot
