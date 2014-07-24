@@ -2,6 +2,13 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update KDL SegmentMap interface to optionally use shared pointers
+  The KDL Tree API optionally uses shared pointers on platforms where
+  the STL containers don't support incomplete types.
+* Contributors: Brian Jensen
+
 1.11.4 (2014-07-07)
 -------------------
 

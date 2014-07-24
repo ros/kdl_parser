@@ -2,6 +2,9 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.11.4 (2014-07-07)
 -------------------
 * collada_parser: add extract actuators, fix for using nominal torque
