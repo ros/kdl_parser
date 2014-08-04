@@ -113,7 +113,7 @@ class JointStatePublisher():
         for source in source_list:
             self.sources.append(rospy.Subscriber(source, JointState, self.source_cb))
 
-        self.pub = rospy.Publisher('joint_states', JointState)
+        self.pub = rospy.Publisher('joint_states', JointState, queue_size=5)
 
     def source_cb(self, msg):
         for i in range(len(msg.name)):
