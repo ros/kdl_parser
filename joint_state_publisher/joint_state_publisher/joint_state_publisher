@@ -54,6 +54,7 @@ class JointStatePublisher():
                         minval = float(limit.getAttribute('lower'))
                         maxval = float(limit.getAttribute('upper'))
                     except:
+                        rospy.logwarn("%s is not fixed, nor continuous, but limits are not specified!" % name)
                         continue
 
                 safety_tags = child.getElementsByTagName('safety_controller')
