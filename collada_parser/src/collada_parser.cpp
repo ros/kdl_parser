@@ -1038,18 +1038,32 @@ protected:
                     boost::shared_ptr<Joint> pjoint = vjoints[ic];
                     pjoint->child_link_name = pchildlink->name;
 
-                    //  Axes and Anchor assignment.
+#define PRINT_POSE(pname, apose) ROS_DEBUG(pname" pos: %f %f %f, rot: %f %f %f %f", \
+                                           apose.position.x, apose.position.y, apose.position.z, \
+                                           apose.rotation.x, apose.rotation.y, apose.rotation.z, apose.rotation.w);
                     {
+                      PRINT_POSE("tatt", tatt);
+                      PRINT_POSE("trans_joint_to_child", tatt);
+                      Pose trans_joint_to_child = _poseFromMatrix(_ExtractFullTransform(pattfull->getLink()));
+
+                      pjoint->parent_to_joint_origin_transform = _poseMult(tatt, trans_joint_to_child);
+                      //  Axes and Anchor assignment.
                       Vector3 ax(pdomaxis->getAxis()->getValue()[0],
                                  pdomaxis->getAxis()->getValue()[1],
                                  pdomaxis->getAxis()->getValue()[2]);
-
+                      Pose pinv = _poseInverse(trans_joint_to_child);
                       // rotate axis
-                      ax = tatt.rotation * ax;
+                      ax = pinv.rotation * ax;
 
                       pjoint->axis.x = ax.x;
                       pjoint->axis.y = ax.y;
                       pjoint->axis.z = ax.z;
+
+                      ROS_DEBUG("joint %s axis: %f %f %f -> %f %f %f\n", pjoint->name.c_str(),
+                                pdomaxis->getAxis()->getValue()[0],
+                                pdomaxis->getAxis()->getValue()[1],
+                                pdomaxis->getAxis()->getValue()[2],
+                                pjoint->axis.x, pjoint->axis.y, pjoint->axis.z);
                     }
 
                     if (!motion_axis_info) {
@@ -1122,8 +1136,6 @@ protected:
                         }
                     }
 
-                    //ROS_INFO("joint %s axis: %f %f %f",pjoint->name.c_str(),pjoint->axis.x,pjoint->axis.y,pjoint->axis.z);
-                    pjoint->parent_to_joint_origin_transform = _poseMult(tatt,_poseFromMatrix(_ExtractFullTransform(pattfull->getLink())));
                     if (pjoint->limits->velocity == 0.0) {
                       pjoint->limits->velocity = pjoint->type == Joint::PRISMATIC ? 0.01 : 0.5f;
                     }
