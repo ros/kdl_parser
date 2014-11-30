@@ -2,8 +2,8 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.6 (2014-11-30)
+-------------------
 * Added floating joints to joint types ignored by publisher
 * warn when joints have no limits
 * add queue_size for publisher

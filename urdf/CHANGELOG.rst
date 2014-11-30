@@ -2,8 +2,8 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.6 (2014-11-30)
+-------------------
 * Add install for static libs needed for Android cross-compilation
 * Contributors: Gary Servin
 

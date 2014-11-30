@@ -2,8 +2,8 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.6 (2014-11-30)
+-------------------
 * fix rotation of joint axis when oriantation between parent link and child link is differ
 * Contributors: YoheiKakiuchi
 
