@@ -28,5 +28,6 @@
   <run_depend>curl</run_depend>
   <run_depend>rosconsole</run_depend>
   <run_depend>roslib</run_depend>
+  <run_depend>python-urlgrabber</run_depend>
 
 </package>
