@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
+import random
 import wx
 import wx.lib.newevent
 import xml.dom.minidom
@@ -64,7 +65,7 @@ class JointStatePublisher():
                         minval = max(minval, float(tag.getAttribute('soft_lower_limit')))
                     if tag.hasAttribute('soft_upper_limit'):
                         maxval = min(maxval, float(tag.getAttribute('soft_upper_limit')))
-                    
+
                 mimic_tags = child.getElementsByTagName('mimic')
                 if use_mimic and len(mimic_tags)==1:
                     tag = mimic_tags[0]
@@ -94,11 +95,11 @@ class JointStatePublisher():
                     joint['velocity'] = 0.0
                 if pub_def_efforts:
                     joint['effort'] = 0.0
-                    
+
                 if jtype == 'continuous':
                     joint['continuous'] = True
                 self.free_joints[name] = joint
-                
+
 
         use_gui = get_param("use_gui", False)
 
@@ -146,11 +147,11 @@ class JointStatePublisher():
         if self.gui is not None:
             # post an event here instead of directly calling the update_sliders method, to switch to the wx thread
             wx.PostEvent(self.gui.GetEventHandler(), self.gui.UpdateSlidersEvent())
-        
+
 
     def loop(self):
         hz = get_param("rate", 10) # 10hz
-        r = rospy.Rate(hz) 
+        r = rospy.Rate(hz)
 
         delta = get_param("delta", 0.0)
 
@@ -182,7 +183,7 @@ class JointStatePublisher():
             if has_effort:
                 msg.effort = num_joints * [0.0]
 
-            
+
             for i, name in enumerate(self.joint_list):
                 msg.name.append(str(name))
                 joint = None
@@ -199,7 +200,7 @@ class JointStatePublisher():
                     joint = self.free_joints[parent]
                     factor = param.get('factor', 1)
                     offset = param.get('offset', 0)
-                
+
                 if has_position and 'position' in joint:
                     msg.position[i] = joint['position'] * factor + offset
                 if has_velocity and 'velocity' in joint:
@@ -235,7 +236,7 @@ class JointStatePublisherGui(wx.Frame):
         panel = wx.Panel(self, wx.ID_ANY);
         box = wx.BoxSizer(wx.VERTICAL)
         font = wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD)
-        
+
         ### Sliders ###
         for name in self.jsp.joint_list:
             if name not in self.jsp.free_joints:
@@ -250,30 +251,33 @@ class JointStatePublisherGui(wx.Frame):
             label.SetFont(font)
             row.Add(label, 1, wx.ALIGN_CENTER_VERTICAL)
 
-            display = wx.TextCtrl (panel, value=str(0), 
+            display = wx.TextCtrl (panel, value=str(0),
                         style=wx.TE_READONLY | wx.ALIGN_RIGHT)
 
             row.Add(display, flag= wx.ALIGN_RIGHT| wx.ALIGN_CENTER_VERTICAL)
             box.Add(row, 1, wx.EXPAND)
-            slider = wx.Slider(panel, -1, RANGE/2, 0, RANGE, 
+            slider = wx.Slider(panel, -1, RANGE/2, 0, RANGE,
                         style= wx.SL_AUTOTICKS | wx.SL_HORIZONTAL)
             slider.SetFont(font)
             box.Add(slider, 1, wx.EXPAND)
 
-            self.joint_map[name] = {'slidervalue':0, 'display':display, 
+            self.joint_map[name] = {'slidervalue':0, 'display':display,
                                     'slider':slider, 'joint':joint}
 
         self.UpdateSlidersEvent, self.EVT_UPDATESLIDERS = wx.lib.newevent.NewEvent()
         self.Bind(self.EVT_UPDATESLIDERS, self.updateSliders)
-        
-        ### Buttons ###
-        self.ctrbutton = wx.Button(panel, 1, 'Center')
-        self.Bind(wx.EVT_SLIDER, self.sliderUpdate)
-        
-        wx.EVT_BUTTON(self, 1, self.center_event)
 
-        box.Add(self.ctrbutton, 0, wx.EXPAND)
-        
+        ### Buttons ###
+        self.randbutton = wx.Button(panel, 1, 'Randomize')
+        self.ctrbutton = wx.Button(panel, 2, 'Center')
+        self.Bind(wx.EVT_SLIDER, self.sliderUpdate)
+
+        wx.EVT_BUTTON(self, 1, self.randomize_event)
+        wx.EVT_BUTTON(self, 2, self.center_event)
+
+        box.Add(self.randbutton, 0, wx.EXPAND)
+        box.Add(self.ctrbutton, 1, wx.EXPAND)
+
         panel.SetSizer(box)
         self.center()
         box.Fit(self)
@@ -309,6 +313,17 @@ class JointStatePublisherGui(wx.Frame):
             joint_info['slidervalue'] = self.valueToSlider(joint['zero'], joint)
         self.update_values()
 
+    def randomize_event(self, event):
+        self.randomize()
+
+    def randomize(self):
+        rospy.loginfo("Randomizing")
+        for (name,joint_info) in self.joint_map.items():
+            joint = joint_info['joint']
+            joint_info['slidervalue'] = self.valueToSlider(random.uniform(joint['min'], joint['max']), joint)
+        self.update_values()
+
+
     def sliderUpdate(self, event):
         for (name,joint_info) in self.joint_map.items():
             joint_info['slidervalue'] = joint_info['slider'].GetValue()
@@ -316,7 +331,7 @@ class JointStatePublisherGui(wx.Frame):
 
     def valueToSlider(self, value, joint):
         return (value - joint['min']) * float(RANGE) / (joint['max'] - joint['min'])
-        
+
     def sliderToValue(self, slider, joint):
         pctvalue = slider / float(RANGE)
         return joint['min'] + (joint['max']-joint['min']) * pctvalue
@@ -332,5 +347,5 @@ if __name__ == '__main__':
         else:
             Thread(target=jsp.loop).start()
             jsp.app.MainLoop()
-        
+
     except rospy.ROSInterruptException: pass
