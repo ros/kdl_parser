@@ -37,6 +37,9 @@
 #include "collada_urdf/collada_urdf.h"
 #include <ros/ros.h>
 
+#include <pcrecpp.h>
+pcrecpp::RE __re__(""); // https://github.com/ros/robot_model/issues/89
+
 int main(int argc, char** argv)
 {
     if (argc != 3) {
