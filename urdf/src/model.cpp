@@ -52,6 +52,9 @@
 #include <fstream>
 #include <iostream>
 
+#include <pcrecpp.h>
+pcrecpp::RE __re__("");
+
 namespace urdf{
 
 static bool IsColladaData(const std::string& data)
