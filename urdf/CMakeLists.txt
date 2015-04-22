@@ -15,9 +15,9 @@ pkg_check_modules(libpcrecpp libpcrecpp)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
-  INCLUDE_DIRS include ${TinyXML_INCLUDE_DIRS}
+  INCLUDE_DIRS include
   CATKIN_DEPENDS rosconsole_bridge roscpp
-  DEPENDS urdfdom_headers urdfdom Boost pcrecpp
+  DEPENDS urdfdom_headers urdfdom TinyXML
 )
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
