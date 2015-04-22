@@ -25,7 +25,7 @@
   <build_depend>collada_parser</build_depend>
   <build_depend>liburdfdom-dev</build_depend>
   <build_depend>liburdfdom-headers-dev</build_depend>
-  <build_depend>pcrecpp</build_depend>
+  <build_depend>pcre-dev</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>urdf</build_depend>
   <build_depend>geometric_shapes</build_depend>
@@ -39,7 +39,7 @@
   <run_depend>liburdfdom-dev</run_depend>
   <run_depend>liburdfdom-headers-dev</run_depend>
   <run_depend>resource_retriever</run_depend>
-  <run_depend>pcrecpp</run_depend>
+  <run_depend>pcre</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>urdf</run_depend>
   <run_depend>tf</run_depend>
