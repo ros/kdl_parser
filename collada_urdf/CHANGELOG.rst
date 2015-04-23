@@ -2,6 +2,12 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fixed `#89 <https://github.com/ros/robot_model/issues/89>`_
+  Accomplished by loading libpcrecpp before collada-dom.
+* Contributors: Kei Okada, William Woodall
+
 1.11.6 (2014-11-30)
 -------------------
 

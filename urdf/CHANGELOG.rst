@@ -2,6 +2,12 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Removed the exporting of Boost and pcre as they are not used in the headers, and added TinyXML because it is.
+* Fixed a bug with pcrecpp on Ubuntu > 13.04.
+* Contributors: Kei Okada, William Woodall
+
 1.11.6 (2014-11-30)
 -------------------
 * Add install for static libs needed for Android cross-compilation

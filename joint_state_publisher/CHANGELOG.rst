@@ -2,6 +2,11 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added a randomize button for the joints.
+* Contributors: Aaron Blasdel
+
 1.11.6 (2014-11-30)
 -------------------
 * Added floating joints to joint types ignored by publisher
