@@ -2,8 +2,8 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.7 (2015-04-22)
+-------------------
 * Removed the exporting of Boost and pcre as they are not used in the headers, and added TinyXML because it is.
 * Fixed a bug with pcrecpp on Ubuntu > 13.04.
 * Contributors: Kei Okada, William Woodall

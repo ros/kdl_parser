@@ -1,6 +1,6 @@
 <package>
   <name>urdf_parser_plugin</name>
-  <version>1.11.6</version>
+  <version>1.11.7</version>
   <description>
     This package contains a C++ base class for URDF parsers.
   </description>
