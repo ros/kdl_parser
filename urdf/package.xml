@@ -23,7 +23,6 @@
   <build_depend>liburdfdom-headers-dev</build_depend>
   <build_depend>rosconsole_bridge</build_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>pcre-dev</build_depend>
   <build_depend>urdf_parser_plugin</build_depend>
   <build_depend>pluginlib</build_depend>
   <build_depend>cmake_modules</build_depend>
@@ -33,7 +32,6 @@
   <run_depend>liburdfdom-headers-dev</run_depend>
   <run_depend>rosconsole_bridge</run_depend>
   <run_depend>roscpp</run_depend>
-  <run_depend>pcre</run_depend>
   <run_depend>urdf_parser_plugin</run_depend>
   <run_depend>pluginlib</run_depend>
 

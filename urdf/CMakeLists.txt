@@ -15,9 +15,9 @@ pkg_check_modules(libpcrecpp libpcrecpp)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
-  INCLUDE_DIRS include
+  INCLUDE_DIRS include ${TinyXML_INLCLUDE_DIRS}
   CATKIN_DEPENDS rosconsole_bridge roscpp
-  DEPENDS urdfdom_headers urdfdom TinyXML
+  DEPENDS urdfdom_headers urdfdom Boost pcrecpp
 )
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
@@ -33,7 +33,7 @@ include_directories(
 link_directories(${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
-target_link_libraries(${PROJECT_NAME} ${libpcrecpp_LIBRARIES} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${urdfdom_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${urdfdom_LIBRARIES})
 
 if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
