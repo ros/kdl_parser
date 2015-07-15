@@ -44,12 +44,6 @@ endif()
 find_package(Boost REQUIRED COMPONENTS system filesystem program_options)
 include_directories(${Boost_INCLUDE_DIR})
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(PCRECPP libpcrecpp)
-if( PCRECPP_FOUND )
-  include_directories(${PCRECPP_INCLUDE_DIRS})
-  link_directories(${PCRECPP_LIBRARY_DIRS})
-endif()
 find_package(COLLADA_DOM 2.3 COMPONENTS 1.5)
 if( COLLADA_DOM_FOUND )
   include_directories(${COLLADA_DOM_INCLUDE_DIRS})
@@ -60,17 +54,17 @@ include_directories(${TinyXML_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/collada_urdf.cpp)
-target_link_libraries(${PROJECT_NAME} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${PCRECPP_LIBRARIES} ${COLLADA_DOM_LIBRARIES}
+target_link_libraries(${PROJECT_NAME} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
   ${Boost_LIBRARIES} ${ASSIMP_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}") 
 
 add_executable(urdf_to_collada src/urdf_to_collada.cpp)
-target_link_libraries(urdf_to_collada ${catkin_LIBRARIES} ${PCRECPP_LIBRARIES} ${COLLADA_DOM_LIBRARIES}
+target_link_libraries(urdf_to_collada ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES}  
   ${Boost_LIBRARIES} ${PROJECT_NAME})
 
 add_executable(collada_to_urdf src/collada_to_urdf.cpp)
-target_link_libraries(collada_to_urdf ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${PCRECPP_LIBRARIES} ${COLLADA_DOM_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(collada_to_urdf ${ASSIMP_LIBRARIES} ${catkin_LIBRARIES} ${COLLADA_DOM_LIBRARIES} ${Boost_LIBRARIES})
 set_target_properties(collada_to_urdf PROPERTIES COMPILER_FLAGS "${ASSIMP_CXX_FLAGS} ${ASSIMP_CFLAGS_OTHER}")
 set_target_properties(collada_to_urdf PROPERTIES LINK_FLAGS "${ASSIMP_LINK_FLAGS}")
 
