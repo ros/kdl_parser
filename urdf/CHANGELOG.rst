@@ -2,6 +2,12 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Removed pcre hack for newer released collada-dom.
+* Fixed link order of libpcrecpp.
+* Contributors: Kei Okada
+
 1.11.7 (2015-04-22)
 -------------------
 * Removed the exporting of Boost and pcre as they are not used in the headers, and added TinyXML because it is.
