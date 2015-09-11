@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.8 (2015-09-11)
+-------------------
 * Removed pcre hack for newer released collada-dom.
 * Contributors: Kei Okada
 

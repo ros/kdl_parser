@@ -1,6 +1,6 @@
 <package>
   <name>collada_parser</name>
-  <version>1.11.7</version>
+  <version>1.11.8</version>
   <description>
     This package contains a C++ parser for the Collada robot
     description format. The parser reads a Collada XML robot
