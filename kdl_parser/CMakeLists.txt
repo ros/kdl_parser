@@ -38,6 +38,9 @@ if(CATKIN_ENABLE_TESTING)
   find_package(catkin REQUIRED COMPONENTS rostest)
   add_rostest_gtest(test_kdl_parser test/test_kdl_parser.launch test/test_kdl_parser.cpp )
   target_link_libraries(test_kdl_parser ${PROJECT_NAME})
+
+  add_rostest_gtest(test_inertia_rpy test/test_inertia_rpy.launch test/test_inertia_rpy.cpp )
+  target_link_libraries(test_inertia_rpy ${PROJECT_NAME})
 endif()
 
 # How does CATKIN do this?
