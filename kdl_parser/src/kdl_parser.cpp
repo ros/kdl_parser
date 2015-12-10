@@ -168,15 +168,19 @@ bool treeFromXml(TiXmlDocument *xml_doc, Tree& tree)
 bool treeFromUrdfModel(const urdf::ModelInterface& robot_model, Tree& tree)
 {
   tree = Tree(robot_model.getRoot()->name);
+  ROS_INFO("constructed tree");
 
   // warn if root link has inertia. KDL does not support this
   if (robot_model.getRoot()->inertial)
     ROS_WARN("The root link %s has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.", robot_model.getRoot()->name.c_str());
 
   //  add all children
-  for (size_t i=0; i<robot_model.getRoot()->child_links.size(); i++)
-    if (!addChildrenToTree(robot_model.getRoot()->child_links[i], tree))
+  for (size_t i=0; i<robot_model.getRoot()->child_links.size(); i++) {
+    ROS_INFO("Adding link to KDL tree");
+    if (!addChildrenToTree(robot_model.getRoot()->child_links[i], tree)) {
       return false;
+    }
+  }
 
   return true;
 }

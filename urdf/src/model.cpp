@@ -183,8 +183,7 @@ bool Model::initString(const std::string& xml_string)
     this->root_link_ = model->root_link_;
     return true;
   }
-  else
-    return false;
+  return false;
 }
 
 
