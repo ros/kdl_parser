@@ -25,6 +25,7 @@
 
   <run_depend version_gte="1.3.0">orocos_kdl</run_depend>
   <run_depend>urdf</run_depend>
+  <run_depend>urdfdom_py</run_depend>
   <run_depend>python_orocos_kdl</run_depend>
 
 </package>
