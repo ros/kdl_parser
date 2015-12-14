@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="r2d2">
 
-<material name="blue">
+  <material name="blue">
     <color rgba="0 0 .8 1"/>
   </material>
   <material name="black">
