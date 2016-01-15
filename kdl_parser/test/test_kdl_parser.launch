@@ -1,6 +1,3 @@
 <launch>
-  <test test-name="test_kdl_parser" pkg="kdl_parser" type="test_kdl_parser" args="$(find kdl_parser)/test/pr2_desc_vector.xml \
-                                                                                  $(find kdl_parser)/test/pr2_desc_bracket.xml \
-                                                                                  $(find kdl_parser)/test/pr2_desc_bracket2.xml \
-                                                                                  $(find kdl_parser)/test/pr2_desc.xml" />
+  <test test-name="test_kdl_parser" pkg="kdl_parser" type="test_kdl_parser" args="$(find kdl_parser)/test/test_robot.urdf"/>
 </launch>

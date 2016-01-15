@@ -63,8 +63,6 @@ protected:
 };
 
 
-
-
 TEST_F(TestParser, test)
 {
   for (int i=1; i<g_argc-2; i++){
@@ -73,13 +71,13 @@ TEST_F(TestParser, test)
   }
 
   ASSERT_TRUE(treeFromFile(g_argv[g_argc-1], my_tree));
-  ASSERT_EQ(my_tree.getNrOfJoints(), (unsigned int)44);
-  ASSERT_EQ(my_tree.getNrOfSegments(), (unsigned int)81);
-  ASSERT_TRUE(my_tree.getSegment("base_footprint") == my_tree.getRootSegment());
+  ASSERT_EQ(my_tree.getNrOfJoints(), 8);
+  ASSERT_EQ(my_tree.getNrOfSegments(), 16);
+  ASSERT_TRUE(my_tree.getSegment("dummy_link") == my_tree.getRootSegment());
   ASSERT_EQ(my_tree.getRootSegment()->second.children.size(), (unsigned int)1);
   ASSERT_TRUE(my_tree.getSegment("base_link")->second.parent == my_tree.getRootSegment());
-  ASSERT_EQ(my_tree.getSegment("base_link")->second.segment.getInertia().getMass(), 116.0);
-  ASSERT_NEAR(my_tree.getSegment("base_link")->second.segment.getInertia().getRotationalInertia().data[0], 15.6107, 0.001);
+  ASSERT_EQ(my_tree.getSegment("base_link")->second.segment.getInertia().getMass(), 10.0);
+  ASSERT_NEAR(my_tree.getSegment("base_link")->second.segment.getInertia().getRotationalInertia().data[0], 1.000, 0.001);
   SUCCEED();
 }
 

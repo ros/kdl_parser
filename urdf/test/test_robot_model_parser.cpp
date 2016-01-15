@@ -50,26 +50,26 @@ char** g_argv;
 class TestParser : public testing::Test
 {
 public:
-  Model robot;
 
-  bool checkModel()
+  bool checkModel(urdf::Model & robot)
   {
     // get root link
-    boost::shared_ptr<const Link> root_link=this->robot.getRoot();
+    boost::shared_ptr<const Link> root_link = robot.getRoot();
     if (!root_link)
     {
-      ROS_ERROR("no root link %s",this->robot.getName().c_str());
+      ROS_ERROR("no root link %s", robot.getName().c_str());
       return false;
     }
 
     // go through entire tree
-    return this->traverse_tree(root_link); 
+    return this->traverse_tree(root_link);
 
   };
 
 protected:
   /// constructor
-  TestParser()
+  // num_links starts at 1 because traverse_tree doesn't count the root node
+  TestParser() : num_joints(0), num_links(1)
   {
   }
 
@@ -81,11 +81,15 @@ protected:
 
   bool traverse_tree(boost::shared_ptr<const Link> link,int level = 0)
   {
+    ROS_INFO("Traversing tree at level %d, link size %lu", level, link->child_links.size());
     level+=2;
+    bool retval = true;
     for (std::vector<boost::shared_ptr<Link> >::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
     {
-      if (*child)
+      ++num_links;
+      if (*child && (*child)->parent_joint)
       {
+        ++num_joints;
         // check rpy
         double roll,pitch,yaw;
         (*child)->parent_joint->parent_to_joint_origin_transform.rotation.getRPY(roll,pitch,yaw);
@@ -96,7 +100,7 @@ protected:
           return false;
         }
         // recurse down the tree
-        return this->traverse_tree(*child,level);
+        retval &= this->traverse_tree(*child,level);
       }
       else
       {
@@ -104,9 +108,12 @@ protected:
         return false;
       }
     }
-    // no children
-    return true;
+    // no more children
+    return retval;
   };
+
+  size_t num_joints;
+  size_t num_links;
 };
 
 
@@ -114,20 +121,36 @@ protected:
 
 TEST_F(TestParser, test)
 {
+  ASSERT_GE(g_argc, 3);
   std::string folder = std::string(g_argv[1]) + "/test/";
   ROS_INFO("Folder %s",folder.c_str());
-  for (int i=2; i<g_argc; i++){
-    std::string file = g_argv[i];
-    bool expect_success = (file.substr(0,5)  != "fail_");
-    ROS_INFO("Parsing file %d/%d called %s, expecting %d",(i-1), g_argc-1, (folder + file).c_str(), expect_success);
-    if (!expect_success)
-      ASSERT_FALSE(robot.initFile(folder + file));
-    else
-    {
-      ASSERT_TRUE(robot.initFile(folder + file));
-      ASSERT_TRUE(checkModel());
-    }
+  std::string file = std::string(g_argv[2]);
+  bool expect_success = (file.substr(0,5)  != "fail_");
+  urdf::Model robot;
+  ROS_INFO("Parsing file %s, expecting %d",(folder + file).c_str(), expect_success);
+  if (!expect_success) {
+    ASSERT_FALSE(robot.initFile(folder + file));
+    return;
   }
+
+  ASSERT_EQ(g_argc, 7);
+  std::string robot_name = std::string(g_argv[3]);
+  std::string root_name = std::string(g_argv[4]);
+  size_t expected_num_joints = atoi(g_argv[5]);
+  size_t expected_num_links = atoi(g_argv[6]);
+
+  ASSERT_TRUE(robot.initFile(folder + file));
+
+  EXPECT_EQ(robot.getName(), robot_name);
+  boost::shared_ptr<const urdf::Link> root = robot.getRoot();
+  ASSERT_TRUE(root);
+  EXPECT_EQ(root->name, root_name);
+
+  ASSERT_TRUE(checkModel(robot));
+  EXPECT_EQ(num_joints, expected_num_joints);
+  EXPECT_EQ(num_links, expected_num_links);
+  EXPECT_EQ(robot.joints_.size(), expected_num_joints);
+  EXPECT_EQ(robot.links_.size(), expected_num_links);
 
   // test reading from parameter server
   ASSERT_TRUE(robot.initParam("robot_description"));
