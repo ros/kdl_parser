@@ -11,6 +11,7 @@
   <author>Rosen Diankov</author>
   <author>Kei Okada</author>
   <maintainer email="isucan@gmail.com">Ioan Sucan</maintainer>
+  <maintainer email="jacquelinekay1@gmail.com">Jackie Kay</maintainer>
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/collada_parser</url>
