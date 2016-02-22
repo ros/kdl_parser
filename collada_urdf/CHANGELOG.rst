@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.9 (2016-02-22)
+-------------------
 * Add Jackie as a maintainer
 * Contributors: Jackie Kay
 

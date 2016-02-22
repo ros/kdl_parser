@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.9 (2016-02-22)
+-------------------
 * Add Jackie as a maintainer
 * Add COM import test
 * [kdl_parser] remove spurious newline
