@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(kdl_parser_py)
 
 find_package(catkin REQUIRED
-  COMPONENTS urdf cmake_modules
+  COMPONENTS urdf
 )
 
 catkin_package(
