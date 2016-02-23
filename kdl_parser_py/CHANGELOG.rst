@@ -2,6 +2,11 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Remove cmake_modules dependency
+* Contributors: Jackie Kay
+
 1.11.9 (2016-02-22)
 -------------------
 * kdl_parser_py: run_depend on urdfdom_py
