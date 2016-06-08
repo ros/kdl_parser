@@ -286,7 +286,7 @@ class JointStatePublisherGui(QWidget):
             self.joint_map[name] = {'slidervalue': 0, 'display': display,
                                     'slider': slider, 'joint': joint}
             # Connect to the signal provided by QSignal
-            slider.sliderMoved.connect(self.sliderUpdate)
+            slider.valueChanged.connect(self.sliderUpdate)
 
         # Synchronize slider and displayed value
         self.sliderUpdate(None)
