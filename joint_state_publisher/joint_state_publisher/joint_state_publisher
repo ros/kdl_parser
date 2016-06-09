@@ -287,7 +287,7 @@ class JointStatePublisherGui(QWidget):
             self.joint_map[name] = {'slidervalue': 0, 'display': display,
                                     'slider': slider, 'joint': joint}
             # Connect to the signal provided by QSignal
-            slider.valueChanged.connect(self.sliderUpdate)
+            slider.valueChanged.connect(self.onValueChanged)
 
         # Synchronize slider and displayed value
         self.sliderUpdate(None)
@@ -303,13 +303,13 @@ class JointStatePublisherGui(QWidget):
         self.ctrbutton.clicked.connect(self.center_event)
         box_layout.addWidget(self.ctrbutton)
 
-    def update_values(self):
+    def onValueChanged(self, event):
+        # A slider value was changed, but we need to change the joint_info metadata.
         for name, joint_info in self.joint_map.items():
-            purevalue = joint_info['slidervalue']
+            joint_info['slidervalue'] = joint_info['slider'].value()
             joint = joint_info['joint']
-            value = self.sliderToValue(purevalue, joint)
-            joint['position'] = value
-        self.update_sliders()
+            joint['position'] = self.sliderToValue(joint_info['slidervalue'], joint)
+            joint_info['display'].setText("%.2f" % joint['position'])
 
     def updateSliders(self, event):
         self.update_sliders()
@@ -320,7 +320,6 @@ class JointStatePublisherGui(QWidget):
             joint_info['slidervalue'] = self.valueToSlider(joint['position'],
                                                            joint)
             joint_info['slider'].setValue(joint_info['slidervalue'])
-            joint_info['display'].setText("%.2f" % joint['position'])
 
 
     def center_event(self, event):
@@ -330,8 +329,8 @@ class JointStatePublisherGui(QWidget):
         rospy.loginfo("Centering")
         for name, joint_info in self.joint_map.items():
             joint = joint_info['joint']
-            joint_info['slidervalue'] = self.valueToSlider(joint['zero'], joint)
-        self.update_values()
+            joint_info['slider'].setValue(self.valueToSlider(joint['zero'], joint))
+
 
     def randomize_event(self, event):
         self.randomize()
@@ -340,13 +339,13 @@ class JointStatePublisherGui(QWidget):
         rospy.loginfo("Randomizing")
         for name, joint_info in self.joint_map.items():
             joint = joint_info['joint']
-            joint_info['slidervalue'] = self.valueToSlider(random.uniform(joint['min'], joint['max']), joint)
-        self.update_values()
+            joint_info['slider'].setValue(
+                    self.valueToSlider(random.uniform(joint['min'], joint['max']), joint))
 
     def sliderUpdate(self, event):
         for name, joint_info in self.joint_map.items():
             joint_info['slidervalue'] = joint_info['slider'].value()
-        self.update_values()
+        self.update_sliders()
 
     def valueToSlider(self, value, joint):
         return (value - joint['min']) * float(RANGE) / (joint['max'] - joint['min'])
