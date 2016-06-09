@@ -19,7 +19,8 @@ import xml.dom.minidom
 from sensor_msgs.msg import JointState
 from math import pi
 from threading import Thread
-from sys import argv
+import sys
+import signal
 
 RANGE = 10000
 
@@ -117,7 +118,7 @@ class JointStatePublisher():
         use_gui = get_param("use_gui", False)
 
         if use_gui:
-            self.app = QApplication(argv)
+            self.app = QApplication(sys.argv)
             self.gui = JointStatePublisherGui("Joint State Publisher", self)
             self.gui.show()
         else:
@@ -364,7 +365,8 @@ if __name__ == '__main__':
             jsp.loop()
         else:
             Thread(target=jsp.loop).start()
-            jsp.app.exec_()
+            signal.signal(signal.SIGINT, signal.SIG_DFL)
+            sys.exit(jsp.app.exec_())
 
     except rospy.ROSInterruptException:
         pass
