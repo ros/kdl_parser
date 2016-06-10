@@ -2,8 +2,8 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.3 (2016-06-10)
+-------------------
 * Fix circular logic in joint state publisher events (`#140 <https://github.com/ros/robot_model/issues/140>`_)
 * Use signal and sys.exit to fix shutdown in joint_state_publisher (`#139 <https://github.com/ros/robot_model/issues/139>`_)
 * joint_state_publisher: Change slider update method (`#135 <https://github.com/ros/robot_model/issues/135>`_)
