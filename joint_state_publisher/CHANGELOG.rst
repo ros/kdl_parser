@@ -2,8 +2,8 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.11 (2016-06-10)
+--------------------
 * scroll joint_state_publisher if there are too many joints (`#137 <https://github.com/ros/robot_model//issues/137>`_)
 * Contributors: v4hn
 
