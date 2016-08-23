@@ -34,7 +34,13 @@
 
 /* Author: Tim Field */
 
+#ifndef _WIN32
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "collada_urdf/collada_urdf.h"
+#pragma GCC diagnostic pop
+#endif
+
 #include <ros/ros.h>
 
 int main(int argc, char** argv)
