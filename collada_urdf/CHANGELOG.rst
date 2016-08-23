@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.4 (2016-08-23)
+-------------------
 * Use the C++11 standard (`#145 <https://github.com/ros/robot_model/issues/145>`_)
 * Contributors: William Woodall
 
