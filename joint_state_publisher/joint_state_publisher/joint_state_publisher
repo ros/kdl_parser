@@ -289,6 +289,9 @@ class JointStatePublisherGui(QWidget):
             # Connect to the signal provided by QSignal
             slider.valueChanged.connect(self.onValueChanged)
 
+        # Set zero positions read from parameters
+        self.center()
+
         # Synchronize slider and displayed value
         self.sliderUpdate(None)
 
