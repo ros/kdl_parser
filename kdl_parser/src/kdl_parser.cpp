@@ -189,6 +189,9 @@ bool treeFromXml(TiXmlDocument *xml_doc, Tree& tree)
 
 bool treeFromUrdfModel(const urdf::ModelInterface& robot_model, Tree& tree)
 {
+  if (!robot_model.getRoot())
+    return false;
+
   tree = Tree(robot_model.getRoot()->name);
 
   // warn if root link has inertia. KDL does not support this
