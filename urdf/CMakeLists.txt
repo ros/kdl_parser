@@ -20,17 +20,16 @@ catkin_package(
   DEPENDS urdfdom_headers urdfdom Boost pcrecpp
 )
 
-include_directories(SYSTEM ${Boost_INCLUDE_DIR})
-link_directories(${Boost_LIBRARY_DIRS})
-
 include_directories(
   include
+  ${Boost_INCLUDE_DIR}
   ${catkin_INCLUDE_DIRS}
   ${urdfdom_INCLUDE_DIRS}
   ${urdfdom_headers_INCLUDE_DIRS}
   ${TinyXML_INCLUDE_DIRS}
   )
-link_directories(${catkin_LIBRARY_DIRS})
+
+link_directories(${Boost_LIBRARY_DIRS} ${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
 target_link_libraries(${PROJECT_NAME} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${urdfdom_LIBRARIES})
