@@ -10,14 +10,11 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(TinyXML REQUIRED)
 
-find_package(PkgConfig)
-pkg_check_modules(libpcrecpp libpcrecpp)
-
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include ${TinyXML_INLCLUDE_DIRS}
   CATKIN_DEPENDS rosconsole_bridge roscpp
-  DEPENDS urdfdom_headers urdfdom Boost pcrecpp
+  DEPENDS urdfdom_headers urdfdom Boost
 )
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
