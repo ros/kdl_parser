@@ -143,7 +143,7 @@ TEST_F(TestParser, test)
 
   EXPECT_EQ(robot.getName(), robot_name);
   boost::shared_ptr<const urdf::Link> root = robot.getRoot();
-  ASSERT_TRUE(root);
+  ASSERT_TRUE(static_cast<bool>(root));
   EXPECT_EQ(root->name, root_name);
 
   ASSERT_TRUE(checkModel(robot));
