@@ -2,6 +2,14 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix initial position of sliders in joint_state_publisher GUI (`#148 <https://github.com/ros/robot_model/issues/148>`_)
+  Caused by a regression in 8c6cf9841cb, the slider positions are not initialized correctly
+  from the provided zero positions at startup.
+  This commit fixes the issue, by adding the call to center() again that got lost.
+* Contributors: Timm Linder
+
 1.12.4 (2016-08-23)
 -------------------
 
