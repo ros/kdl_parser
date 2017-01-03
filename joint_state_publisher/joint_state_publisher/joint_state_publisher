@@ -3,6 +3,7 @@
 import rospy
 import random
 
+from python_qt_binding.QtCore import pyqtSlot
 from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtCore import Signal
 from python_qt_binding.QtGui import QFont
@@ -331,6 +332,7 @@ class JointStatePublisherGui(QWidget):
         self.maxrowsupdown.valueChanged.connect(self.reorggrid_event)
         self.vlayout.addWidget(self.maxrowsupdown)
 
+    @pyqtSlot(int)
     def onValueChanged(self, event):
         # A slider value was changed, but we need to change the joint_info metadata.
         for name, joint_info in self.joint_map.items():
@@ -339,7 +341,8 @@ class JointStatePublisherGui(QWidget):
             joint['position'] = self.sliderToValue(joint_info['slidervalue'], joint)
             joint_info['display'].setText("%.2f" % joint['position'])
 
-    def updateSliders(self, event):
+    @pyqtSlot()
+    def updateSliders(self):
         self.update_sliders()
 
     def update_sliders(self):
