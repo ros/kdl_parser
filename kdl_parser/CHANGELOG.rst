@@ -4,7 +4,7 @@ Changelog for package kdl_parser
 
 1.12.6 (2017-01-04)
 -------------------
-* Now using urdf::*ShredPtr instead of boost::shared_ptr (`#144 <https://github.com/ros/robot_model/issues/144>`_)
+* Now using ``urdf::*ShredPtr`` instead of ``boost::shared_ptr`` (`#144 <https://github.com/ros/robot_model/issues/144>`_)
 * Contributors: Jochen Sprickerhof
 
 1.12.5 (2016-10-27)
