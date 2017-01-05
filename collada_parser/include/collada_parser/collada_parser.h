@@ -41,13 +41,13 @@
 #include <map>
 #include <boost/function.hpp>
 
-#include <urdf_model/model.h>
+#include <urdf/urdfdom_compatibility.h>
 
 
 namespace urdf {
 
 /// \brief Load Model from string
-boost::shared_ptr<ModelInterface> parseCollada(const std::string &xml_string );
+urdf::ModelInterfaceSharedPtr parseCollada(const std::string &xml_string );
 
 }
 

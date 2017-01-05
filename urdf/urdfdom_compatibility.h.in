@@ -37,7 +37,12 @@
 #ifndef URDF_URDFDOM_COMPATIBILITY_
 #define URDF_URDFDOM_COMPATIBILITY_
 
-#if @URDFDOM_DECLARE_TYPES@ // This is needed for urdfdom <= 0.4
+#define URDFDOM_HEADERS_MAJOR_VERSION @URDFDOM_HEADERS_MAJOR_VERSION@
+#define URDFDOM_HEADERS_MINOR_VERSION @URDFDOM_HEADERS_MINOR_VERSION@
+#define URDFDOM_HEADERS_REVISION_VERSION @URDFDOM_HEADERS_REVISION_VERSION@
+
+// for Wily: maintain compatibility between urdfdom 0.3 and 0.4 (definining SharedPtr types)
+#if URDFDOM_HEADERS_MAJOR_VERSION == 0 && URDFDOM_HEADERS_MINOR_VERSION <= 4
 
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -75,9 +80,14 @@ URDF_TYPEDEF_CLASS_POINTER(ModelInterface);
 
 #else // urdfdom <= 0.4
 
+#include <urdf_model/types.h>
+#include <urdf_world/types.h>
+
+namespace urdf {
 typedef std::shared_ptr<ModelInterface> ModelInterfaceSharedPtr;
 typedef std::shared_ptr<const ModelInterface> ModelInterfaceConstSharedPtr;
 typedef std::weak_ptr<ModelInterface> ModelInterfaceWeakPtr;
+}
 
 #endif // urdfdom > 0.4
 

@@ -46,7 +46,7 @@ class ColladaURDFParser : public URDFParser
 {
 public:
 
-  virtual boost::shared_ptr<ModelInterface> parse(const std::string &xml_string);    
+  virtual urdf::ModelInterfaceSharedPtr parse(const std::string &xml_string);
 };
 
 }

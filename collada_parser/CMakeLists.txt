@@ -3,7 +3,7 @@ project(collada_parser)
 
 find_package(Boost REQUIRED system)
 
-find_package(catkin REQUIRED COMPONENTS urdf_parser_plugin roscpp class_loader)
+find_package(catkin REQUIRED COMPONENTS urdf_parser_plugin roscpp class_loader urdf)
 find_package(urdfdom_headers REQUIRED)
 
 catkin_package( 
