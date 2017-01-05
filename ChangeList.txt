@@ -1,3 +1,5 @@
+Notice: this file is out of date, please see the CHANGELOG.rst in each package's folder.
+
 = 1.10.10 =
  * [[urdf_parser]]
   * Package was removed

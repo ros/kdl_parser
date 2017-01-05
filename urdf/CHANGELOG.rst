@@ -2,6 +2,12 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added ``urdf_compatibility.h`` to define ``SharedPtr`` types, copy of `#160 <https://github.com/ros/robot_model/issues/160>`_ (`#170 <https://github.com/ros/robot_model/issues/170>`_)
+* Addressed gcc6 build error in the urdf package (`#156 <https://github.com/ros/robot_model/issues/156>`_)
+* Contributors: Lukas Bulwahn, Michael Görner
+
 1.11.11 (2016-06-10)
 --------------------
 
