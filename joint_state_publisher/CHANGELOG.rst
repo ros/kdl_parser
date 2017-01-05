@@ -2,8 +2,8 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.6 (2017-01-04)
+-------------------
 * Migrated slots in joint state publisher gui to Qt5 (`#147 <https://github.com/ros/robot_model/issues/147>`_)
 * Now uses GridLayout to support large numbers of joints and small screens (`#150 <https://github.com/ros/robot_model/issues/150>`_)
 * Contributors: Bence Magyar, Michał Barciś
