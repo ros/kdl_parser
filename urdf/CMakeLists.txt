@@ -29,17 +29,16 @@ catkin_package(
 )
 install(FILES ${generated_compat_header} DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
-
 include_directories(
   include
-  ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIR}
+  ${catkin_INCLUDE_DIRS}
   ${urdfdom_INCLUDE_DIRS}
   ${urdfdom_headers_INCLUDE_DIRS}
   ${TinyXML_INCLUDE_DIRS}
   )
 
-link_directories(${catkin_LIBRARY_DIRS} ${Boost_LIBRARY_DIRS})
+link_directories(${Boost_LIBRARY_DIRS} ${catkin_LIBRARY_DIRS})
 
 add_library(${PROJECT_NAME} src/model.cpp src/rosconsole_bridge.cpp)
 target_link_libraries(${PROJECT_NAME} ${TinyXML_LIBRARIES} ${catkin_LIBRARIES} ${urdfdom_LIBRARIES})
