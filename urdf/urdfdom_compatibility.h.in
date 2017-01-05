@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
-*  Copyright (c) 2008, Willow Garage, Inc.
+*
+*  Copyright (c) 2016, CITEC, Bielefeld University
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -32,34 +32,53 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-/* Author: Wim Meeussen */
+/* Robert Haschke */
 
-#ifndef URDF_MODEL_H
-#define URDF_MODEL_H
+#ifndef URDF_URDFDOM_COMPATIBILITY_
+#define URDF_URDFDOM_COMPATIBILITY_
 
-#include <string>
-#include <map>
-#include <urdf_model/model.h>
-#include <urdf/urdfdom_compatibility.h>
-#include <tinyxml.h>
+#if @URDFDOM_DECLARE_TYPES@ // This is needed for urdfdom <= 0.4
 
-namespace urdf{
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
-class Model: public ModelInterface
-{
-public:
-  /// \brief Load Model from TiXMLElement
-  bool initXml(TiXmlElement *xml);
-  /// \brief Load Model from TiXMLDocument
-  bool initXml(TiXmlDocument *xml);
-  /// \brief Load Model given a filename
-  bool initFile(const std::string& filename);
-  /// \brief Load Model given the name of a parameter on the parameter server
-  bool initParam(const std::string& param);
-  /// \brief Load Model from a XML-string
-  bool initString(const std::string& xmlstring);
-};
+#define URDF_TYPEDEF_CLASS_POINTER(Class) \
+class Class; \
+typedef boost::shared_ptr<Class> Class##SharedPtr; \
+typedef boost::shared_ptr<const Class> Class##ConstSharedPtr; \
+typedef boost::weak_ptr<Class> Class##WeakPtr
 
+namespace urdf {
+URDF_TYPEDEF_CLASS_POINTER(Box);
+URDF_TYPEDEF_CLASS_POINTER(Collision);
+URDF_TYPEDEF_CLASS_POINTER(Cylinder);
+URDF_TYPEDEF_CLASS_POINTER(Geometry);
+URDF_TYPEDEF_CLASS_POINTER(Inertial);
+
+URDF_TYPEDEF_CLASS_POINTER(Joint);
+URDF_TYPEDEF_CLASS_POINTER(JointCalibration);
+URDF_TYPEDEF_CLASS_POINTER(JointDynamics);
+URDF_TYPEDEF_CLASS_POINTER(JointLimits);
+URDF_TYPEDEF_CLASS_POINTER(JointMimic);
+URDF_TYPEDEF_CLASS_POINTER(JointSafety);
+
+URDF_TYPEDEF_CLASS_POINTER(Link);
+URDF_TYPEDEF_CLASS_POINTER(Material);
+URDF_TYPEDEF_CLASS_POINTER(Mesh);
+URDF_TYPEDEF_CLASS_POINTER(Sphere);
+URDF_TYPEDEF_CLASS_POINTER(Visual);
+
+URDF_TYPEDEF_CLASS_POINTER(ModelInterface);
 }
 
-#endif
+#undef URDF_TYPEDEF_CLASS_POINTER
+
+#else // urdfdom <= 0.4
+
+typedef std::shared_ptr<ModelInterface> ModelInterfaceSharedPtr;
+typedef std::shared_ptr<const ModelInterface> ModelInterfaceConstSharedPtr;
+typedef std::weak_ptr<ModelInterface> ModelInterfaceWeakPtr;
+
+#endif // urdfdom > 0.4
+
+#endif // URDF_URDFDOM_COMPATIBILITY_
