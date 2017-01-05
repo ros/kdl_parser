@@ -37,7 +37,7 @@
 #ifndef URDF_PARSER_PLUGIN_H
 #define URDF_PARSER_PLUGIN_H
 
-#include <urdf_model/model.h>
+#include <urdf/urdfdom_compatibility.h>
 
 namespace urdf
 {
@@ -54,7 +54,7 @@ public:
   }
 
   /// \brief Load Model from string
-  virtual boost::shared_ptr<ModelInterface> parse(const std::string &xml_string) = 0;
+  virtual urdf::ModelInterfaceSharedPtr parse(const std::string &xml_string) = 0;
 };
   
 }

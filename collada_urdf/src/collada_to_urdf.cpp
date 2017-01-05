@@ -188,7 +188,7 @@ void assimp_calc_bbox(string fname, float &minx, float &miny, float &minz,
   }
 }
 
-void addChildLinkNamesXML(boost::shared_ptr<const Link> link, ofstream& os)
+void addChildLinkNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
 {
   os << "  <link name=\"" << link->name << "\">" << endl;
   if ( !!link->visual ) {
@@ -405,14 +405,14 @@ void addChildLinkNamesXML(boost::shared_ptr<const Link> link, ofstream& os)
   }
 #endif
 
-  for (std::vector<boost::shared_ptr<Link> >::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
+  for (std::vector<urdf::LinkSharedPtr >::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
     addChildLinkNamesXML(*child, os);
 }
 
-void addChildJointNamesXML(boost::shared_ptr<const Link> link, ofstream& os)
+void addChildJointNamesXML(urdf::LinkConstSharedPtr link, ofstream& os)
 {
   double r, p, y;
-  for (std::vector<boost::shared_ptr<Link> >::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++){
+  for (std::vector<urdf::LinkSharedPtr >::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++){
     (*child)->parent_joint->parent_to_joint_origin_transform.rotation.getRPY(r,p,y);
     std::string jtype;
     if ( (*child)->parent_joint->type == urdf::Joint::UNKNOWN ) {
@@ -443,7 +443,7 @@ void addChildJointNamesXML(boost::shared_ptr<const Link> link, ofstream& os)
     os << "    <axis   xyz=\"" <<  (*child)->parent_joint->axis.x << " ";
     os << (*child)->parent_joint->axis.y << " " << (*child)->parent_joint->axis.z << "\"/>" << endl;
     {
-      boost::shared_ptr<urdf::Joint> jt((*child)->parent_joint);
+      urdf::JointSharedPtr jt((*child)->parent_joint);
 
       if ( !!jt->limits ) {
         os << "    <limit ";
@@ -501,7 +501,7 @@ void addChildJointNamesXML(boost::shared_ptr<const Link> link, ofstream& os)
   }
 }
 
-void printTreeXML(boost::shared_ptr<const Link> link, string name, string file)
+void printTreeXML(urdf::LinkConstSharedPtr link, string name, string file)
 {
   std::ofstream os;
   os.open(file.c_str());
@@ -667,7 +667,7 @@ int main(int argc, char** argv)
   }
   xml_file.close();
 
-  boost::shared_ptr<ModelInterface> robot;
+  urdf::ModelInterfaceSharedPtr robot;
   if( xml_string.find("<COLLADA") != std::string::npos )
   {
     ROS_DEBUG("Parsing robot collada xml string");

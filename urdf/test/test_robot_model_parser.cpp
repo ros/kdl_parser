@@ -54,7 +54,7 @@ public:
   bool checkModel(urdf::Model & robot)
   {
     // get root link
-    boost::shared_ptr<const Link> root_link = robot.getRoot();
+    urdf::LinkConstSharedPtr root_link = robot.getRoot();
     if (!root_link)
     {
       ROS_ERROR("no root link %s", robot.getName().c_str());
@@ -79,12 +79,12 @@ protected:
   {
   }
 
-  bool traverse_tree(boost::shared_ptr<const Link> link,int level = 0)
+  bool traverse_tree(urdf::LinkConstSharedPtr link,int level = 0)
   {
     ROS_INFO("Traversing tree at level %d, link size %lu", level, link->child_links.size());
     level+=2;
     bool retval = true;
-    for (std::vector<boost::shared_ptr<Link> >::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
+    for (std::vector<urdf::LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
     {
       ++num_links;
       if (*child && (*child)->parent_joint)
@@ -142,7 +142,7 @@ TEST_F(TestParser, test)
   ASSERT_TRUE(robot.initFile(folder + file));
 
   EXPECT_EQ(robot.getName(), robot_name);
-  boost::shared_ptr<const urdf::Link> root = robot.getRoot();
+  urdf::LinkConstSharedPtr root = robot.getRoot();
   ASSERT_TRUE(static_cast<bool>(root));
   EXPECT_EQ(root->name, root_name);
 

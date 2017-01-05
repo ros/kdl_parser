@@ -36,6 +36,7 @@
 
 #include "kdl_parser/kdl_parser.hpp"
 #include <urdf/model.h>
+#include <urdf/urdfdom_compatibility.h>
 #include <kdl/frames_io.hpp>
 #include <ros/console.h>
 
@@ -64,7 +65,7 @@ Frame toKdl(urdf::Pose p)
 }
 
 // construct joint
-Joint toKdl(boost::shared_ptr<urdf::Joint> jnt)
+Joint toKdl(urdf::JointSharedPtr jnt)
 {
   Frame F_parent_jnt = toKdl(jnt->parent_to_joint_origin_transform);
 
@@ -93,7 +94,7 @@ Joint toKdl(boost::shared_ptr<urdf::Joint> jnt)
 }
 
 // construct inertia
-RigidBodyInertia toKdl(boost::shared_ptr<urdf::Inertial> i)
+RigidBodyInertia toKdl(urdf::InertialSharedPtr i)
 {
   Frame origin = toKdl(i->origin);
   
@@ -124,9 +125,9 @@ RigidBodyInertia toKdl(boost::shared_ptr<urdf::Inertial> i)
 
 
 // recursive function to walk through tree
-bool addChildrenToTree(boost::shared_ptr<const urdf::Link> root, Tree& tree)
+bool addChildrenToTree(urdf::LinkConstSharedPtr root, Tree& tree)
 {
-  std::vector<boost::shared_ptr<urdf::Link> > children = root->child_links;
+  std::vector<urdf::LinkSharedPtr > children = root->child_links;
   ROS_DEBUG("Link %s had %i children", root->name.c_str(), (int)children.size());
 
   // constructs the optional inertia

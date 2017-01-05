@@ -38,7 +38,7 @@
 #include "collada_parser/collada_parser.h"
 #include <class_loader/class_loader.h>
 
-boost::shared_ptr<urdf::ModelInterface> urdf::ColladaURDFParser::parse(const std::string &xml_string)
+urdf::ModelInterfaceSharedPtr urdf::ColladaURDFParser::parse(const std::string &xml_string)
 {
   return urdf::parseCollada(xml_string);
 }
