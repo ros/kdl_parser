@@ -2,6 +2,12 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Addressed gcc6 build error in the urdf package, forward port of `#156 <https://github.com/ros/robot_model/issues/156>`_ (`#173 <https://github.com/ros/robot_model/issues/173>`_)
+* Now using urdf::*ShredPtr instead of boost::shared_ptr (`#144 <https://github.com/ros/robot_model/issues/144>`_)
+* Contributors: Jochen Sprickerhof, William Woodall
+
 1.12.5 (2016-10-27)
 -------------------
 * Added urdf_compatibility.h header to define SharedPtr types (`#160 <https://github.com/ros/robot_model/issues/160>`_)

@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Now using urdf::*ShredPtr instead of boost::shared_ptr (`#144 <https://github.com/ros/robot_model/issues/144>`_)
+* Contributors: Jochen Sprickerhof
+
 1.12.5 (2016-10-27)
 -------------------
 * fix segfault: safely handle empty robot model (`#154 <https://github.com/ros/robot_model/issues/154>`_)
