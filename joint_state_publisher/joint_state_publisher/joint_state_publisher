@@ -380,6 +380,8 @@ class JointStatePublisherGui(QWidget):
             self.gridlayout.addLayout(item, *pos)
 
     def generate_grid_positions(self, num_items, num_rows):
+        if num_rows==0:
+          return []
         positions = [(y, x) for x in range(int((math.ceil(float(num_items) / num_rows)))) for y in range(num_rows)]
         positions = positions[:num_items]
         return positions
