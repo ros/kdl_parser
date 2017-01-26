@@ -2,6 +2,11 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fixed a crash which happened when there were ``0`` free joints, opens empty window (`#178 <https://github.com/ros/robot_model/issues/178>`_)
+* Contributors: Bence Magyar
+
 1.12.6 (2017-01-04)
 -------------------
 * Migrated slots in joint state publisher gui to Qt5 (`#147 <https://github.com/ros/robot_model/issues/147>`_)

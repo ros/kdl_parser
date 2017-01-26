@@ -2,6 +2,9 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.12.6 (2017-01-04)
 -------------------
 * Addressed gcc6 build error in the urdf package, forward port of `#156 <https://github.com/ros/robot_model/issues/156>`_ (`#173 <https://github.com/ros/robot_model/issues/173>`_)
