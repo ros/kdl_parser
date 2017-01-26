@@ -2,8 +2,8 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.7 (2017-01-26)
+-------------------
 * Fixed a crash which happened when there were ``0`` free joints, opens empty window (`#178 <https://github.com/ros/robot_model/issues/178>`_)
 * Contributors: Bence Magyar
 
