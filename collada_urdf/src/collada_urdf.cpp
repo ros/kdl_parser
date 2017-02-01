@@ -1287,9 +1287,9 @@ protected:
             break;
         }
         case urdf::Geometry::BOX: {
-	    shapes::Box box(static_cast<urdf::Box*>(geometry.get())->dim.x / 2.0,
-			    static_cast<urdf::Box*>(geometry.get())->dim.y / 2.0,
-			    static_cast<urdf::Box*>(geometry.get())->dim.z / 2.0);
+	    shapes::Box box(static_cast<urdf::Box*>(geometry.get())->dim.x,
+			    static_cast<urdf::Box*>(geometry.get())->dim.y,
+			    static_cast<urdf::Box*>(geometry.get())->dim.z);
 	    boost::scoped_ptr<shapes::Mesh> mesh(shapes::createMeshFromShape(box));
             _loadVertices(mesh.get(), cgeometry);
             break;
