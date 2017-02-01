@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
+*
 *  Copyright (c) 2010, Willow Garage, Inc.
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redstributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -50,14 +50,15 @@ int main(int argc, char** argv)
         return -1;
     }
 
-	ros::init(argc, argv, "urdf_to_collada");
+    ros::init(argc, argv, "urdf_to_collada");
 
     std::string input_filename(argv[1]);
     std::string output_filename(argv[2]);
 
     urdf::Model robot_model;
     if( !robot_model.initFile(input_filename) ) {
-        ROS_ERROR("failed to open urdf file %s",input_filename.c_str());
+        ROS_ERROR("failed to open urdf file %s", input_filename.c_str());
+        return -2;
     }
 
     collada_urdf::WriteUrdfModelToColladaFile(robot_model, output_filename);

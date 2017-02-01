@@ -34,52 +34,23 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-/*
-std::string readTestUrdfString() {
-    std::ifstream file("test/pr2.urdf");
-    std::stringstream ss;
-    ss << file.rdbuf();
-    return ss.str();
-}
 
 TEST(collada_urdf, collada_from_urdf_file_works)
 {
-    boost::shared_ptr<DAE> dom;
-    ASSERT_TRUE(collada_urdf::colladaFromUrdfFile("test/pr2.urdf", dom));
-    ASSERT_TRUE(collada_urdf::colladaToFile(dom, "test/pr2.dae"));
+    urdf::Model robot_model;
+
+    ASSERT_TRUE(robot_model.initFile("pr2.urdf"));
+    ASSERT_TRUE(collada_urdf::WriteUrdfModelToColladaFile(robot_model, "pr2.dae"));
 }
 
-TEST(collada_urdf, collada_from_urdf_string_works)
-{
-    std::string urdf_str = readTestUrdfString();
-
-    boost::shared_ptr<DAE> dom;
-    ASSERT_TRUE(collada_urdf::colladaFromUrdfString(urdf_str, dom));
-    ASSERT_TRUE(collada_urdf::colladaToFile(dom, "test/pr2.dae"));
-}
-
-TEST(collada_urdf, collada_from_urdf_xml_works)
-{
-    TiXmlDocument urdf_xml;
-    ASSERT_TRUE(urdf_xml.Parse(readTestUrdfString().c_str()) > 0);
-
-    boost::shared_ptr<DAE> dom;
-    ASSERT_TRUE(collada_urdf::colladaFromUrdfXml(&urdf_xml, dom));
-    ASSERT_TRUE(collada_urdf::colladaToFile(dom, "test/pr2.dae"));
-}
-
-TEST(collada_urdf, collada_from_urdf_model_works)
+TEST(collada_urdf, collada_output_dir_does_not_exist)
 {
     urdf::Model robot_model;
-    TiXmlDocument urdf_xml;
-    ASSERT_TRUE(urdf_xml.Parse(readTestUrdfString().c_str()) > 0);
-    ASSERT_TRUE(robot_model.initXml(&urdf_xml));
 
-    boost::shared_ptr<DAE> dom;
-    ASSERT_TRUE(collada_urdf::colladaFromUrdfModel(robot_model, dom));
-    ASSERT_TRUE(collada_urdf::colladaToFile(dom, "test/pr2.dae"));
+    ASSERT_TRUE(robot_model.initFile("pr2.urdf"));
+    ASSERT_FALSE(collada_urdf::WriteUrdfModelToColladaFile(robot_model, "a/very/long/directory/path/that/should/not/exist/pr2.dae"));
 }
-*/
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
