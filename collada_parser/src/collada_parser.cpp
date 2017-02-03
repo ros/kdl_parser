@@ -42,8 +42,13 @@
 #include <string>
 #include <sstream>
 
+/* disable deprecated auto_ptr warnings */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include <dae.h>
 #include <dae/daeErrorHandler.h>
+#pragma GCC diagnostic pop
+
 #include <dom/domCOLLADA.h>
 #include <dae/domAny.h>
 #include <dom/domConstants.h>
@@ -67,6 +72,7 @@
 #include <fcntl.h>
 #endif
 
+#define typeof __typeof__
 #define FOREACH(it, v) for(typeof((v).begin())it = (v).begin(); it != (v).end(); (it)++)
 #define FOREACHC FOREACH
 

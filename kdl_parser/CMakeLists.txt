@@ -19,6 +19,8 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 find_library(KDL_LIBRARY REQUIRED NAMES orocos-kdl HINTS ${orocos_kdl_LIBRARY_DIRS})
 
+add_compile_options(-std=c++11)
+
 catkin_package(
   LIBRARIES ${PROJECT_NAME} ${KDL_LIBRARY}
   INCLUDE_DIRS include

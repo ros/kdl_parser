@@ -21,6 +21,8 @@ set(generated_compat_header "${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME}/urdf
 include_directories("${CATKIN_DEVEL_PREFIX}/include")
 configure_file(urdfdom_compatibility.h.in "${generated_compat_header}" @ONLY)
 
+add_compile_options(-std=c++11)
+
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   INCLUDE_DIRS include ${TinyXML_INLCLUDE_DIRS} ${CATKIN_DEVEL_PREFIX}/include

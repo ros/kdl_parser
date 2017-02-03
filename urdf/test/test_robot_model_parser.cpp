@@ -94,7 +94,7 @@ protected:
         double roll,pitch,yaw;
         (*child)->parent_joint->parent_to_joint_origin_transform.rotation.getRPY(roll,pitch,yaw);
 
-        if (isnan(roll) || isnan(pitch) || isnan(yaw))
+        if (std::isnan(roll) || std::isnan(pitch) || std::isnan(yaw))
         {
           ROS_ERROR("getRPY() returned nan!");
           return false;
