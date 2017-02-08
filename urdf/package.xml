@@ -3,14 +3,15 @@
   <version>1.12.7</version>
   <description>
     This package contains a C++ parser for the Unified Robot Description
-    Format (URDF), which is an XML format for representing a robot model. 
+    Format (URDF), which is an XML format for representing a robot model.
     The code API of the parser has been through our review process and will remain
     backwards compatible in future releases.
   </description>
 
-  <author>Ioan Sucan</author>
-  <maintainer email="isucan@gmail.com">Ioan Sucan</maintainer>
-  <maintainer email="jacquelinekay1@gmail.com">Jackie Kay</maintainer>
+  <author email="isucan@gmail.com">Ioan Sucan</author>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
 
   <license>BSD</license>
 
