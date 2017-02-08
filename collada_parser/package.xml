@@ -8,10 +8,14 @@
     to directly use this parser when working with Collada robot
     descriptions, the preferred user API is found in the urdf package.
   </description>
+
   <author>Rosen Diankov</author>
   <author>Kei Okada</author>
-  <maintainer email="isucan@gmail.com">Ioan Sucan</maintainer>
-  <maintainer email="jacquelinekay1@gmail.com">Jackie Kay</maintainer>
+  <author email="isucan@gmail.com">Ioan Sucan</author>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
+
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/collada_parser</url>
