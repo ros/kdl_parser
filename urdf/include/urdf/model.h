@@ -44,6 +44,7 @@
 #include <tinyxml.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
+#include <ros/ros.h>
 
 namespace urdf{
 
@@ -58,6 +59,8 @@ public:
   bool initFile(const std::string& filename);
   /// \brief Load Model given the name of a parameter on the parameter server
   bool initParam(const std::string& param);
+  /// \brief Load Model given the name of a parameter on the parameter server using provided nodehandle
+  bool initParamWithNodeHandle(const std::string& param, const ros::NodeHandle& nh = ros::NodeHandle());
   /// \brief Load Model from a XML-string
   bool initString(const std::string& xmlstring);
 };
