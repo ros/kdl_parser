@@ -31,10 +31,8 @@
 #include <tf/LinearMath/Transform.h>
 #include <tf/LinearMath/Quaternion.h>
 
-#undef GAZEBO_1_0
 #undef GAZEBO_1_3
 
-//#define GAZEBO_1_0
 #define GAZEBO_1_3
 
 using namespace urdf;
@@ -385,17 +383,6 @@ void addChildLinkNamesXML(boost::shared_ptr<const Link> link, ofstream& os)
   }
   os << "  </link>" << endl;
 
-#ifdef GAZEBO_1_0
-  if ( add_gazebo_description ) {
-    os << "  <gazebo reference=\"" << link->name << "\">" << endl;
-    os << "    <material>Gazebo/Grey</material>" << endl;
-    //os << "    <mu1>0.9</mu1>" << endl;
-    //os << "    <mu2>0.9</mu2>" << endl;
-    os << "    <turnGravityOff>false</turnGravityOff>" << endl;
-    os << "  </gazebo>" << endl;
-  }
-#endif
-
 #ifdef GAZEBO_1_3
   if ( add_gazebo_description ) {
     os << "  <gazebo reference=\"" << link->name << "\">" << endl;
@@ -507,36 +494,11 @@ void printTreeXML(boost::shared_ptr<const Link> link, string name, string file)
   os.open(file.c_str());
   os << "<?xml version=\"1.0\"?>" << endl;
   os << "<robot name=\"" << name << "\"" << endl;
-  os << "       xmlns:xi=\"http://www.w3.org/2001/XInclude\"" << endl;
-  os << "       xmlns:gazebo=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#gz\"" << endl;
-  os << "       xmlns:model=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#model\"" << endl;
-  os << "       xmlns:sensor=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor\"" << endl;
-  os << "       xmlns:body=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#body\"" << endl;
-  os << "       xmlns:geom=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#geom\"" << endl;
-  os << "       xmlns:joint=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#joint\"" << endl;
-  os << "       xmlns:interface=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#interface\"" << endl;
-  os << "       xmlns:rendering=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering\"" << endl;
-  os << "       xmlns:renderable=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#renderable\"" << endl;
-  os << "       xmlns:controller=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#controller\"" << endl;
-  os << "       xmlns:physics=\"http://playerstage.sourceforge.net/gazebo/xmlschema/#physics\">" << endl;
+  os << "       xmlns:xi=\"http://www.w3.org/2001/XInclude\">" << endl;
 
   addChildLinkNamesXML(link, os);
 
   addChildJointNamesXML(link, os);
-
-  if ( add_gazebo_description ) {
-#ifdef GAZEBO_1_0
-    // old gazebo (gazebo on ROS Fuerte)
-    os << " <gazebo>" << endl;
-    os << "   <controller:gazebo_ros_controller_manager" << endl;
-    os << "      name=\"gazebo_ros_controller_manager\"" << endl;
-    os << "      plugin=\"libgazebo_ros_controller_manager.so\">" << endl;
-    os << "     <alwaysOn>true</alwaysOn>" << endl;
-    os << "     <updateRate>1000.0</updateRate>" << endl;
-    os << "   </controller:gazebo_ros_controller_manager>" << endl;
-    os << "  </gazebo>" << endl;
-#endif
-  }
 
   os << "</robot>" << endl;
   os.close();
