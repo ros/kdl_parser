@@ -214,9 +214,21 @@ class JointStatePublisher():
                 elif name in self.dependent_joints:
                     param = self.dependent_joints[name]
                     parent = param['parent']
-                    joint = self.free_joints[parent]
                     factor = param.get('factor', 1)
                     offset = param.get('offset', 0)
+                    # Handle recursive mimic chain
+                    recursive_mimic_chain_joints = [name]
+                    while parent in self.dependent_joints:
+                        if parent in recursive_mimic_chain_joints:
+                            error_message = "Found an infinite recursive mimic chain"
+                            rospy.logerr("%s: [%s, %s]", error_message, ', '.join(recursive_mimic_chain_joints), parent)
+                            sys.exit(-1)
+                        recursive_mimic_chain_joints.append(parent)
+                        param = self.dependent_joints[parent]
+                        parent = param['parent']
+                        offset += factor * param.get('offset', 0)
+                        factor *= param.get('factor', 1)
+                    joint = self.free_joints[parent]
 
                 if has_position and 'position' in joint:
                     msg.position[i] = joint['position'] * factor + offset
