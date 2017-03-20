@@ -1,4 +1,4 @@
-<package>
+<package format="2">
   <name>joint_state_publisher</name>
   <version>1.12.7</version>
   <description>
@@ -13,12 +13,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>rospy</build_depend>
-  <build_depend>python_qt_binding</build_depend>
-  <build_depend>sensor_msgs</build_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>python_qt_binding</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
 
-  <run_depend>rospy</run_depend>
-  <run_depend>python_qt_binding</run_depend>
-  <run_depend>sensor_msgs</run_depend>
-
+  <test_depend>rostest</test_depend>
 </package>
