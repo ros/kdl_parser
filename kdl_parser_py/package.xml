@@ -9,7 +9,9 @@
   </description>
 
   <author email="jonathan.bohren@gmail.com">Jonathan Bohren</author>
-  <maintainer email="jackie@osrfoundation.org">Jackie Kay</maintainer>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
 
   <license>BSD</license>
 

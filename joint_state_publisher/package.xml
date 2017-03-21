@@ -5,8 +5,9 @@
     This package contains a tool for setting and publishing joint state values for a given URDF.
   </description>
   <author email="davidvlu@gmail.com">David V. Lu!!</author>
-  <maintainer email="davidvlu@gmail.com">David V. Lu!!</maintainer>
-  <maintainer email="jacquelinekay1@gmail.com">Jackie Kay</maintainer>
+  <author email="jacquelinekay1@gmail.com">Jackie Kay</author>
+  <maintainer email="clalancette@osrfoundation.org">Chris Lalancette</maintainer>
+  <maintainer email="sloretz@osrfoundation.org">Shane Loretz</maintainer>
 
   <license>BSD</license>
   <url type="website">http://www.ros.org/wiki/joint_state_publisher</url>
