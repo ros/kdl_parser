@@ -209,7 +209,10 @@ class JointStatePublisher():
                     msg.effort[i] = joint['effort']
 
             self.pub.publish(msg)
-            r.sleep()
+            try:
+                r.sleep()
+            except rospy.exceptions.ROSTimeMovedBackwardsException:
+                pass
 
     def update(self, delta):
         for name, joint in self.free_joints.iteritems():
