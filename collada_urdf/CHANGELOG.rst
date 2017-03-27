@@ -2,8 +2,8 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.8 (2017-03-27)
+-------------------
 * Remove old gazebo settings.
   Based on an initial patch from YoheiKakiuchi, just totally
   remove old Gazebo 1.0 settings, as they are never used and

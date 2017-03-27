@@ -2,8 +2,8 @@
 Changelog for package robot_model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.8 (2017-03-27)
+-------------------
 * add Chris and Shane as maintainers (`#184 <https://github.com/ros/robot_model/issues/184>`_)
 * Contributors: William Woodall
 

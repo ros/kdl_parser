@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.8 (2017-03-27)
+-------------------
 * add Chris and Shane as maintainers (`#184 <https://github.com/ros/robot_model/issues/184>`_)
 * fix missed mandatory -std=c++11 flag (`#181 <https://github.com/ros/robot_model/issues/181>`_)
   collada_parser,kdl_parser,urdf: add c++11 flag,

@@ -2,8 +2,8 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.8 (2017-03-27)
+-------------------
 * Allow supplying NodeHandle for initParam (`#168 <https://github.com/ros/robot_model/issues/168>`_)
   * Allow supplying NodeHandle for initParam using new function.
   * fixed missing return statement in previous commit.
