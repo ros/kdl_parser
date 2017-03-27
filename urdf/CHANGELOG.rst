@@ -2,6 +2,19 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Allow supplying NodeHandle for initParam (`#168 <https://github.com/ros/robot_model/issues/168>`_)
+  * Allow supplying NodeHandle for initParam using new function.
+  * fixed missing return statement in previous commit.
+* add Chris and Shane as maintainers (`#184 <https://github.com/ros/robot_model/issues/184>`_)
+* fix missed mandatory -std=c++11 flag (`#181 <https://github.com/ros/robot_model/issues/181>`_)
+  collada_parser,kdl_parser,urdf: add c++11 flag,
+  collada_parser: replace typeof with ansi __typeof\_\_
+  builded/tested on gentoo
+  Thanks den4ix for the contribution!
+* Contributors: Denis Romanchuk, Piyush Khandelwal, William Woodall
+
 1.12.7 (2017-01-26)
 -------------------
 

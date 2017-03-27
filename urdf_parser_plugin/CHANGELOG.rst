@@ -2,6 +2,11 @@
 Changelog for package urdf_parser_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add Chris and Shane as maintainers (`#184 <https://github.com/ros/robot_model/issues/184>`_)
+* Contributors: William Woodall
+
 1.12.7 (2017-01-26)
 -------------------
 

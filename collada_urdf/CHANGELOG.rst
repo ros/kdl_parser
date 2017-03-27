@@ -2,6 +2,26 @@
 Changelog for package collada_urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Remove old gazebo settings.
+  Based on an initial patch from YoheiKakiuchi, just totally
+  remove old Gazebo 1.0 settings, as they are never used and
+  almost certainly will never be used.
+* add Chris and Shane as maintainers (`#184 <https://github.com/ros/robot_model/issues/184>`_)
+* Do a few cleanup tasks in collada_urdf (`#183 <https://github.com/ros/robot_model/issues/183>`_)
+  * Style cleanup within collada_urdf.
+  No functional change, just style.
+  * Make sure to quit out of urdf_to_collada when invalid file is found.
+  Otherwise, we'll just end up segfaulting later on.
+  * Re-enable one of the collada-urdf tests.
+  In point of fact, we delete the rest of the tests because
+  they don't make much sense anymore.  Just enable this one
+  for now; we'll enable further ones in the future.
+  * Add in another test for collada_urdf.
+* remove divide by 2 when writing boxes to collada format (`#133 <https://github.com/ros/robot_model/issues/133>`_)
+* Contributors: Chris Lalancette, Jackie Kay, William Woodall
+
 1.12.7 (2017-01-26)
 -------------------
 

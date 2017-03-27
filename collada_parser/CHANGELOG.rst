@@ -2,6 +2,16 @@
 Changelog for package collada_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add Chris and Shane as maintainers (`#184 <https://github.com/ros/robot_model/issues/184>`_)
+* fix missed mandatory -std=c++11 flag (`#181 <https://github.com/ros/robot_model/issues/181>`_)
+  collada_parser,kdl_parser,urdf: add c++11 flag,
+  collada_parser: replace typeof with ansi __typeof\_\_
+  builded/tested on gentoo
+  Thanks den4ix for the contribution!
+* Contributors: Denis Romanchuk, William Woodall
+
 1.12.7 (2017-01-26)
 -------------------
 
