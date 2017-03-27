@@ -2,6 +2,13 @@
 Changelog for package joint_state_publisher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* [joint_state_publisher] Handle time moving backwards
+  Without this patch, joint_state_publisher dies whenever the ROS time moves backwards (e.g., when running `rosbag play --clock --loop`).
+* Switch a couple more packages over to Chris and Shane.
+* Contributors: Chris Lalancette, Martin Günther
+
 1.11.12 (2017-01-04)
 --------------------
 

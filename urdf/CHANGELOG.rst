@@ -2,6 +2,12 @@
 Changelog for package urdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Use urdf::*ShredPtr instead of boost::shared_ptr (`#144 <https://github.com/ros/robot_model/issues/144>`_)
+* add Chris and Shane as maintainers (`#185 <https://github.com/ros/robot_model/issues/185>`_)
+* Contributors: Jochen Sprickerhof, William Woodall
+
 1.11.12 (2017-01-04)
 --------------------
 * Added ``urdf_compatibility.h`` to define ``SharedPtr`` types, copy of `#160 <https://github.com/ros/robot_model/issues/160>`_ (`#170 <https://github.com/ros/robot_model/issues/170>`_)
