@@ -32,6 +32,12 @@
   <run_depend>joint_state_publisher</run_depend>
 
   <export>
+    <deprecated>
+      This metapackage will be removed in ROS M. Replace all dependencies on
+      "robot_model" in your package.xml with dependencies on collada_parser,
+      collada_urdf, joint_state_publisher, kdl_parser, resource-retriever, urdf,
+      urdf_parser_plugin, and liburdfdom-tools instead.
+    </deprecated>
     <metapackage/>
   </export>
 
