@@ -2,6 +2,11 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Unset origin xyz or rpy is now properly interpreted as zero vector (`#187 <https://github.com/ros/robot_model/issues/187>`_)
+* Contributors: eugene-katsevman
+
 1.12.8 (2017-03-27)
 -------------------
 * Switch a couple more packages over to Chris and Shane.
