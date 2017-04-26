@@ -1,6 +1,6 @@
 <package format="2">
   <name>joint_state_publisher</name>
-  <version>1.12.8</version>
+  <version>1.12.9</version>
   <description>
     This package contains a tool for setting and publishing joint state values for a given URDF.
   </description>
