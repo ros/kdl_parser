@@ -14,15 +14,12 @@ find_package(TinyXML REQUIRED)
 include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 link_directories(${catkin_LIBRARY_DIRS})
-link_directories(${orocos_kdl_LIBRARY_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
-
-find_library(KDL_LIBRARY REQUIRED NAMES orocos-kdl HINTS ${orocos_kdl_LIBRARY_DIRS})
 
 add_compile_options(-std=c++11)
 
 catkin_package(
-  LIBRARIES ${PROJECT_NAME} ${KDL_LIBRARY}
+  LIBRARIES ${PROJECT_NAME} ${orocos_kdl_LIBRARIES}
   INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp rosconsole urdf
   DEPENDS orocos_kdl TinyXML
