@@ -1,14 +1,11 @@
-# Robot Model
+# KDL Parser
 
-`robot_model` contains packages for modeling various aspects of robot information, specified in the Xml Robot Description Format (URDF).
-The core package of this stack is urdf, which parses URDF files, and constructs an object model (C++) of the robot.
+This contains packages for converting from URDF to a representation in KDL.
+See the ROS wiki for API documentation and tutorials.
 
-## Deprecation
-This repository and the `robot_model` metapackage are deprecated.
-The other packages will continue to be maintained, but are being moved to new repositories.
-More information is available at [`ros/robot_model#195`](https://github.com/ros/robot_model/issues/195).
+* [kdl_parser](http://wiki.ros.org/kdl_parser)
+* [kdl_parser_py](http://wiki.ros.org/kdl_parser_py)
 
-**Moved Repos**
+This was originally part of the ros/robot_model repository.
+It has been moved to this repo as described by ros/robot_model#195
 
-* `collada_urdf` and `collada_parser`
-    * [`ros/collada_urdf`](https://github.com/ros/collada_urdf)
