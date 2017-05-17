@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Use result of find_package(orocos_kdl) properly (`ros/robot_model#200 <https://github.com/ros/robot_model/issues/200>`_) (`#1 <https://github.com/ros/kdl_parser/issues/1>`_)
+  orocos_kdl_LIBRARY_DIRS was not set
+
 1.11.13 (2017-03-27)
 --------------------
 * Use urdf::*ShredPtr instead of boost::shared_ptr (`#144 <https://github.com/ros/robot_model/issues/144>`_)
@@ -78,3 +83,4 @@ Changelog for package kdl_parser
 1.10.15 (2013-08-17)
 --------------------
 * fix `#30 <https://github.com/ros/robot_model/issues/30>`_
+
