@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.10 (2017-05-17)
+--------------------
 * Use result of find_package(orocos_kdl) properly (`#200 <https://github.com/ros/robot_model/issues/200>`_)
   orocos_kdl_LIBRARY_DIRS was not set
 
