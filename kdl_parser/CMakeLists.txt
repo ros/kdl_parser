@@ -9,9 +9,9 @@ find_package(catkin REQUIRED
   COMPONENTS roscpp rosconsole urdf cmake_modules
 )
 find_package(orocos_kdl REQUIRED)
-find_package(TinyXML REQUIRED)
+find_package(TinyXML2 REQUIRED)
 
-include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 link_directories(${catkin_LIBRARY_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
@@ -22,12 +22,12 @@ catkin_package(
   LIBRARIES ${PROJECT_NAME} ${orocos_kdl_LIBRARIES}
   INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp rosconsole urdf
-  DEPENDS orocos_kdl TinyXML
+  DEPENDS orocos_kdl TinyXML2
 )
 
 add_library(${PROJECT_NAME} src/kdl_parser.cpp)
 target_link_libraries(${PROJECT_NAME}
-  ${TinyXML_LIBRARIES} ${orocos_kdl_LIBRARIES} ${catkin_LIBRARIES}
+  ${TinyXML2_LIBRARIES} ${orocos_kdl_LIBRARIES} ${catkin_LIBRARIES}
 )
 
 add_executable(check_kdl_parser src/check_kdl_parser.cpp )

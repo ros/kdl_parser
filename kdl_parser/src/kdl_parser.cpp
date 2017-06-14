@@ -42,6 +42,7 @@
 
 using namespace std;
 using namespace KDL;
+using namespace tinyxml2;
 
 namespace kdl_parser{
 
@@ -155,8 +156,8 @@ bool addChildrenToTree(urdf::LinkConstSharedPtr root, Tree& tree)
 
 bool treeFromFile(const string& file, Tree& tree)
 {
-  TiXmlDocument urdf_xml;
-  urdf_xml.LoadFile(file);
+  XMLDocument urdf_xml;
+  urdf_xml.LoadFile(file.c_str());
   return treeFromXml(&urdf_xml, tree);
 }
 
@@ -172,12 +173,12 @@ bool treeFromParam(const string& param, Tree& tree)
 
 bool treeFromString(const string& xml, Tree& tree)
 {
-  TiXmlDocument urdf_xml;
+  XMLDocument urdf_xml;
   urdf_xml.Parse(xml.c_str());
   return treeFromXml(&urdf_xml, tree);
 }
 
-bool treeFromXml(TiXmlDocument *xml_doc, Tree& tree)
+bool treeFromXml(XMLDocument *xml_doc, Tree& tree)
 {
   urdf::Model robot_model;
   if (!robot_model.initXml(xml_doc)){
