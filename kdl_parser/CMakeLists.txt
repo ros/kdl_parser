@@ -30,6 +30,10 @@ target_link_libraries(${PROJECT_NAME}
   ${TinyXML_LIBRARIES} ${orocos_kdl_LIBRARIES} ${catkin_LIBRARIES}
 )
 
+if(WIN32)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE "KDL_PARSER_BUILDING_DLL")
+endif()
+
 add_executable(check_kdl_parser src/check_kdl_parser.cpp )
 target_link_libraries(check_kdl_parser ${PROJECT_NAME})
 
