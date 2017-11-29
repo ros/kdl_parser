@@ -37,12 +37,9 @@
 #include <iostream>
 #include <vector>
 
-#include <gtest/gtest.h>
-#include <kdl/jntarray.hpp>
-#include <kdl/chainidsolver_recursive_newton_euler.hpp>
-
-#include <ros/ros.h>
-#include <ros/console.h>
+#include "gtest/gtest.h"
+#include "kdl/chainidsolver_recursive_newton_euler.hpp"
+#include "kdl/jntarray.hpp"
 #include "kdl_parser/kdl_parser.hpp"
 
 int g_argc;
@@ -115,7 +112,6 @@ TEST_F(TestInertiaRPY, test_torques) {
 int main(int argc, char ** argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  ros::init(argc, argv, "test_kdl_parser");
   for (size_t i = 0; i < argc; ++i) {
     std::cout << argv[i] << std::endl;
   }

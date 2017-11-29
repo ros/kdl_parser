@@ -37,10 +37,11 @@
 #ifndef KDL_PARSER__KDL_PARSER_HPP_
 #define KDL_PARSER__KDL_PARSER_HPP_
 
-#include <kdl/tree.hpp>
 #include <string>
-#include <urdf_model/model.h>
 #include <tinyxml.h>  // NOLINT
+
+#include "kdl/tree.hpp"
+#include "urdf_model/model.h"
 
 #include "kdl_parser/visibility_control.hpp"
 

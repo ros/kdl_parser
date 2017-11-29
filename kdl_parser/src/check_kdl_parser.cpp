@@ -37,10 +37,10 @@
 #include <iostream>
 #include <string>
 
+#include "kdl/chainfksolverpos_recursive.hpp"
+#include "kdl/frames_io.hpp"
 #include "kdl_parser/kdl_parser.hpp"
-#include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/frames_io.hpp>
-#include <urdf/model.h>
+#include "urdf/model.h"
 
 void printLink(const KDL::SegmentMap::const_iterator & link, const std::string & prefix)
 {
