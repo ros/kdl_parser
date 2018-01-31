@@ -17,8 +17,8 @@
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/kdl_parser</url>
-  <url type="repository">https://github.com/ros/robot_model</url>
-  <url type="bugtracker">https://github.com/ros/robot_model/issues</url>
+  <url type="repository">https://github.com/ros/kdl_parser</url>
+  <url type="bugtracker">https://github.com/ros/kdl_parser/issues</url>
 
   <buildtool_depend version_gte="0.5.68">catkin</buildtool_depend>
 
