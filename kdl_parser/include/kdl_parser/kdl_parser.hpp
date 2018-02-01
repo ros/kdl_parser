@@ -40,7 +40,7 @@
 #include <kdl/tree.hpp>
 #include <string>
 #include <urdf_model/model.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 namespace kdl_parser{
 
@@ -65,12 +65,12 @@ bool treeFromParam(const std::string& param, KDL::Tree& tree);
  */
 bool treeFromString(const std::string& xml, KDL::Tree& tree);
 
-/** Constructs a KDL tree from a TiXmlDocument
- * \param xml_doc The TiXmlDocument containting the xml description of the robot
+/** Constructs a KDL tree from a XMLDocument
+ * \param xml_doc The XMLDocument containting the xml description of the robot
  * \param tree The resulting KDL Tree
  * returns true on success, false on failure
  */
-bool treeFromXml(TiXmlDocument *xml_doc, KDL::Tree& tree);
+bool treeFromXml(tinyxml2::XMLDocument *xml_doc, KDL::Tree& tree);
 
 /** Constructs a KDL tree from a URDF robot model
  * \param robot_model The URDF robot model
