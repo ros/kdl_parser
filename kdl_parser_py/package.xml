@@ -1,4 +1,4 @@
-<package>
+<package format="2">
   <name>kdl_parser_py</name>
   <version>1.12.10</version>
   <description>
@@ -22,13 +22,15 @@
   <buildtool_depend version_gte="0.5.68">catkin</buildtool_depend>
   <buildtool_depend>python-catkin-pkg</buildtool_depend>
 
-  <build_depend version_gte="1.3.0">orocos_kdl</build_depend>
-  <build_depend>urdf</build_depend>
-  <build_depend>rostest</build_depend>
+  <depend version_gte="1.3.0">orocos_kdl</depend>
+  <depend>urdf</depend>
 
-  <run_depend version_gte="1.3.0">orocos_kdl</run_depend>
-  <run_depend>urdf</run_depend>
-  <run_depend>urdfdom_py</run_depend>
-  <run_depend>python_orocos_kdl</run_depend>
+  <build_export_depend>urdfdom_py</build_export_depend>
+  <build_export_depend>python_orocos_kdl</build_export_depend>
+
+  <exec_depend>urdfdom_py</exec_depend>
+  <exec_depend>python_orocos_kdl</exec_depend>
+
+  <test_depend>rostest</test_depend>
 
 </package>
