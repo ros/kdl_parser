@@ -32,7 +32,7 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-/* Author: Jackie Kay */
+/* Author: Wim Meeussen */
 
 #include <iostream>
 #include <string>
