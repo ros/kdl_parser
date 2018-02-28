@@ -32,7 +32,7 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-/* Author: Wim Meeussen */
+/* Author: Jackie Kay */
 
 #include <iostream>
 #include <string>
@@ -41,8 +41,6 @@
 #include <kdl/chainfksolverpos_recursive.hpp>
 #include <kdl/frames_io.hpp>
 #include <urdf/model.h>
-
-using namespace KDL;
 
 void printLink(const KDL::SegmentMap::const_iterator & link, const std::string & prefix)
 {
