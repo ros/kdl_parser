@@ -1,5 +1,42 @@
+/*********************************************************************
+* Software License Agreement (BSD License)
+*
+*  Copyright (c) 2015 Open Source Robotics Foundation, Inc.
+*  All rights reserved.
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions
+*  are met:
+*
+*   * Redistributions of source code must retain the above copyright
+*     notice, this list of conditions and the following disclaimer.
+*   * Redistributions in binary form must reproduce the above
+*     copyright notice, this list of conditions and the following
+*     disclaimer in the documentation and/or other materials provided
+*     with the distribution.
+*   * Neither the name of the copyright holder nor the names of its
+*     contributors may be used to endorse or promote products derived
+*     from this software without specific prior written permission.
+*
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+*  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+*  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+*  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+*  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+*  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+*  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+*  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+*  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+*  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+*  POSSIBILITY OF SUCH DAMAGE.
+*********************************************************************/
 
-#include <string>
+/* Author: Jackie Kay */
+
+#include <iostream>
+#include <vector>
+
 #include <gtest/gtest.h>
 #include <kdl/jntarray.hpp>
 #include <kdl/chainidsolver_recursive_newton_euler.hpp>
@@ -8,21 +45,17 @@
 #include <ros/console.h>
 #include "kdl_parser/kdl_parser.hpp"
 
-using namespace kdl_parser;
-
 int g_argc;
-char** g_argv;
+char ** g_argv;
 
 class TestInertiaRPY : public testing::Test
 {
 public:
-
 protected:
   /// constructor
   TestInertiaRPY()
   {
   }
-
 
   /// Destructor
   ~TestInertiaRPY()
@@ -31,10 +64,7 @@ protected:
 };
 
 
-TEST_F(TestInertiaRPY, test_torques)
-{
-  //ASSERT_EQ(g_argc, 3);
-
+TEST_F(TestInertiaRPY, test_torques) {
   // workaround for segfault issue with parsing 2 trees instantiated on the stack
   KDL::Tree * tree_1 = new KDL::Tree;
   KDL::Tree * tree_2 = new KDL::Tree;
@@ -42,7 +72,7 @@ TEST_F(TestInertiaRPY, test_torques)
   KDL::JntArray torques_2;
 
   {
-    ASSERT_TRUE(treeFromFile(g_argv[1], *tree_1));
+    ASSERT_TRUE(kdl_parser::treeFromFile(g_argv[1], *tree_1));
     KDL::Vector gravity(0, 0, -9.81);
     KDL::Chain chain;
     std::cout << "number of joints: " << tree_1->getNrOfJoints() << std::endl;
@@ -50,11 +80,9 @@ TEST_F(TestInertiaRPY, test_torques)
 
     ASSERT_TRUE(tree_1->getChain("base_link", "link2", chain));
     KDL::ChainIdSolver_RNE solver(chain, gravity);
-    //JntArrays get initialized with all 0 values
     KDL::JntArray q(chain.getNrOfJoints());
     KDL::JntArray qdot(chain.getNrOfJoints());
     KDL::JntArray qdotdot(chain.getNrOfJoints());
-    //KDL::JntArray torques(chain.getNrOfJoints());
     std::vector<KDL::Wrench> wrenches(chain.getNrOfJoints());
     solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_1);
 
@@ -63,17 +91,15 @@ TEST_F(TestInertiaRPY, test_torques)
   }
 
   {
-    ASSERT_TRUE(treeFromFile(g_argv[2], *tree_2));
+    ASSERT_TRUE(kdl_parser::treeFromFile(g_argv[2], *tree_2));
     KDL::Vector gravity(0, 0, -9.81);
     KDL::Chain chain;
 
     ASSERT_TRUE(tree_2->getChain("base_link", "link2", chain));
     KDL::ChainIdSolver_RNE solver(chain, gravity);
-    //JntArrays get initialized with all 0 values
     KDL::JntArray q(chain.getNrOfJoints());
     KDL::JntArray qdot(chain.getNrOfJoints());
     KDL::JntArray qdotdot(chain.getNrOfJoints());
-    //KDL::JntArray torques(chain.getNrOfJoints());
     std::vector<KDL::Wrench> wrenches(chain.getNrOfJoints());
     solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_2);
 
@@ -86,9 +112,7 @@ TEST_F(TestInertiaRPY, test_torques)
   SUCCEED();
 }
 
-
-
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   testing::InitGoogleTest(&argc, argv);
   ros::init(argc, argv, "test_kdl_parser");
