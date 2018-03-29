@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
+*
 *  Copyright (c) 2008, Willow Garage, Inc.
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -34,45 +34,46 @@
 
 /* Author: Wim Meeussen */
 
+#include <iostream>
+#include <string>
+
 #include "kdl_parser/kdl_parser.hpp"
 #include <kdl/chainfksolverpos_recursive.hpp>
 #include <kdl/frames_io.hpp>
 #include <urdf/model.h>
-#include <iostream>
 
-using namespace KDL;
-using namespace std;
-using namespace urdf;
-
-void printLink(const SegmentMap::const_iterator& link, const std::string& prefix)
+void printLink(const KDL::SegmentMap::const_iterator & link, const std::string & prefix)
 {
-  cout << prefix << "- Segment " << GetTreeElementSegment(link->second).getName() << " has "
-       << GetTreeElementChildren(link->second).size() << " children" << endl;
-  for (unsigned int i=0; i < GetTreeElementChildren(link->second).size(); i++)
-      printLink(GetTreeElementChildren(link->second)[i], prefix + "  ");
+  std::cout << prefix << "- Segment " << GetTreeElementSegment(link->second).getName() <<
+    " has " << GetTreeElementChildren(link->second).size() << " children" << std::endl;
+  for (unsigned int i = 0; i < GetTreeElementChildren(link->second).size(); i++) {
+    printLink(GetTreeElementChildren(link->second)[i], prefix + "  ");
+  }
 }
 
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
-  if (argc < 2){
+  if (argc < 2) {
     std::cerr << "Expect xml file to parse" << std::endl;
     return -1;
   }
-  Model robot_model;
-  if (!robot_model.initFile(argv[1]))
-  {cerr << "Could not generate robot model" << endl; return false;}
+  urdf::Model robot_model;
+  if (!robot_model.initFile(argv[1])) {
+    std::cerr << "Could not generate robot model" << std::endl;
+    return false;
+  }
 
-  Tree my_tree;
-  if (!kdl_parser::treeFromUrdfModel(robot_model, my_tree)) 
-  {cerr << "Could not extract kdl tree" << endl; return false;}
+  KDL::Tree my_tree;
+  if (!kdl_parser::treeFromUrdfModel(robot_model, my_tree)) {
+    std::cerr << "Could not extract kdl tree" << std::endl;
+    return false;
+  }
 
   // walk through tree
-  cout << " ======================================" << endl;
-  cout << " Tree has " << my_tree.getNrOfSegments() << " link(s) and a root link" << endl;
-  cout << " ======================================" << endl;
-  SegmentMap::const_iterator root = my_tree.getRootSegment();
+  std::cout << " ======================================" << std::endl;
+  std::cout << " Tree has " << my_tree.getNrOfSegments() << " link(s) and a root link" << std::endl;
+  std::cout << " ======================================" << std::endl;
+  KDL::SegmentMap::const_iterator root = my_tree.getRootSegment();
   printLink(root, "");
 }
-
-
