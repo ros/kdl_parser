@@ -46,7 +46,6 @@
 
 namespace kdl_parser
 {
-
 // construct vector
 KDL::Vector toKdl(urdf::Vector3 v)
 {
@@ -160,8 +159,8 @@ bool addChildrenToTree(urdf::LinkConstSharedPtr root, KDL::Tree & tree)
 
 bool treeFromFile(const std::string & file, KDL::Tree & tree)
 {
-  TiXmlDocument urdf_xml;
-  urdf_xml.LoadFile(file);
+  tinyxml2::XMLDocument urdf_xml;
+  urdf_xml.LoadFile(file.c_str());
   return treeFromXml(&urdf_xml, tree);
 }
 
@@ -177,12 +176,12 @@ bool treeFromParam(const std::string & param, KDL::Tree & tree)
 
 bool treeFromString(const std::string & xml, KDL::Tree & tree)
 {
-  TiXmlDocument urdf_xml;
+  tinyxml2::XMLDocument urdf_xml;
   urdf_xml.Parse(xml.c_str());
   return treeFromXml(&urdf_xml, tree);
 }
 
-bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
+bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree)
 {
   urdf::Model robot_model;
   if (!robot_model.initXml(xml_doc)) {
@@ -192,6 +191,22 @@ bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
   return treeFromUrdfModel(robot_model, tree);
 }
 
+bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
+{
+  if (!xml_doc) {
+    ROS_ERROR("Could not parse the xml document");
+    return false;
+  }
+
+  urdf::Model robot_model;
+  std::stringstream ss;
+  ss << *xml_doc;
+  if (!robot_model.initString(ss.str())) {
+    ROS_ERROR("Could not generate robot model");
+    return false;
+  }
+  return treeFromUrdfModel(robot_model, tree);
+}
 
 bool treeFromUrdfModel(const urdf::ModelInterface & robot_model, KDL::Tree & tree)
 {
