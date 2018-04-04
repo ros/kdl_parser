@@ -193,8 +193,15 @@ bool treeFromXml(tinyxml2::XMLDocument & xml_doc, KDL::Tree & tree)
 
 bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
 {
+  if (!xml_doc) {
+    ROS_ERROR("Could not parse the xml document");
+    return false;
+  }
+
   urdf::Model robot_model;
-  if (!robot_model.initXml(xml_doc)) {
+  std::stringstream ss;
+  ss << *xml_doc;
+  if (!robot_model.initString(ss.str())) {
     ROS_ERROR("Could not generate robot model");
     return false;
   }
