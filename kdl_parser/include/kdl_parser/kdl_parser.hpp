@@ -78,7 +78,7 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree);
  * \return true on success, false on failure
  */
 KDL_PARSER_PUBLIC
-bool treeFromXml(tinyxml2::XMLDocument & xml_doc, KDL::Tree & tree);
+bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree);
 
 /** Constructs a KDL tree from a TinyXML document
  * \param[in] xml_doc The document containing the xml description of the robot
