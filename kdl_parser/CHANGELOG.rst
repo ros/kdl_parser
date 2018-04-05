@@ -2,6 +2,14 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* kdl_parser: switch from TinyXML to TinyXML2 (`#4 <https://github.com/ros/kdl_parser/issues/4>`_)
+* Style fixes from ros2 (`#11 <https://github.com/ros/kdl_parser/issues/11>`_)
+* Make rostest a test_depend (`#3 <https://github.com/ros/kdl_parser/issues/3>`_)
+* update links now that this is in its own repo
+* Contributors: Chris Lalancette, Dmitry Rozhkov, Mikael Arguedas
+
 1.12.10 (2017-05-17)
 --------------------
 * Use result of find_package(orocos_kdl) properly (`#200 <https://github.com/ros/robot_model/issues/200>`_)
