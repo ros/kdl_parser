@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.0 (2018-04-05)
+-------------------
 * kdl_parser: switch from TinyXML to TinyXML2 (`#4 <https://github.com/ros/kdl_parser/issues/4>`_)
 * Style fixes from ros2 (`#11 <https://github.com/ros/kdl_parser/issues/11>`_)
 * Make rostest a test_depend (`#3 <https://github.com/ros/kdl_parser/issues/3>`_)

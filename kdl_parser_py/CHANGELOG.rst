@@ -2,8 +2,8 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.0 (2018-04-05)
+-------------------
 * Make rostest a test_depend (`#3 <https://github.com/ros/kdl_parser/issues/3>`_)
 * update links now that this is in its own repo
 * Contributors: Chris Lalancette, Mikael Arguedas
