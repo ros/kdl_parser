@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 
 project(kdl_parser)
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
-
 find_package(catkin REQUIRED
   COMPONENTS rosconsole urdf cmake_modules
 )
@@ -15,7 +12,6 @@ find_package(TinyXML2 REQUIRED)
 include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 link_directories(${catkin_LIBRARY_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
 
 add_compile_options(-std=c++11)
 
