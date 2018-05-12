@@ -40,7 +40,12 @@
 #include "kdl_parser/kdl_parser.hpp"
 #include <kdl/chainfksolverpos_recursive.hpp>
 #include <kdl/frames_io.hpp>
+#ifdef HAS_URDF
 #include <urdf/model.h>
+#else
+#include <urdf_model/model.h>
+#include <urdf_parser/urdf_parser.h>
+#endif
 
 void printLink(const KDL::SegmentMap::const_iterator & link, const std::string & prefix)
 {
@@ -58,14 +63,23 @@ int main(int argc, char ** argv)
     std::cerr << "Expect xml file to parse" << std::endl;
     return -1;
   }
+#ifdef HAS_URDF
   urdf::Model robot_model;
   if (!robot_model.initFile(argv[1])) {
+#else
+  urdf::ModelInterfaceSharedPtr robot_model = urdf::parseURDFFile(argv[1]);
+  if (!robot_model) {
+#endif
     std::cerr << "Could not generate robot model" << std::endl;
     return false;
   }
 
   KDL::Tree my_tree;
+#ifdef HAS_URDF
   if (!kdl_parser::treeFromUrdfModel(robot_model, my_tree)) {
+#else
+  if (!kdl_parser::treeFromUrdfModel(*robot_model, my_tree)) {
+#endif
     std::cerr << "Could not extract kdl tree" << std::endl;
     return false;
   }
