@@ -29,12 +29,6 @@
   <build_export_depend>urdfdom_py</build_export_depend>
   <build_export_depend>python_orocos_kdl</build_export_depend>
 
-  <!-- The build_depend on urdfdom_py is needed for the doc job; we
-       don't have one for python_orocos_kdl because it is not a
-       catkin package.
-  -->
-  <build_depend>urdfdom_py</build_depend>
-
   <exec_depend>urdfdom_py</exec_depend>
   <exec_depend>python_orocos_kdl</exec_depend>
 
