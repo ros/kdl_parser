@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.15 (2018-07-23)
+--------------------
 * update links now that this is in its own repo
 * Contributors: Mikael Arguedas
 

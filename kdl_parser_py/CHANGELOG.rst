@@ -2,8 +2,8 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.11.15 (2018-07-23)
+--------------------
 * Remove unused test file. (`#19 <https://github.com/ros/kdl_parser/issues/19>`_)
 * update links now that this is in its own repo
 * Contributors: Chris Lalancette, Mikael Arguedas
