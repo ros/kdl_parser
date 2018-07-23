@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.1 (2018-07-23)
+-------------------
 * Fix up missing link tags in some XML files. (`#15 <https://github.com/ros/kdl_parser/issues/15>`_)
 * Contributors: Chris Lalancette
 
