@@ -2,8 +2,8 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.12.11 (2018-07-23)
+--------------------
 * Remove unused kdl_parser_py.urdf. (`#18 <https://github.com/ros/kdl_parser/issues/18>`_)
 * Make rostest a test_depend (`#3 <https://github.com/ros/kdl_parser/issues/3>`_)
 * update links now that this is in its own repo
