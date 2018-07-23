@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* update links now that this is in its own repo
+* Contributors: Mikael Arguedas
+
 1.11.14 (2017-05-17)
 --------------------
 * Use result of find_package(orocos_kdl) properly (`ros/robot_model#200 <https://github.com/ros/robot_model/issues/200>`_) (`#1 <https://github.com/ros/kdl_parser/issues/1>`_)
