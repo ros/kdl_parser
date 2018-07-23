@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix up missing link tags in some XML files. (`#15 <https://github.com/ros/kdl_parser/issues/15>`_)
+* Contributors: Chris Lalancette
+
 1.13.0 (2018-04-05)
 -------------------
 * kdl_parser: switch from TinyXML to TinyXML2 (`#4 <https://github.com/ros/kdl_parser/issues/4>`_)
