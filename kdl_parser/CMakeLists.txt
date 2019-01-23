@@ -7,7 +7,7 @@ find_package(catkin QUIET
 )
 
 if(NOT catkin_FOUND)
-  set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 endif()
 
 find_package(urdf QUIET)
