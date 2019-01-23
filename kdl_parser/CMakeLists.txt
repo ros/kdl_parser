@@ -10,22 +10,25 @@ if(NOT catkin_FOUND)
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 endif()
 
-find_package(urdf QUIET)
-if(urdf_FOUND)
-  add_definitions(-DHAS_URDF)
-  include_directories(${urdf_INCLUDE_DIRS})
-else()
-  find_package(urdfdom REQUIRED)
-  include_directories(${urdfdom_INCLUDE_DIRS})
-endif()
+find_package(urdfdom REQUIRED)
+include_directories(${urdfdom_INCLUDE_DIRS})
 
 find_package(orocos_kdl REQUIRED)
 find_package(TinyXML REQUIRED)
 find_package(TinyXML2 REQUIRED)
 
+# check for rosconsole
+# We check additionally for catkin to distinguish between an "official" ROS distribution
+# and the one provided in the distribution's repository.
 find_package(rosconsole QUIET)
-if(rosconsole_FOUND)
+if(rosconsole_FOUND AND catkin_FOUND)
   add_definitions(-DHAS_ROS)
+endif()
+
+find_package(urdf QUIET)
+if(urdf_FOUND)
+  add_definitions(-DHAS_URDF)
+  include_directories(${urdf_INCLUDE_DIRS})
 endif()
 
 include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
@@ -49,14 +52,14 @@ target_link_libraries(${PROJECT_NAME}
   ${TinyXML_LIBRARIES} ${TinyXML2_LIBRARIES} ${orocos_kdl_LIBRARIES}
 )
 
-if(urdf_FOUND)
-  target_link_libraries(${PROJECT_NAME} ${urdf_LIBRARIES})
-else()
-  target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES})
-endif()
+target_link_libraries(${PROJECT_NAME} ${urdfdom_LIBRARIES})
 
 if(catkin_FOUND)
   target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+endif()
+
+if(urdf_FOUND)
+  target_link_libraries(${PROJECT_NAME} ${urdf_LIBRARIES})
 endif()
 
 if(WIN32)

@@ -39,16 +39,18 @@
 #include <string>
 #include <vector>
 
+#include <urdf_model/model.h>
+#include <urdf_parser/urdf_parser.h>
+
+#include <kdl/frames_io.hpp>
+
+#ifdef HAS_ROS
+#include <ros/console.h>
+#endif
+
 #ifdef HAS_URDF
 #include <urdf/model.h>
 #include <urdf/urdfdom_compatibility.h>
-#else
-#include <urdf_model/model.h>
-#include <urdf_parser/urdf_parser.h>
-#endif
-#include <kdl/frames_io.hpp>
-#ifdef HAS_ROS
-#include <ros/console.h>
 #endif
 
 namespace kdl_parser
@@ -170,27 +172,17 @@ bool addChildrenToTree(urdf::LinkConstSharedPtr root, KDL::Tree & tree)
 
 bool treeFromFile(const std::string & file, KDL::Tree & tree)
 {
-#ifdef HAS_URDF
-  tinyxml2::XMLDocument urdf_xml;
-  urdf_xml.LoadFile(file.c_str());
-  return treeFromXml(&urdf_xml, tree);
-#else
   const urdf::ModelInterfaceSharedPtr robot_model = urdf::parseURDFFile(file);
   return kdl_parser::treeFromUrdfModel(*robot_model, tree);
-#endif
 }
 
 
-#ifdef HAS_URDF
+#if defined(HAS_ROS) && defined(HAS_URDF)
 bool treeFromParam(const std::string & param, KDL::Tree & tree)
 {
   urdf::Model robot_model;
   if (!robot_model.initParam(param)){
-#ifdef HAS_ROS
     ROS_ERROR("Could not generate robot model");
-#else
-    std::cerr << "Could not generate robot model" << std::endl;
-#endif
     return false;
   }
   return treeFromUrdfModel(robot_model, tree);
@@ -200,31 +192,34 @@ bool treeFromParam(const std::string & param, KDL::Tree & tree)
 
 bool treeFromString(const std::string & xml, KDL::Tree & tree)
 {
-#ifdef HAS_URDF
-  tinyxml2::XMLDocument urdf_xml;
-  urdf_xml.Parse(xml.c_str());
-  return treeFromXml(&urdf_xml, tree);
-#else
   const urdf::ModelInterfaceSharedPtr robot_model = urdf::parseURDF(xml);
-  return kdl_parser::treeFromUrdfModel(*robot_model, tree);
-#endif
-}
-
-#ifdef HAS_URDF
-bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree)
-{
-  urdf::Model robot_model;
-  if (!robot_model.initXml(xml_doc)) {
+  if (!robot_model) {
 #ifdef HAS_ROS
     ROS_ERROR("Could not generate robot model");
 #else
-    std::cerr << "Could not generate robot model" << std::endl;
+    std::cout << "Could not generate robot model" << std::endl;
 #endif
     return false;
   }
-  return treeFromUrdfModel(robot_model, tree);
+  return kdl_parser::treeFromUrdfModel(*robot_model, tree);
 }
+
+bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree)
+{
+  if (!xml_doc) {
+#ifdef HAS_ROS
+    ROS_ERROR("Could not parse the xml document");
+#else
+    std::cerr << "Could not parse the xml document" << std::endl;
 #endif
+    return false;
+  }
+
+  tinyxml2::XMLPrinter printer;
+  xml_doc->Print(&printer);
+
+  return treeFromString(printer.CStr(), tree);
+}
 
 bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
 {
@@ -237,28 +232,10 @@ bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
     return false;
   }
 
-
   std::stringstream ss;
   ss << *xml_doc;
-#ifdef HAS_URDF
-  urdf::Model robot_model;
-  if (!robot_model.initString(ss.str())) {
-#else
-  const urdf::ModelInterfaceSharedPtr robot_model = urdf::parseURDF(ss.str());
-  if (!robot_model) {
-#endif
-#ifdef HAS_ROS
-    ROS_ERROR("Could not generate robot model");
-#else
-    std::cout << "Could not generate robot model" << std::endl;
-#endif
-    return false;
-  }
-#ifdef HAS_URDF
-  return treeFromUrdfModel(robot_model, tree);
-#else
-  return treeFromUrdfModel(*robot_model, tree);
-#endif
+
+  return treeFromString(ss.str(), tree);
 }
 
 bool treeFromUrdfModel(const urdf::ModelInterface & robot_model, KDL::Tree & tree)

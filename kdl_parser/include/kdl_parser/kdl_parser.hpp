@@ -61,7 +61,7 @@ bool treeFromFile(const std::string & file, KDL::Tree & tree);
  * \param tree The resulting KDL Tree
  * returns true on success, false on failure
  */
-#ifdef HAS_URDF
+#if defined(HAS_ROS) && defined(HAS_URDF)
 KDL_PARSER_PUBLIC
 bool treeFromParam(const std::string & param, KDL::Tree & tree);
 #endif
@@ -79,10 +79,8 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree);
  * \param[out] tree The resulting KDL Tree
  * \return true on success, false on failure
  */
-#ifdef HAS_URDF
 KDL_PARSER_PUBLIC
 bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree);
-#endif
 
 /** Constructs a KDL tree from a TinyXML document
  * \param[in] xml_doc The document containing the xml description of the robot
