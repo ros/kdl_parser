@@ -177,17 +177,19 @@ bool treeFromFile(const std::string & file, KDL::Tree & tree)
 }
 
 
-#if defined(HAS_ROS) && defined(HAS_URDF)
 bool treeFromParam(const std::string & param, KDL::Tree & tree)
 {
+#if defined(HAS_ROS) && defined(HAS_URDF)
   urdf::Model robot_model;
   if (!robot_model.initParam(param)){
     ROS_ERROR("Could not generate robot model");
     return false;
   }
   return treeFromUrdfModel(robot_model, tree);
-}
+#else
+  return false;
 #endif
+}
 
 
 bool treeFromString(const std::string & xml, KDL::Tree & tree)
