@@ -7,6 +7,8 @@ find_package(catkin QUIET
 )
 
 if(NOT catkin_FOUND)
+  # use local copies of FindTinyXML.cmake and FindTinyXML2.cmake from
+  # 'cmake_modules' (https://github.com/ros/cmake_modules)
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 endif()
 
