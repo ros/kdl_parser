@@ -49,7 +49,7 @@ if(catkin_FOUND)
   )
 endif()
 
-add_library(${PROJECT_NAME} src/kdl_parser.cpp)
+add_library(${PROJECT_NAME} SHARED src/kdl_parser.cpp)
 target_link_libraries(${PROJECT_NAME}
   ${TinyXML_LIBRARIES} ${TinyXML2_LIBRARIES} ${orocos_kdl_LIBRARIES}
 )
