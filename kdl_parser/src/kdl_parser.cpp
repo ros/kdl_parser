@@ -46,6 +46,10 @@
 
 #ifdef HAS_ROS
 #include <ros/console.h>
+#else
+// forward ROS warnings and errors to stderr
+#define ROS_ERROR(...) fprintf(stderr, __VA_ARGS__);
+#define ROS_WARN(...) fprintf(stderr, __VA_ARGS__);
 #endif
 
 #ifdef HAS_URDF
@@ -95,11 +99,7 @@ KDL::Joint toKdl(urdf::JointSharedPtr jnt)
         return KDL::Joint(jnt->name, F_parent_jnt.p, F_parent_jnt.M * axis, KDL::Joint::TransAxis);
       }
     default: {
-#ifdef HAS_ROS
         ROS_WARN("Converting unknown joint type of joint '%s' into a fixed joint", jnt->name.c_str());
-#else
-        std::cerr << "Converting unknown joint type of joint '" << jnt->name << "' into a fixed joint" << std::endl;
-#endif
         return KDL::Joint(jnt->name, KDL::Joint::None);
       }
   }
@@ -194,11 +194,7 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree)
 {
   const urdf::ModelInterfaceSharedPtr robot_model = urdf::parseURDF(xml);
   if (!robot_model) {
-#ifdef HAS_ROS
     ROS_ERROR("Could not generate robot model");
-#else
-    std::cout << "Could not generate robot model" << std::endl;
-#endif
     return false;
   }
   return kdl_parser::treeFromUrdfModel(*robot_model, tree);
@@ -207,11 +203,7 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree)
 bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree)
 {
   if (!xml_doc) {
-#ifdef HAS_ROS
     ROS_ERROR("Could not parse the xml document");
-#else
-    std::cerr << "Could not parse the xml document" << std::endl;
-#endif
     return false;
   }
 
@@ -224,11 +216,7 @@ bool treeFromXml(const tinyxml2::XMLDocument * xml_doc, KDL::Tree & tree)
 bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
 {
   if (!xml_doc) {
-#ifdef HAS_ROS
     ROS_ERROR("Could not parse the xml document");
-#else
-    std::cerr << "Could not parse the xml document" << std::endl;
-#endif
     return false;
   }
 
@@ -248,15 +236,9 @@ bool treeFromUrdfModel(const urdf::ModelInterface & robot_model, KDL::Tree & tre
 
   // warn if root link has inertia. KDL does not support this
   if (robot_model.getRoot()->inertial) {
-#ifdef HAS_ROS
     ROS_WARN("The root link %s has an inertia specified in the URDF, but KDL does not "
       "support a root link with an inertia.  As a workaround, you can add an extra "
       "dummy link to your URDF.", robot_model.getRoot()->name.c_str());
-#else
-    std::cerr << "The root link " << robot_model.getRoot()->name << " has an inertia specified in the URDF, but KDL does not "
-                 "support a root link with an inertia.  As a workaround, you can add an extra "
-                 "dummy link to your URDF." << std::endl;
-#endif
   }
 
   //  add all children
