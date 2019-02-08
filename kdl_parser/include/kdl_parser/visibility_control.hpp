@@ -53,7 +53,7 @@
   #else
     #define KDL_PARSER_EXPORT __declspec(dllexport)
     #define KDL_PARSER_IMPORT __declspec(dllimport)
-	#define KDL_PARSER_DEPRECATED(msg)
+    #define KDL_PARSER_DEPRECATED(msg) __declspec(deprecated(msg))
   #endif
   #ifdef KDL_PARSER_BUILDING_DLL
     #define KDL_PARSER_PUBLIC KDL_PARSER_EXPORT
