@@ -18,9 +18,20 @@ link_directories(${catkin_LIBRARY_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
 include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-  add_compile_options(-std=c++11)
+unset(COMPILER_SUPPORTS_CXX11 CACHE)
+if(MSVC)
+  # https://docs.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version
+  # MSVC will fail the following check since it does not have the c++11 switch
+  # however, c++11 is always enabled (the newer /std:c++14 is enabled by default)
+  check_cxx_compiler_flag(/std:c++11 COMPILER_SUPPORTS_CXX11)
+  if(COMPILER_SUPPORTS_CXX11)
+    add_compile_options(/std:c++11)
+  endif()
+else()
+  check_cxx_compiler_flag(-std=c++11 COMPILER_SUPPORTS_CXX11)
+  if(COMPILER_SUPPORTS_CXX11)
+    add_compile_options(-std=c++11)
+  endif()
 endif()
 
 catkin_package(
