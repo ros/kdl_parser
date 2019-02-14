@@ -17,11 +17,7 @@ include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} $
 link_directories(${catkin_LIBRARY_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-  add_compile_options(-std=c++11)
-endif()
+add_compile_options(-std=c++11)
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME} ${orocos_kdl_LIBRARIES}
