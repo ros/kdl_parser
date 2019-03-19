@@ -48,6 +48,7 @@
 #include <ros/console.h>
 #else
 // forward ROS warnings and errors to stderr
+#define ROS_DEBUG(...) fprintf(stdout, __VA_ARGS__);
 #define ROS_ERROR(...) fprintf(stderr, __VA_ARGS__);
 #define ROS_WARN(...) fprintf(stderr, __VA_ARGS__);
 #endif
@@ -141,9 +142,7 @@ KDL::RigidBodyInertia toKdl(urdf::InertialSharedPtr i)
 bool addChildrenToTree(urdf::LinkConstSharedPtr root, KDL::Tree & tree)
 {
   std::vector<urdf::LinkSharedPtr> children = root->child_links;
-#ifdef HAS_ROS
   ROS_DEBUG("Link %s had %zu children", root->name.c_str(), children.size());
-#endif
 
   // constructs the optional inertia
   KDL::RigidBodyInertia inert(0);
