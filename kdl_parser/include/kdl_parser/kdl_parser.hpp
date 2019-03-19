@@ -59,7 +59,7 @@ bool treeFromFile(const std::string & file, KDL::Tree & tree);
 /** Constructs a KDL tree from the parameter server, given the parameter name
  * \param param the name of the parameter on the parameter server
  * \param tree The resulting KDL Tree
- * returns true on success, false on failure
+ * returns true on success, false on failure or if built without ROS
  */
 KDL_PARSER_PUBLIC
 bool treeFromParam(const std::string & param, KDL::Tree & tree);
