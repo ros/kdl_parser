@@ -16,4 +16,23 @@ catkin_install_python(PROGRAMS ${PROJECT_NAME}/urdf.py
 if(CATKIN_ENABLE_TESTING)
   find_package(catkin REQUIRED COMPONENTS rostest)
   add_rostest(test/test_kdl_parser.launch)
+
+  if(PYTHON_EXECUTABLE)
+    # Force CMake to find python again in case it was called before to find python 2
+    set(old_python_exec "${PYTHON_EXECUTABLE}")
+    unset(PYTHON_EXECUTABLE CACHE)
+    unset(PYTHONINTERP_FOUND CACHE)
+  endif()
+
+  find_package(PythonInterp 3 REQUIRED)
+  add_test(NAME test_py3_syntax COMMAND "${PYTHON_EXECUTABLE}" "-m" "flake8" "--select" "E999")
+
+  if(old_python_exec)
+    # Restore old executable in case something after expects python 2
+    set(PYTHON_EXECUTABLE "${old_python_exec}" CACHE PATH "Python executable found by PythonInterp" FORCE)
+  else()
+    # Unset in case some catkin script tries to find_package(PythonInterp)
+    unset(PYTHON_EXECUTABLE CACHE)
+    unset(PYTHONINTERP_FOUND CACHE)
+  endif()
 endif()

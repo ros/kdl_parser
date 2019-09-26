@@ -34,5 +34,6 @@
   <exec_depend>python_orocos_kdl</exec_depend>
 
   <test_depend>rostest</test_depend>
+  <test_depend>python3-flake8</test_depend>
 
 </package>
