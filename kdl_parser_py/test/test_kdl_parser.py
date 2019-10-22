@@ -13,7 +13,7 @@ NAME = "test_kdl_parser"
 class TestKdlParser(unittest.TestCase):
     def runTest(self):
         filename = None
-        if (sys.argv > 1):
+        if (len(sys.argv) > 1):
             filename = sys.argv[1]
         else:
             self.fail("Expected filename!")
