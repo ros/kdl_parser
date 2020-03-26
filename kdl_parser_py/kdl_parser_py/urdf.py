@@ -19,7 +19,7 @@ def treeFromParam(param):
     :param param: Parameter name, ``str``
     """
 
-    return treeFromUrdfModel(urdf.URDF.from_parameter_server())
+    return treeFromUrdfModel(urdf.URDF.from_parameter_server(param))
 
 def treeFromString(xml):
     """
