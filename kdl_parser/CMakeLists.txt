@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.7.2)
 
 project(kdl_parser)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(catkin QUIET
   COMPONENTS rosconsole cmake_modules
@@ -34,8 +37,6 @@ if(urdf_FOUND)
 endif()
 
 include_directories(include ${orocos_kdl_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
-
-add_compile_options(-std=c++11)
 
 if(catkin_FOUND)
   link_directories(${catkin_LIBRARY_DIRS})
