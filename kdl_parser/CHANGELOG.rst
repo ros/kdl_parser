@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.3.0 (2020-04-29)
+------------------
 * export targets in a addition to include directories / libraries (`#6 <https://github.com/ros2/kdl_parser/issues/6>`_)
 * code style only: wrap after open parenthesis if not in one line (`#5 <https://github.com/ros2/kdl_parser/issues/5>`_)
 * Contributors: Dirk Thomas
