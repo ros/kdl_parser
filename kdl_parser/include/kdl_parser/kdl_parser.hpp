@@ -77,6 +77,7 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree);
  * \param tree The resulting KDL Tree
  * returns true on success, false on failure
  */
+[[deprecated("Use treeFromString instead")]]
 KDL_PARSER_PUBLIC
 bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree);
 

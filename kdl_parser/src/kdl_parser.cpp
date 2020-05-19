@@ -160,9 +160,11 @@ bool addChildrenToTree(urdf::LinkConstSharedPtr root, KDL::Tree & tree)
 
 bool treeFromFile(const std::string & file, KDL::Tree & tree)
 {
-  TiXmlDocument urdf_xml;
-  urdf_xml.LoadFile(file);
-  return treeFromXml(&urdf_xml, tree);
+  std::ifstream t(file);
+  std::stringstream buffer;
+  buffer << t.rdbuf();
+
+  return treeFromString(buffer.str(), tree);
 }
 
 bool treeFromParam(const std::string & param, KDL::Tree & tree)
@@ -181,19 +183,19 @@ bool treeFromParam(const std::string & param, KDL::Tree & tree)
 
 bool treeFromString(const std::string & xml, KDL::Tree & tree)
 {
-  TiXmlDocument urdf_xml;
-  urdf_xml.Parse(xml.c_str());
-  return treeFromXml(&urdf_xml, tree);
-}
-
-bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
-{
   urdf::Model robot_model;
-  if (!robot_model.initXml(xml_doc)) {
+  if (!robot_model.initString(xml.c_str())) {
     fprintf(stderr, "Could not generate robot model\n");
     return false;
   }
   return treeFromUrdfModel(robot_model, tree);
+}
+
+bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
+{
+  std::stringstream ss;
+  ss << *xml_doc;
+  return treeFromString(ss.str(), tree);
 }
 
 
