@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.0 (2020-05-26)
+------------------
+* Deprecate treeFromXml (`#8 <https://github.com/ros2/kdl_parser/issues/8>`_)
+* Contributors: Dan Rose
+
 2.3.0 (2020-04-29)
 ------------------
 * export targets in a addition to include directories / libraries (`#6 <https://github.com/ros2/kdl_parser/issues/6>`_)
