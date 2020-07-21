@@ -8,9 +8,6 @@ find_package(tinyxml_vendor REQUIRED)
 find_package(TinyXML REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
-find_library(KDL_LIBRARY REQUIRED
-  NAMES orocos-kdl
-  HINTS ${orocos_kdl_LIBRARY_DIRS})
 
 include_directories(
   include
