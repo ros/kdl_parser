@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.1 (2020-07-21)
+------------------
+* Remove unused find_library call (`#41 <https://github.com/ros/kdl_parser/issues/41>`_)
+* Contributors: Michael Carroll
+
 2.2.0 (2018-11-20)
 -----------
 * Fix up missing link tags in some XML files. (`#15 <https://github.com/ros2/kdl_parser/issues/15>`_)
