@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.1 (2020-08-07)
+------------------
+* Remove unused find_library call (`#40 <https://github.com/ros/kdl_parser/issues/40>`_)
+* Contributors: Michael Carroll
+
 2.4.0 (2020-05-26)
 ------------------
 * Deprecate treeFromXml (`#8 <https://github.com/ros2/kdl_parser/issues/8>`_)
