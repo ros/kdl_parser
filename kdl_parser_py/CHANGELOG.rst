@@ -2,6 +2,11 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.14.1 (2020-08-24)
+-------------------
+* Drop CATKIN_IGNORE (`#42 <https://github.com/ros/kdl_parser/issues/42>`_)
+* Contributors: Jochen Sprickerhof
+
 1.14.0 (2020-04-13)
 -------------------
 * Used keys for Orocos (`#38 <https://github.com/ros/kdl_parser/issues/38>`_)

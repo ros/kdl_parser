@@ -1,6 +1,6 @@
 <package format="2">
   <name>kdl_parser</name>
-  <version>1.14.0</version>
+  <version>1.14.1</version>
   <description>
    The Kinematics and Dynamics Library (KDL) defines a tree structure
    to represent the kinematic and dynamic parameters of a robot

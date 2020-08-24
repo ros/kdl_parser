@@ -2,6 +2,9 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.14.1 (2020-08-24)
+-------------------
+
 1.14.0 (2020-04-13)
 -------------------
 * Used keys for Orocos (`#38 <https://github.com/ros/kdl_parser/issues/38>`_)
