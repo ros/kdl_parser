@@ -4,8 +4,6 @@ project(kdl_parser)
 
 find_package(ament_cmake_ros REQUIRED)
 find_package(orocos_kdl REQUIRED)
-find_package(tinyxml_vendor REQUIRED)
-find_package(TinyXML REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
 
@@ -23,7 +21,6 @@ target_include_directories(${PROJECT_NAME}
   "$<INSTALL_INTERFACE:include>"
 )
 ament_target_dependencies(${PROJECT_NAME}
-  TinyXML
   orocos_kdl
   urdf
   urdfdom_headers)
