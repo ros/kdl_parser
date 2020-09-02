@@ -167,20 +167,6 @@ bool treeFromFile(const std::string & file, KDL::Tree & tree)
   return treeFromString(buffer.str(), tree);
 }
 
-bool treeFromParam(const std::string & param, KDL::Tree & tree)
-{
-  fprintf(stderr, "treeFromParam currently not implemented.\n");
-  return false;
-  /*
-  urdf::Model robot_model;
-  if (!robot_model.initParam(param)){
-    ROS_ERROR("Could not generate robot model");
-    return false;
-  }
-  return treeFromUrdfModel(robot_model, tree);
-  */
-}
-
 bool treeFromString(const std::string & xml, KDL::Tree & tree)
 {
   urdf::Model robot_model;
@@ -190,14 +176,6 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree)
   }
   return treeFromUrdfModel(robot_model, tree);
 }
-
-bool treeFromXml(TiXmlDocument * xml_doc, KDL::Tree & tree)
-{
-  std::stringstream ss;
-  ss << *xml_doc;
-  return treeFromString(ss.str(), tree);
-}
-
 
 bool treeFromUrdfModel(const urdf::ModelInterface & robot_model, KDL::Tree & tree)
 {
