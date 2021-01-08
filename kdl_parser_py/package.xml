@@ -23,10 +23,10 @@
   <build_depend version_gte="1.3.0">orocos_kdl</build_depend>
   <build_depend>urdf</build_depend>
 
-  <exec_depend version_gte="1.3.0">orocos_kdl</run_depend>
-  <exec_depend>urdf</run_depend>
-  <exec_depend>urdfdom_py</run_depend>
-  <exec_depend>python_orocos_kdl</run_depend>
+  <exec_depend version_gte="1.3.0">orocos_kdl</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>urdfdom_py</exec_depend>
+  <exec_depend>python_orocos_kdl</exec_depend>
 
   <export>
     <build_type>ament_python</build_type>
