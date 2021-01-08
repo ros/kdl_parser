@@ -1,11 +1,17 @@
-#!/usr/bin/env python
+from setuptools import setup
+from glob import glob
 
-from distutils.core import setup
-from catkin_pkg.python_setup import generate_distutils_setup
+package_name = "kdl_parser_py"
 
-d = generate_distutils_setup(
-   packages=['kdl_parser_py'],
-   package_dir={'': ''}
+setup(
+    name=package_name,
+    version="2.3.0",
+    author="Jonathan Bohren, Jackie Kay",
+    packages=[package_name],
+    data_files=[
+        # Include package file
+        ("share/" + package_name, ["package.xml"]),
+        # Install marker file in package index
+        ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
+    ],
 )
-
-setup(**d)
