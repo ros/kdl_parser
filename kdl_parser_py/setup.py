@@ -21,4 +21,5 @@ setup(
         (os.path.join(share_path, "assets"), [os.path.join("test", "test.urdf")]),
     ],
     tests_require=["pytest"],
+    test_suite="test",
 )
