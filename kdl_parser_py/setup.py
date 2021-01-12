@@ -1,5 +1,7 @@
-from setuptools import setup
 import os
+
+from setuptools import setup
+
 
 package_name = "kdl_parser_py"
 share_path = os.path.join("share", package_name)
