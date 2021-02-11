@@ -8,6 +8,7 @@ find_package(tinyxml_vendor REQUIRED)
 find_package(TinyXML REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
+find_package(rcutils REQUIRED)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -26,7 +27,8 @@ ament_target_dependencies(${PROJECT_NAME}
   TinyXML
   orocos_kdl
   urdf
-  urdfdom_headers)
+  urdfdom_headers
+  rcutils)
 
 if(WIN32)
   target_compile_definitions(${PROJECT_NAME} PRIVATE "KDL_PARSER_BUILDING_DLL")

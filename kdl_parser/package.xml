@@ -23,6 +23,7 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
   <depend version_gte="1.3.0">orocos_kdl</depend>
+  <depend>rcutils</depend>>
 
   <build_depend>tinyxml</build_depend>
   <build_depend>tinyxml_vendor</build_depend>
