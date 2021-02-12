@@ -6,6 +6,7 @@ find_package(ament_cmake_ros REQUIRED)
 find_package(orocos_kdl REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
+find_package(rcutils)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -23,7 +24,8 @@ target_include_directories(${PROJECT_NAME}
 ament_target_dependencies(${PROJECT_NAME}
   orocos_kdl
   urdf
-  urdfdom_headers)
+  urdfdom_headers
+  rcutils)
 
 if(WIN32)
   target_compile_definitions(${PROJECT_NAME} PRIVATE "KDL_PARSER_BUILDING_DLL")

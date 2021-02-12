@@ -42,6 +42,8 @@
 #include "kdl/frames_io.hpp"
 #include "urdf/model.h"
 #include "urdf/urdfdom_compatibility.h"
+#include "rcutils/logging_macros.h"
+
 
 namespace kdl_parser
 {
@@ -86,9 +88,10 @@ KDL::Joint toKdl(urdf::JointSharedPtr jnt)
         return KDL::Joint(jnt->name, F_parent_jnt.p, F_parent_jnt.M * axis, KDL::Joint::TransAxis);
       }
     default: {
-        fprintf(
-          stderr, "Converting unknown joint type of joint '%s' into a fixed joint\n",
-          jnt->name.c_str());
+        rcutils_log(nullptr,
+                    RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_WARN,
+                     "kdl_parser",
+                    "Converting unknown joint type of joint '%s' into a fixed joint", jnt->name.c_str());
         return KDL::Joint(jnt->name, KDL::Joint::None);
       }
   }
@@ -130,7 +133,10 @@ KDL::RigidBodyInertia toKdl(urdf::InertialSharedPtr i)
 bool addChildrenToTree(urdf::LinkConstSharedPtr root, KDL::Tree & tree)
 {
   std::vector<urdf::LinkSharedPtr> children = root->child_links;
-  fprintf(stderr, "Link %s had %zu children\n", root->name.c_str(), children.size());
+  rcutils_log(nullptr,
+              RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_INFO,
+               "kdl_parser",
+              "Link %s had %zu children.", root->name.c_str(), children.size());
 
   // constructs the optional inertia
   KDL::RigidBodyInertia inert(0);
@@ -171,7 +177,10 @@ bool treeFromString(const std::string & xml, KDL::Tree & tree)
 {
   urdf::Model robot_model;
   if (!robot_model.initString(xml.c_str())) {
-    fprintf(stderr, "Could not generate robot model\n");
+    rcutils_log(nullptr,
+                RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_ERROR,
+                "kdl_parser",
+                "Could not generate robot model.");
     return false;
   }
   return treeFromUrdfModel(robot_model, tree);
@@ -187,10 +196,12 @@ bool treeFromUrdfModel(const urdf::ModelInterface & robot_model, KDL::Tree & tre
 
   // warn if root link has inertia. KDL does not support this
   if (robot_model.getRoot()->inertial) {
-    fprintf(
-      stderr, "The root link %s has an inertia specified in the URDF, but KDL does not "
-      "support a root link with an inertia.  As a workaround, you can add an extra "
-      "dummy link to your URDF.\n", robot_model.getRoot()->name.c_str());
+    rcutils_log(nullptr,
+                RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_WARN,
+                "kdl_parser",
+                "The root link %s has an inertia specified in the URDF, but KDL "
+                "does not support a root link with an inertia.  As a workaround, you can add "
+                "an extra dummy link to your URDF.", robot_model.getRoot()->name.c_str());
   }
 
   //  add all children
