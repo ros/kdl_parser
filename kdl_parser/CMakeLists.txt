@@ -6,6 +6,7 @@ find_package(ament_cmake_ros REQUIRED)
 find_package(orocos_kdl REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
+find_package(rcutils REQUIRED)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -24,6 +25,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
   orocos-kdl
   urdfdom_headers::urdfdom_headers)
 target_link_libraries(${PROJECT_NAME} PRIVATE
+  rcutils::rcutils
   urdf::urdf)
 
 if(WIN32)
