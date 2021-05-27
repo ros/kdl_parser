@@ -1,3 +1,35 @@
+# Copyright 2019 Open Source Robotics Foundation, Inc.
+# All rights reserved.
+#
+# Software License Agreement (BSD License 2.0)
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above
+#    copyright notice, this list of conditions and the following
+#    disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#  * Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
 from __future__ import print_function
 
 import urdf_parser_py.urdf as urdf
@@ -7,26 +39,18 @@ import PyKDL as kdl
 def treeFromFile(filename):
     """
     Construct a PyKDL.Tree from an URDF file.
+
     :param filename: URDF file path
     """
-
     with open(filename) as urdf_file:
         return treeFromUrdfModel(urdf.URDF.from_xml_string(urdf_file.read()))
-
-def treeFromParam(param):
-    """
-    Construct a PyKDL.Tree from an URDF in a ROS parameter.
-    :param param: Parameter name, ``str``
-    """
-
-    return treeFromUrdfModel(urdf.URDF.from_parameter_server())
 
 def treeFromString(xml):
     """
     Construct a PyKDL.Tree from an URDF xml string.
+
     :param xml: URDF xml string, ``str``
     """
-
     return treeFromUrdfModel(urdf.URDF.from_xml_string(xml))
 
 def _toKdlPose(pose):
@@ -49,8 +73,7 @@ def _toKdlInertia(i):
             kdl.RotationalInertia(inertia.ixx, inertia.iyy, inertia.izz, inertia.ixy, inertia.ixz, inertia.iyz));
 
 def _toKdlJoint(jnt):
-
-    fixed = lambda j,F: kdl.Joint(j.name, kdl.Joint.None)
+    fixed = lambda j,F: kdl.Joint(j.name, kdl.Joint.JointType(8))
     rotational = lambda j,F: kdl.Joint(j.name, F.p, F.M * kdl.Vector(*j.axis), kdl.Joint.RotAxis)
     translational = lambda j,F: kdl.Joint(j.name, F.p, F.M * kdl.Vector(*j.axis), kdl.Joint.TransAxis)
 
@@ -67,8 +90,6 @@ def _toKdlJoint(jnt):
     return type_map[jnt.type](jnt, _toKdlPose(jnt.origin))
 
 def _add_children_to_tree(robot_model, root, tree):
-
-
     # constructs the optional inertia
     inert = kdl.RigidBodyInertia(0)
     if root.inertial:
@@ -108,7 +129,6 @@ def treeFromUrdfModel(robot_model, quiet=False):
     :param robot_model: URDF xml string, ``str``
     :param quiet: If true suppress messages to stdout, ``bool``
     """
-
     root = robot_model.link_map[robot_model.get_root()]
 
     if root.inertial and not quiet:
@@ -122,5 +142,5 @@ def treeFromUrdfModel(robot_model, quiet=False):
         if not _add_children_to_tree(robot_model, robot_model.link_map[child], tree):
             ok = False
             break
-  
+
     return (ok, tree)
