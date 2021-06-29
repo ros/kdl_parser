@@ -46,6 +46,13 @@
 //     https://gcc.gnu.org/wiki/Visibility
 
 #if defined _WIN32 || defined __CYGWIN__
+#ifdef KDL_PARSER_STATIC
+	#define KDL_PARSER_EXPORT
+    #define KDL_PARSER_IMPORT
+	#define KDL_PARSER_PUBLIC
+	#define KDL_PARSER_LOCAL
+    #define KDL_PARSER_DEPRECATED(msg) __declspec(deprecated(msg))
+#else
   #ifdef __GNUC__
     #define KDL_PARSER_EXPORT __attribute__ ((dllexport))
     #define KDL_PARSER_IMPORT __attribute__ ((dllimport))
@@ -62,6 +69,7 @@
   #endif
   #define KDL_PARSER_PUBLIC_TYPE KDL_PARSER_PUBLIC
   #define KDL_PARSER_LOCAL
+#endif
 #else
   #define KDL_PARSER_EXPORT __attribute__ ((visibility("default")))
   #define KDL_PARSER_IMPORT
