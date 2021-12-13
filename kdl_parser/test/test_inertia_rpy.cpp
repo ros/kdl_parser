@@ -48,6 +48,8 @@ char ** g_argv;
 class TestInertiaRPY : public testing::Test
 {
 public:
+  // NOLINT
+
 protected:
   /// constructor
   TestInertiaRPY()
