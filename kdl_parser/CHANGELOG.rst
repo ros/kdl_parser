@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.6.0 (2021-12-17)
+------------------
 * Update to uncrustify 0.72 (`#60 <https://github.com/ros/kdl_parser/issues/60>`_)
 * Contributors: Chris Lalancette
 
