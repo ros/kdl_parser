@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update to uncrustify 0.72 (`#60 <https://github.com/ros/kdl_parser/issues/60>`_)
+* Contributors: Chris Lalancette
+
 2.5.0 (2020-10-05)
 ------------------
 * Remove tinyxml dependency from kdl_parser. (`#43 <https://github.com/ros/kdl_parser/issues/43>`_)
