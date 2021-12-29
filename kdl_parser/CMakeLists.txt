@@ -15,29 +15,27 @@ endif()
 add_library(
   ${PROJECT_NAME}
   src/kdl_parser.cpp)
-target_include_directories(${PROJECT_NAME}
-  PUBLIC
+target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-  "$<INSTALL_INTERFACE:include>"
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
-ament_target_dependencies(${PROJECT_NAME}
-  orocos_kdl
-  urdf
-  urdfdom_headers)
+target_link_libraries(${PROJECT_NAME} PUBLIC
+  orocos-kdl
+  urdfdom_headers::urdfdom_headers)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+  urdf::urdf)
 
 if(WIN32)
   target_compile_definitions(${PROJECT_NAME} PRIVATE "KDL_PARSER_BUILDING_DLL")
 endif()
 
 install(
-  TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
+  TARGETS ${PROJECT_NAME} EXPORT export_${PROJECT_NAME}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin)
 
-install(
-  DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION include/${PROJECT_NAME})
+install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -49,7 +47,5 @@ endif()
 
 ament_export_dependencies(orocos_kdl)
 ament_export_dependencies(urdfdom_headers)
-ament_export_include_directories(include)
-ament_export_libraries(${PROJECT_NAME})
-ament_export_targets(${PROJECT_NAME})
+ament_export_targets(export_${PROJECT_NAME})
 ament_package()
