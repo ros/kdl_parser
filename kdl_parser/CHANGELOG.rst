@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.6.1 (2022-01-14)
+------------------
+* Install includes to include/ and misc CMake fixes (`#61 <https://github.com/ros/kdl_parser/issues/61>`_)
+* Contributors: Shane Loretz
+
 2.6.0 (2021-12-17)
 ------------------
 * Update to uncrustify 0.72 (`#60 <https://github.com/ros/kdl_parser/issues/60>`_)
