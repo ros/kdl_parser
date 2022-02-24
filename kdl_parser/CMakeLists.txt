@@ -18,6 +18,7 @@ add_library(
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+  "${orocos_kdl_INCLUDE_DIRS}"
 )
 target_link_libraries(${PROJECT_NAME} PUBLIC
   orocos-kdl
