@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.6.2 (2022-04-05)
+------------------
+* Depend on orocos-kdl vendor packages  (`#58 <https://github.com/ros/kdl_parser/issues/58>`_)
+* Contributors: Jacob Perron
+
 2.6.1 (2022-01-14)
 ------------------
 * Install includes to include/ and misc CMake fixes (`#61 <https://github.com/ros/kdl_parser/issues/61>`_)
