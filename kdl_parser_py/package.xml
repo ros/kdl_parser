@@ -4,7 +4,7 @@
   schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>kdl_parser_py</name>
-  <version>1.13.2</version>
+  <version>1.13.3</version>
   <description>
    The Kinematics and Dynamics Library (KDL) defines a tree structure
    to represent the kinematic and dynamic parameters of a robot

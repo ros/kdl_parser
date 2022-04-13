@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.13.3 (2022-04-13)
+-------------------
 * Set C++ standard to 14 (`#37 <https://github.com/ros/kdl_parser/issues/37>`_)
 * Contributors: Shane Loretz
 
