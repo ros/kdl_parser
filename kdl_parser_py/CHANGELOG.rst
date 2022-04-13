@@ -2,8 +2,8 @@
 Changelog for package kdl_parser_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.14.2 (2022-04-13)
+-------------------
 * Restored compatibility with Orocos KDL after Joint.None was removed (`#45 <https://github.com/ros/kdl_parser/issues/45>`_)
 * Contributors: Julian Förster
 
