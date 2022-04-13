@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Set C++ standard to 14 (`#37 <https://github.com/ros/kdl_parser/issues/37>`_)
+* Contributors: Shane Loretz
+
 1.13.1 (2018-07-23)
 -------------------
 * Fix up missing link tags in some XML files. (`#15 <https://github.com/ros/kdl_parser/issues/15>`_)
