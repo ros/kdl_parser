@@ -2,6 +2,9 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.7.0 (2022-05-10)
+------------------
+
 2.6.2 (2022-04-05)
 ------------------
 * Depend on orocos-kdl vendor packages  (`#58 <https://github.com/ros/kdl_parser/issues/58>`_)
