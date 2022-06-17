@@ -49,6 +49,7 @@ if(BUILD_TESTING)
 endif()
 
 ament_export_dependencies(orocos_kdl)
+ament_export_dependencies(rcutils)
 ament_export_dependencies(urdfdom_headers)
 ament_export_targets(export_${PROJECT_NAME})
 ament_package()
