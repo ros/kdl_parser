@@ -23,6 +23,7 @@
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
 
   <depend>orocos_kdl_vendor</depend>
+  <depend>rcutils</depend>
 
   <build_depend>urdf</build_depend>
   <build_depend>urdfdom_headers</build_depend>
