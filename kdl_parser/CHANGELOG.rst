@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.8.0 (2022-06-21)
+------------------
+* Use the rcutils logger instead of printf (`#65 <https://github.com/ros/kdl_parser/issues/65>`_)
+* Contributors: Chris Lalancette, yuraSomatic
+
 2.7.0 (2022-05-10)
 ------------------
 
