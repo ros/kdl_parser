@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project(kdl_parser)
 
 find_package(ament_cmake_ros REQUIRED)
+find_package(orocos_kdl_vendor REQUIRED)
 find_package(orocos_kdl REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
@@ -18,7 +19,6 @@ add_library(
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
-  "${orocos_kdl_INCLUDE_DIRS}"
 )
 target_link_libraries(${PROJECT_NAME} PUBLIC
   orocos-kdl
@@ -46,6 +46,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_dependencies(orocos_kdl_vendor)
 ament_export_dependencies(orocos_kdl)
 ament_export_dependencies(urdfdom_headers)
 ament_export_targets(export_${PROJECT_NAME})
