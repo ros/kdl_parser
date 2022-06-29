@@ -42,9 +42,6 @@ install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # TODO(clalancette): we have to disable copyright checking until
-  # https://github.com/ament/ament_lint/issues/75 is resolved.
-  set(ament_cmake_copyright_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 
