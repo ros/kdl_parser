@@ -1,3 +1,0 @@
-<launch>
-  <test test-name="test_kdl_parser" pkg="kdl_parser" type="test_kdl_parser" args="$(find kdl_parser)/test/test_robot.urdf"/>
-</launch>

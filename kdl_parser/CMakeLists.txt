@@ -48,6 +48,9 @@ if(BUILD_TESTING)
 
   ament_add_gtest(test_inertia_rpy test/test_inertia_rpy.cpp)
   target_link_libraries(test_inertia_rpy ${PROJECT_NAME})
+
+  ament_add_gtest(test_kdl_parser test/test_kdl_parser.cpp)
+  target_link_libraries(test_kdl_parser ${PROJECT_NAME})
 endif()
 
 ament_export_dependencies(orocos_kdl_vendor)
