@@ -36,28 +36,70 @@
 #include "kdl/jntarray.hpp"
 #include "kdl_parser/kdl_parser.hpp"
 
-int g_argc;
-char ** g_argv;
+const char model1[] =
+  "<?xml version=\"1.0\" ?>"
+  "<robot name=\"testInertialRPYmodel1\">"
+  "  <link name=\"base_link\" />"
+  "  <joint name=\"base_fixed_joint\" type=\"fixed\">"
+  "    <origin xyz=\"0 0 0\" rpy=\"0 -0 0\" />"
+  "    <axis xyz=\"0 0 0\" />"
+  "    <parent link=\"base_link\" />"
+  "    <child link=\"link1\" />"
+  "  </joint>"
+  "  <link name=\"link1\">"
+  "    <inertial>"
+  "      <mass value=\"1\" />"
+  "      <inertia ixx=\"0.01\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.01\" iyz=\"0.0\" izz=\"0.01\" />"
+  "    </inertial>"
+  "  </link>"
+  "  <joint name=\"joint_1_2\" type=\"continuous\">"
+  "    <origin xyz=\"0 0 0\" rpy=\"0 -0 0\" />"
+  "    <axis xyz=\"0 0 1\" />"
+  "    <parent link=\"link1\" />"
+  "    <child link=\"link2\" />"
+  "  </joint>"
+  "  <link name=\"link2\">"
+  "    <inertial>"
+  "      <mass value=\"100\" />"
+  "      <origin xyz=\"1 2 3\" rpy=\"0 -0 0\" />"
+  "      <inertia ixx=\"5\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"15\" iyz=\"0.0\" izz=\"25\" />"
+  "    </inertial>"
+  "  </link>"
+  "</robot>";
 
-class TestInertiaRPY : public testing::Test
+const char model2[] =
+  "<?xml version=\"1.0\" ?>"
+  "<robot name=\"testInertialRPYmodel2\">"
+  "  <link name=\"base_link\" />"
+  "  <joint name=\"base_fixed_joint\" type=\"fixed\">"
+  "    <origin xyz=\"0 0 0\" rpy=\"0 -0 0\" />"
+  "    <axis xyz=\"0 0 0\" />"
+  "    <parent link=\"base_link\" />"
+  "    <child link=\"link1\" />"
+  "  </joint>"
+  "  <link name=\"link1\">"
+  "    <inertial>"
+  "      <mass value=\"1\" />"
+  "      <inertia ixx=\"0.01\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"0.01\" iyz=\"0.0\" izz=\"0.01\" />"
+  "    </inertial>"
+  "  </link>"
+  "  <joint name=\"joint_1_2\" type=\"continuous\">"
+  "    <origin xyz=\"0 0 0\" rpy=\"0 -0 0\" />"
+  "    <axis xyz=\"0 0 1\" />"
+  "    <parent link=\"link1\" />"
+  "    <child link=\"link2\" />"
+  "  </joint>"
+  "  <link name=\"link2\">"
+  "    <inertial>"
+  "      <mass value=\"100\" />"
+  "      <origin xyz=\"1 2 3\" rpy=\"3.141592653589793 0 0\" />"
+  "      <inertia ixx=\"5\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"15\" iyz=\"0.0\" izz=\"25\" />"
+  "    </inertial>"
+  "  </link>"
+  "</robot>";
+
+TEST(TestInertiaRPY, test_torques)
 {
-public:
-  // NOLINT
-
-protected:
-  /// constructor
-  TestInertiaRPY()
-  {
-  }
-
-  /// Destructor
-  ~TestInertiaRPY()
-  {
-  }
-};
-
-
-TEST_F(TestInertiaRPY, test_torques) {
   // workaround for segfault issue with parsing 2 trees instantiated on the stack
   KDL::Tree * tree_1 = new KDL::Tree;
   KDL::Tree * tree_2 = new KDL::Tree;
@@ -65,7 +107,7 @@ TEST_F(TestInertiaRPY, test_torques) {
   KDL::JntArray torques_2;
 
   {
-    ASSERT_TRUE(kdl_parser::treeFromFile(g_argv[1], *tree_1));
+    ASSERT_TRUE(kdl_parser::treeFromString(model1, *tree_1));
     KDL::Vector gravity(0, 0, -9.81);
     KDL::Chain chain;
     std::cout << "number of joints: " << tree_1->getNrOfJoints() << std::endl;
@@ -80,11 +122,11 @@ TEST_F(TestInertiaRPY, test_torques) {
     solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_1);
 
     delete tree_1;
-    tree_1 = NULL;
+    tree_1 = nullptr;
   }
 
   {
-    ASSERT_TRUE(kdl_parser::treeFromFile(g_argv[2], *tree_2));
+    ASSERT_TRUE(kdl_parser::treeFromString(model2, *tree_2));
     KDL::Vector gravity(0, 0, -9.81);
     KDL::Chain chain;
 
@@ -97,21 +139,14 @@ TEST_F(TestInertiaRPY, test_torques) {
     solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_2);
 
     delete tree_2;
-    tree_2 = NULL;
+    tree_2 = nullptr;
   }
 
   ASSERT_TRUE(torques_1 == torques_2);
-
-  SUCCEED();
 }
 
 int main(int argc, char ** argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  for (size_t i = 0; i < argc; ++i) {
-    std::cout << argv[i] << std::endl;
-  }
-  g_argc = argc;
-  g_argv = argv;
   return RUN_ALL_TESTS();
 }

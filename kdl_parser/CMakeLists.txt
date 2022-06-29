@@ -43,6 +43,11 @@ install(DIRECTORY include/ DESTINATION include/${PROJECT_NAME})
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
+
+  find_package(ament_cmake_gtest REQUIRED)
+
+  ament_add_gtest(test_inertia_rpy test/test_inertia_rpy.cpp)
+  target_link_libraries(test_inertia_rpy ${PROJECT_NAME})
 endif()
 
 ament_export_dependencies(orocos_kdl_vendor)
