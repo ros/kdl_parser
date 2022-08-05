@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.6.3 (2022-08-05)
+------------------
+* Use orocos_kdl_vendor and orocos-kdl target (`#69 <https://github.com/ros/kdl_parser/issues/69>`_)
+* Contributors: Scott K Logan
+
 2.6.2 (2022-04-05)
 ------------------
 * Depend on orocos-kdl vendor packages  (`#58 <https://github.com/ros/kdl_parser/issues/58>`_)
