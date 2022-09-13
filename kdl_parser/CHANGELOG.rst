@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.8.2 (2022-09-13)
+------------------
 * Enable the kdl_parser tests in ROS 2 (`#68 <https://github.com/ros/kdl_parser/issues/68>`_)
 * Contributors: Chris Lalancette
 
