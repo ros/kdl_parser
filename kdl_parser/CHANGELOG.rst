@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Enable the kdl_parser tests in ROS 2 (`#68 <https://github.com/ros/kdl_parser/issues/68>`_)
+* Contributors: Chris Lalancette
+
 2.8.1 (2022-06-24)
 ------------------
 * Add in a LICENSE file and fix up copyright headers (`#66 <https://github.com/ros/kdl_parser/issues/66>`_)
