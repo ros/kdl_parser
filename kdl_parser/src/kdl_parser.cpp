@@ -132,7 +132,7 @@ KDL::RigidBodyInertia toKdl(urdf::InertialSharedPtr i)
 bool addChildrenToTree(urdf::LinkConstSharedPtr root, KDL::Tree & tree)
 {
   std::vector<urdf::LinkSharedPtr> children = root->child_links;
-  RCUTILS_LOG_INFO_NAMED(
+  RCUTILS_LOG_DEBUG_NAMED(
     "kdl_parser",
     "Link %s had %zu children.", root->name.c_str(), children.size());
 
