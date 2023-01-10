@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.6.4 (2023-01-10)
+------------------
+* Backport rcutils logger fix to Humble (`#73 <https://github.com/ros/kdl_parser/issues/73>`_)
+* Contributors: Joseph Schornak
+
 2.6.3 (2022-08-05)
 ------------------
 * Use orocos_kdl_vendor and orocos-kdl target (`#69 <https://github.com/ros/kdl_parser/issues/69>`_)
