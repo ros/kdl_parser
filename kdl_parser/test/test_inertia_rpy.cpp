@@ -28,7 +28,7 @@
 
 /* Author: Wim Meeussen */
 
-#include <iostream>
+#include <memory>
 #include <vector>
 
 #include "gtest/gtest.h"
@@ -101,8 +101,8 @@ const char model2[] =
 TEST(TestInertiaRPY, test_torques)
 {
   // workaround for segfault issue with parsing 2 trees instantiated on the stack
-  KDL::Tree * tree_1 = new KDL::Tree;
-  KDL::Tree * tree_2 = new KDL::Tree;
+  std::unique_ptr<KDL::Tree> tree_1 = std::make_unique<KDL::Tree>();
+  std::unique_ptr<KDL::Tree> tree_2 = std::make_unique<KDL::Tree>();
   KDL::JntArray torques_1;
   KDL::JntArray torques_2;
 
@@ -110,8 +110,6 @@ TEST(TestInertiaRPY, test_torques)
     ASSERT_TRUE(kdl_parser::treeFromString(model1, *tree_1));
     KDL::Vector gravity(0, 0, -9.81);
     KDL::Chain chain;
-    std::cout << "number of joints: " << tree_1->getNrOfJoints() << std::endl;
-    std::cout << "number of segments: " << tree_1->getNrOfSegments() << std::endl;
 
     ASSERT_TRUE(tree_1->getChain("base_link", "link2", chain));
     KDL::ChainIdSolver_RNE solver(chain, gravity);
@@ -120,9 +118,6 @@ TEST(TestInertiaRPY, test_torques)
     KDL::JntArray qdotdot(chain.getNrOfJoints());
     std::vector<KDL::Wrench> wrenches(chain.getNrOfJoints());
     solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_1);
-
-    delete tree_1;
-    tree_1 = nullptr;
   }
 
   {
@@ -137,9 +132,6 @@ TEST(TestInertiaRPY, test_torques)
     KDL::JntArray qdotdot(chain.getNrOfJoints());
     std::vector<KDL::Wrench> wrenches(chain.getNrOfJoints());
     solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_2);
-
-    delete tree_2;
-    tree_2 = nullptr;
   }
 
   ASSERT_TRUE(torques_1 == torques_2);
