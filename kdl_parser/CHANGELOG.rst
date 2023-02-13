@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.9.0 (2023-02-13)
+------------------
 * Switch some tests to use unique pointers instead of raw pointers. (`#74 <https://github.com/ros/kdl_parser/issues/74>`_)
 * log link children as DEBUG instead of INFO (`#71 <https://github.com/ros/kdl_parser/issues/71>`_)
 * Contributors: Chris Lalancette, Joseph Schornak
