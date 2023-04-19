@@ -97,6 +97,6 @@ else()
   install(TARGETS ${PROJECT_NAME}
           LIBRARY DESTINATION lib
           ARCHIVE DESTINATION lib)
-  install(DIRECTORY include/${PROJECT_NAME}/
+  install(DIRECTORY include/
           DESTINATION include)
 endif()
