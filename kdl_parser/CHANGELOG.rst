@@ -2,6 +2,9 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 2.9.0 (2023-02-13)
 ------------------
 * Switch some tests to use unique pointers instead of raw pointers. (`#74 <https://github.com/ros/kdl_parser/issues/74>`_)
