@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 
 project(kdl_parser)
 
@@ -9,9 +9,9 @@ find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
 find_package(rcutils REQUIRED)
 
-# Default to C++14
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 add_library(
