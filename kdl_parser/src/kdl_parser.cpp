@@ -34,7 +34,7 @@
 #include <vector>
 
 #include "kdl/frames_io.hpp"
-#include "urdf/model.h"
+#include "urdf/model.hpp"
 #include "urdf/urdfdom_compatibility.h"
 #include "rcutils/logging_macros.h"
 
