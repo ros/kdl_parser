@@ -2,8 +2,8 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.0.0 (2025-07-29)
+------------------
 * Cmake requirement (`#88 <https://github.com/ros/kdl_parser/issues/88>`_)
 * Remove kdl_parser_py. (`#89 <https://github.com/ros/kdl_parser/issues/89>`_)
 * Contributors: Chris Lalancette, mosfet80
