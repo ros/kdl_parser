@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 project(kdl_parser)
 
 find_package(ament_cmake_ros REQUIRED)
-find_package(orocos_kdl_vendor REQUIRED)
+find_package(eigen3_cmake_module REQUIRED)
+find_package(Eigen3 REQUIRED)
 find_package(orocos_kdl REQUIRED)
 find_package(urdf REQUIRED)
 find_package(urdfdom_headers REQUIRED)
@@ -24,7 +25,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 target_link_libraries(${PROJECT_NAME} PUBLIC
   orocos-kdl
-  urdfdom_headers::urdfdom_headers)
+  urdfdom_headers::urdfdom_headers
+  Eigen3::Eigen)
 target_link_libraries(${PROJECT_NAME} PRIVATE
   rcutils::rcutils
   urdf::urdf)
@@ -54,7 +56,6 @@ if(BUILD_TESTING)
   target_link_libraries(test_kdl_parser ${PROJECT_NAME})
 endif()
 
-ament_export_dependencies(orocos_kdl_vendor)
 ament_export_dependencies(orocos_kdl)
 ament_export_dependencies(rcutils)
 ament_export_dependencies(urdfdom_headers)

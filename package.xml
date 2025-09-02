@@ -21,19 +21,23 @@
   <url type="bugtracker">https://github.com/ros2/kdl_parser/issues</url>
 
   <buildtool_depend>ament_cmake_ros</buildtool_depend>
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
 
-  <depend>orocos_kdl_vendor</depend>
   <depend>rcutils</depend>
 
+  <build_depend>eigen</build_depend>
+  <build_depend>liborocos-kdl-dev</build_depend>
   <build_depend>urdf</build_depend>
   <build_depend>urdfdom_headers</build_depend>
 
+  <exec_depend>liborocos-kdl</exec_depend>
   <exec_depend>urdf</exec_depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <build_export_depend>liborocos-kdl-dev</build_export_depend>
   <build_export_depend>urdfdom_headers</build_export_depend>
 
   <export>
