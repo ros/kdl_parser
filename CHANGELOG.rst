@@ -2,6 +2,11 @@
 Changelog for package kdl_parser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.0.1 (2025-10-17)
+------------------
+* Removed kdl vendor dependency (`#90 <https://github.com/ros/kdl_parser//issues/90>`_)
+* Contributors: Alejandro Hernández Cordero
+
 3.0.0 (2025-07-29)
 ------------------
 * Cmake requirement (`#88 <https://github.com/ros/kdl_parser/issues/88>`_)
