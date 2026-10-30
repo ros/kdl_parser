@@ -116,8 +116,10 @@ TEST(TestInertiaRPY, test_torques)
     KDL::JntArray q(chain.getNrOfJoints());
     KDL::JntArray qdot(chain.getNrOfJoints());
     KDL::JntArray qdotdot(chain.getNrOfJoints());
-    std::vector<KDL::Wrench> wrenches(chain.getNrOfJoints());
-    solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_1);
+    qdotdot(0) = 2.5;
+    std::vector<KDL::Wrench> wrenches(chain.getNrOfSegments());
+    torques_1.resize(chain.getNrOfJoints());
+    ASSERT_EQ(solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_1), KDL::SolverI::E_NOERROR);
   }
 
   {
@@ -130,10 +132,58 @@ TEST(TestInertiaRPY, test_torques)
     KDL::JntArray q(chain.getNrOfJoints());
     KDL::JntArray qdot(chain.getNrOfJoints());
     KDL::JntArray qdotdot(chain.getNrOfJoints());
-    std::vector<KDL::Wrench> wrenches(chain.getNrOfJoints());
-    solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_2);
+    qdotdot(0) = 2.5;
+    std::vector<KDL::Wrench> wrenches(chain.getNrOfSegments());
+    torques_2.resize(chain.getNrOfJoints());
+    ASSERT_EQ(solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_2), KDL::SolverI::E_NOERROR);
   }
 
+  ASSERT_EQ(torques_1.rows(), 1u);
+  ASSERT_EQ(torques_2.rows(), 1u);
+  EXPECT_NE(torques_1(0), 0.0);
+  ASSERT_TRUE(torques_1 == torques_2);
+}
+
+TEST(TestInertiaRPY, test_torques_static_gravity)
+{
+  std::unique_ptr<KDL::Tree> tree_1 = std::make_unique<KDL::Tree>();
+  std::unique_ptr<KDL::Tree> tree_2 = std::make_unique<KDL::Tree>();
+  KDL::JntArray torques_1;
+  KDL::JntArray torques_2;
+
+  {
+    ASSERT_TRUE(kdl_parser::treeFromString(model1, *tree_1));
+    KDL::Vector gravity(0, -9.81, 0);
+    KDL::Chain chain;
+
+    ASSERT_TRUE(tree_1->getChain("base_link", "link2", chain));
+    KDL::ChainIdSolver_RNE solver(chain, gravity);
+    KDL::JntArray q(chain.getNrOfJoints());
+    KDL::JntArray qdot(chain.getNrOfJoints());
+    KDL::JntArray qdotdot(chain.getNrOfJoints());
+    std::vector<KDL::Wrench> wrenches(chain.getNrOfSegments());
+    torques_1.resize(chain.getNrOfJoints());
+    ASSERT_EQ(solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_1), KDL::SolverI::E_NOERROR);
+  }
+
+  {
+    ASSERT_TRUE(kdl_parser::treeFromString(model2, *tree_2));
+    KDL::Vector gravity(0, -9.81, 0);
+    KDL::Chain chain;
+
+    ASSERT_TRUE(tree_2->getChain("base_link", "link2", chain));
+    KDL::ChainIdSolver_RNE solver(chain, gravity);
+    KDL::JntArray q(chain.getNrOfJoints());
+    KDL::JntArray qdot(chain.getNrOfJoints());
+    KDL::JntArray qdotdot(chain.getNrOfJoints());
+    std::vector<KDL::Wrench> wrenches(chain.getNrOfSegments());
+    torques_2.resize(chain.getNrOfJoints());
+    ASSERT_EQ(solver.CartToJnt(q, qdot, qdotdot, wrenches, torques_2), KDL::SolverI::E_NOERROR);
+  }
+
+  ASSERT_EQ(torques_1.rows(), 1u);
+  ASSERT_EQ(torques_2.rows(), 1u);
+  EXPECT_NE(torques_1(0), 0.0);
   ASSERT_TRUE(torques_1 == torques_2);
 }
 
